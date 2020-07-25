@@ -65,7 +65,7 @@ jobs:
           cd ./about
           npm install .
           npm run build
-          cp ./dist/* ../public/about/
+          cp -r ./dist/* ../public/about/
           cd ..
 
       - name: Install dependencies

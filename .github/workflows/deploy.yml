@@ -51,6 +51,7 @@ jobs:
         run: |
           sudo mv /etc/localtime  /etc/localtime-old
           sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+          npm install -g hexo-cli
           /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
           brew install pandoc
           brew install pandoc-citeproc

@@ -31,7 +31,7 @@ jobs:
         with:
           repository: ${{ env.THEME_REPO }}
           ref: ${{ env.THEME_BRANCH }}
-          path: /
+          path: themes/next
 
       - name: Checkout deploy repo
         uses: actions/checkout@v2

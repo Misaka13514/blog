@@ -12,7 +12,6 @@
     "version": "4.2.1"
   },
   "dependencies": {
-    "@cloudflare/kv-asset-handler": "0.0.10",
     "hexo": "^4.2.1",
     "hexo-deployer-git": "^2.1.0",
     "hexo-generator-archive": "^1.0.0",

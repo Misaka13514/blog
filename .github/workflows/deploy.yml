@@ -16,7 +16,7 @@ env:
 jobs:
   build:
     name: Build on node ${{ matrix.node_version }} and ${{ matrix.os }}
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
     strategy:
       matrix:
         os: [ubuntu-latest]

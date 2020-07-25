@@ -19,7 +19,7 @@ jobs:
     runs-on: macOS-latest
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [macOS-latest]
         node_version: [12.x]
 
     steps:
@@ -49,7 +49,8 @@ jobs:
         env:
           HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_PRI}}
         run: |
-          sudo timedatectl set-timezone "Asia/Shanghai"
+          sudo mv /etc/localtime  /etc/localtime-old
+          sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
           mkdir -p ~/.ssh/
           echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa

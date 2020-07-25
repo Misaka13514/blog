@@ -62,6 +62,8 @@ jobs:
           git config --global user.email $GIT_EMAIL
           cp _config.theme.yml themes/next/_config.yml
           git clone https://github.com/Misaka13514/i.moeneko.xyz.git ./about
+          mkdir public
+          mkdir public/about
           cd ./about
           npm install .
           npm run build

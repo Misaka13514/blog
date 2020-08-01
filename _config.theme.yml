@@ -176,7 +176,7 @@ site_state: true
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
-  Telegram: https://telegram.me/Misaka_0x34ca || fab fa-telegram
+  Telegram: https://telegram.me/Misaka_0x34ca || fab fa-telegram-plane
   Twitter: https://twitter.com/Misaka_0x34ca || fab fa-twitter
   QQ: https://wpa.qq.com/msgrd?v=3&uin=2024636348&site=qq&menu=yes || fab fa-qq
   GitHub: https://github.com/Misaka13514 || fab fa-github
@@ -244,7 +244,7 @@ post_meta:
   item_text: true
   created_at: true
   updated_at:
-    enable: true
+    enable: false
     another_day: true
   categories: true
 
@@ -539,8 +539,8 @@ quicklink:
 
   # Home page and archive page can be controlled through home and archive options below.
   # This configuration item is independent of `enable`.
-  home: true
-  archive: true
+  home: false
+  archive: false
 
   # Default (true) will initialize quicklink after the load event fires.
   delay: true
@@ -886,7 +886,7 @@ vendors:
   # Internal version: 5.13.0
   # fontawesome: //unpkg.com/@fortawesome/fontawesome-free@5/css/all.min.css
   # fontawesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css
-  fontawesome:
+  fontawesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css
 
   # Prism
   # prism: //unpkg.com/prismjs@1/components/prism-core.min.js
@@ -899,7 +899,7 @@ vendors:
   # MathJax
   # mathjax: //unpkg.com/mathjax@3/es5/tex-mml-chtml.js
   # mathjax: //cdnjs.cloudflare.com/ajax/libs/mathjax/3.0.5/es5/tex-mml-chtml.js
-  mathjax:
+  mathjax: //cdnjs.cloudflare.com/ajax/libs/mathjax/3.0.5/es5/tex-mml-chtml.js
 
   # KaTeX
   # katex: //unpkg.com/katex@0/dist/katex.min.css
@@ -925,12 +925,12 @@ vendors:
   # Medium-zoom
   # mediumzoom: //unpkg.com/medium-zoom@1/dist/medium-zoom.min.js
   # mediumzoom: //cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.5/medium-zoom.min.js
-  mediumzoom:
+  mediumzoom: //cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js
 
   # Lazyload
   # lazyload: //unpkg.com/lozad@1/dist/lozad.min.js
   # lazyload: //cdnjs.cloudflare.com/ajax/libs/lozad.js/1.15.0/lozad.min.js
-  lazyload:
+  lazyload: //cdnjs.cloudflare.com/ajax/libs/lozad.js/1.15.0/lozad.min.js
 
   # Pangu
   # pangu: //unpkg.com/pangu@4/dist/browser/pangu.min.js
@@ -940,7 +940,7 @@ vendors:
   # Quicklink
   # quicklink: //unpkg.com/quicklink@2/dist/quicklink.umd.js
   # quicklink: //cdnjs.cloudflare.com/ajax/libs/quicklink/2.0.0/quicklink.umd.js
-  quicklink:
+  quicklink: //cdnjs.cloudflare.com/ajax/libs/quicklink/2.0.0/quicklink.js
 
   # DisqusJS
   # disqusjs_js: //unpkg.com/disqusjs@1/dist/disqus.js

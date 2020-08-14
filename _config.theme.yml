@@ -176,7 +176,7 @@ site_state: true
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
-  Telegram: https://telegram.me/Misaka_0x34ca || fab fa-telegram
+  Telegram: https://telegram.me/Misaka_0x34ca || fab fa-telegram-plane
   Twitter: https://twitter.com/Misaka_0x34ca || fab fa-twitter
   QQ: https://wpa.qq.com/msgrd?v=3&uin=2024636348&site=qq&menu=yes || fab fa-qq
   GitHub: https://github.com/Misaka13514 || fab fa-github

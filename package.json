@@ -31,6 +31,6 @@
   },
   "devDependencies": {
     "hexo-generator-baidu-sitemap": "^0.1.9",
-    "hexo-generator-sitemap": "^2.0.0"
+    "hexo-generator-sitemap": "^2.1.0"
   }
 }

@@ -1,4 +1,4 @@
-name: CI
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -52,8 +52,7 @@ jobs:
           sudo mv /etc/localtime  /etc/localtime-old
           sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
           /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-          brew install pandoc
-          brew install pandoc-citeproc
+          brew install pandoc pandoc-citeproc
           mkdir -p ~/.ssh/
           echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
@@ -61,14 +60,8 @@ jobs:
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
           cp _config.theme.yml themes/next/_config.yml
-          git clone https://github.com/Misaka13514/i.moeneko.xyz.git ./about
-          mkdir public
-          mkdir public/about
-          cd ./about
-          npm install .
-          npm run build
-          cp -r ./dist/* ../public/about/
-          cd ..
+          mkdir public && mkdir public/about
+          git clone -b gh-pages https://github.com/Misaka13514/i.moeneko.xyz.git ./public/about/
 
       - name: Install dependencies
         run: |

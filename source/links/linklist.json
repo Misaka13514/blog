@@ -29,11 +29,6 @@
         "site": "https://matchasama.ltd"
     },
     {
-        "nickname": "康娜",
-        "avatar": "https://i.loli.net/2020/03/26/tp3ykJNF1izP8mX.png",
-        "site": "https://neko.best"
-    },
-    {
         "nickname": "零件",
         "avatar": "https://secure.gravatar.com/avatar/dfd75de244e05c7efc2c549670f8c212?s=512",
         "site": "https://nekosc.com"
@@ -109,6 +104,16 @@
         "site": "https://www.moeneko.top"
     },
     {
+        "nickname": "Piggy",
+        "avatar": "https://secure.gravatar.com/avatar/ef920f36f362cb19763b307adfd3d515?s=512",
+        "site": "https://blog.piggy.moe"
+    },
+    {
+        "nickname": "billchenchina",
+        "avatar": "https://secure.gravatar.com/avatar/1541e0db587328514c8a2d34de5c5519?s=512",
+        "site": "https://billchen.bid"
+    },
+    {
         "nickname": "Eana Hufwe",
         "avatar": "https://secure.gravatar.com/avatar/66a90bb0427b2ddd8366d21f96f17689?s=512",
         "site": "https://blog.1a23.com"
@@ -132,5 +137,10 @@
         "nickname": "kathleen233",
         "avatar": "https://secure.gravatar.com/avatar/c6c42053ceb2a5baed5c66deb6daf615?s=512",
         "site": "https://kathleen233.xyz"
+    },
+    {
+        "nickname": "Esonhugh",
+        "avatar": "https://avatars1.githubusercontent.com/u/32677240?s=512",
+        "site": "https://esonhugh.github.io"
     }
 ]

@@ -6,6 +6,7 @@ tags:
 - V2Ray
 - Trojan
 - GFW
+- Proxy
 - Nginx
 - Caddy
 - HaProxy

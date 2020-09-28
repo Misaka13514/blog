@@ -51,7 +51,7 @@ jobs:
         run: |
           sudo mv /etc/localtime  /etc/localtime-old
           sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-          /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
           brew install pandoc pandoc-citeproc
           mkdir -p ~/.ssh/
           echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa

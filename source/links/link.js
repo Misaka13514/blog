@@ -12,7 +12,7 @@ link = {
           nickname = data[i].nickname;
           avatar = data[i].avatar;
           site = data[i].site;
-          li += '<div class="card">' + '<a href="' + site + '" target="_blank">' + '<div class="thumb" style="background: url( ' + avatar + ');">' + '</div>' + '</a>' + '<div class="card-header">' + '<div><a href="' + site + '" target="_blank">' + nickname + '</a></div>' + '</div>' + '</div>';
+          li += '<div class="card">' + '<a href="' + site + '" target="_blank" rel="external noopenner nofollow">' + '<div class="thumb" style="background: url( ' + avatar + ');">' + '</div>' + '</a>' + '<div class="card-header">' + '<div><a href="' + site + '" target="_blank">' + nickname + '</a></div>' + '</div>' + '</div>';
       }
       $(".link-navigation").append(li);
   }

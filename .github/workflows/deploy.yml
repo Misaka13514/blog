@@ -12,19 +12,23 @@ env:
   THEME_BRANCH: master
   DEPLOY_REPO: Misaka13514/Misaka13514.github.io
   DEPLOY_BRANCH: master
+  AMPHINEKO_REPO: Misaka13514/Misaka_0x34ca
+  AMPHINEKO_BRANCH: gh-pages
 
 jobs:
   build:
     name: Build on node ${{ matrix.node_version }} and ${{ matrix.os }}
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [macOS-latest]
-        node_version: [12.x]
+        os: [ubuntu-latest]
+        node_version: [15.x]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          submodules: True
 
       - name: Checkout theme repo
         uses: actions/checkout@v2
@@ -49,10 +53,9 @@ jobs:
         env:
           HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_PRI}}
         run: |
-          sudo mv /etc/localtime  /etc/localtime-old
-          sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-          brew install pandoc pandoc-citeproc
+          wget https://github.com/jgm/pandoc/releases/download/2.11.1.1/pandoc-2.11.1.1-1-amd64.deb -O pandoc.deb
+          sudo dpkg -i pandoc.deb
+          rm pandoc.deb
           mkdir -p ~/.ssh/
           echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
@@ -60,15 +63,31 @@ jobs:
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
           cp _config.theme.yml themes/next/_config.yml
-          mkdir public && mkdir public/about
-          git clone -b gh-pages https://github.com/Misaka13514/i.moeneko.xyz.git ./public/about/
 
       - name: Install dependencies
         run: |
           npm install
-          npm install -g hexo-cli
 
-      - name: Deploy hexo
+      - name: Build hexo pages
         run: |
-          hexo g
-          npm run deploy
+          npm run build
+
+      - name: replace new page
+        run: |
+          rm -rf .deploy_git/*
+          cp -r public/* .deploy_git/
+
+      - name: Checkout amphineko repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ env.AMPHINEKO_REPO }}
+          ref: ${{ env.AMPHINEKO_BRANCH }}
+          path: .deploy_git/about/
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          SSH: true
+          BRANCH: master
+          FOLDER: .deploy_git
+          CLEAN: true

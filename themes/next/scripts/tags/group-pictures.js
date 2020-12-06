@@ -2,8 +2,6 @@
  * group-pictures.js | https://theme-next.js.org/docs/tag-plugins/group-pictures
  */
 
-/* global hexo */
-
 'use strict';
 
 const LAYOUTS = {
@@ -73,7 +71,7 @@ const LAYOUTS = {
 
 function groupBy(group, data) {
   const r = [];
-  for (let count of group) {
+  for (const count of group) {
     r.push(data.slice(0, count));
     data = data.slice(count);
   }
@@ -84,7 +82,7 @@ const templates = {
 
   dispatch: function(pictures, group, layout) {
     const rule = LAYOUTS[group] ? LAYOUTS[group][layout] : null;
-    return rule ? this.getHTML(groupBy(rule, pictures)) : templates.defaults(pictures);
+    return rule ? this.getHTML(groupBy(rule, pictures)) : this.defaults(pictures);
   },
 
   /**
@@ -115,25 +113,20 @@ const templates = {
   },
 
   getColumnHTML: function(pictures) {
-    const columnWidth = 100 / pictures.length;
-    const columnStyle = `style="width: ${columnWidth}%;"`;
     return pictures.map(picture => {
-      return `<div class="group-picture-column" ${columnStyle}>${picture}</div>`;
+      return `<div class="group-picture-column">${picture}</div>`;
     }).join('');
   }
 };
 
-function groupPicture(args, content) {
+module.exports = ctx => function(args, content) {
   args = args[0].split('-');
   const group = parseInt(args[0], 10);
   const layout = parseInt(args[1], 10);
 
-  content = hexo.render.renderSync({text: content, engine: 'markdown'});
+  content = ctx.render.renderSync({ text: content, engine: 'markdown' });
 
-  const pictures = content.match(/<img[\s\S]*?>/g);
+  const pictures = content.match(/(<a[^>]*>((?!<\/a)(.|\n))+<\/a>)|(<img[^>]+>)/g);
 
   return `<div class="group-picture">${templates.dispatch(pictures, group, layout)}</div>`;
-}
-
-hexo.extend.tag.register('grouppicture', groupPicture, {ends: true});
-hexo.extend.tag.register('gp', groupPicture, {ends: true});
+};

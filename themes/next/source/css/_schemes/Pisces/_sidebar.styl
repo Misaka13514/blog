@@ -1,7 +1,4 @@
 .sidebar {
-  background: initial;
-  bottom: initial;
-  box-shadow: none;
   margin-top: $sidebar-offset;
   position: -webkit-sticky;
   position: sticky;
@@ -13,7 +10,7 @@
   }
 
   if (hexo-config('motion.enable') && hexo-config('motion.transition.sidebar')) {
-    opacity: 0;
+    visibility: hidden;
   }
 }
 
@@ -29,14 +26,13 @@
   color: var(--text-color);
 }
 
-.site-state-item a {
+.site-state-item {
   padding: 0 10px;
 }
 
-.sidebar-button {
+.sidebar .sidebar-button {
   border-bottom: 1px dotted $grey-light;
   border-top: 1px dotted $grey-light;
-  margin-top: 10px;
 
   a {
     border: 0;
@@ -56,10 +52,7 @@
 }
 
 .links-of-author {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  justify-content: center;
+  flex-wrap();
 }
 
 .links-of-author-item {
@@ -71,11 +64,11 @@
 
   a, span.exturl {
     border-bottom: none;
+    border-radius: 4px;
     display: block;
 
     &:hover {
       background: var(--body-bg-color);
-      border-radius: 4px;
     }
   }
 }
@@ -83,6 +76,7 @@
 .links-of-blogroll-item {
   if (hexo-config('links_settings.layout') == 'inline') {
     display: inline-block;
+    max-width: 100%;
     sidebar-inline-links-item();
   }
 }

@@ -8,12 +8,8 @@ on:
 env:
   GIT_USER: Misaka13514
   GIT_EMAIL: Misaka13514@gmail.com
-  THEME_REPO: Misaka13514/hexo-theme-next
-  THEME_BRANCH: master
-  DEPLOY_REPO: Misaka13514/Misaka13514.github.io
+  DEPLOY_REPO: Misaka13514/blog
   DEPLOY_BRANCH: master
-  AMPHINEKO_REPO: Misaka13514/Misaka_0x34ca
-  AMPHINEKO_BRANCH: gh-pages
 
 jobs:
   build:
@@ -29,13 +25,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: True
-
-      - name: Checkout theme repo
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ env.THEME_REPO }}
-          ref: ${{ env.THEME_BRANCH }}
-          path: themes/next
 
       - name: Checkout deploy repo
         uses: actions/checkout@v2
@@ -62,7 +51,6 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name $GIT_USER
           git config --global user.email $GIT_EMAIL
-          cp _config.theme.yml themes/next/_config.yml
 
       - name: Install dependencies
         run: |
@@ -76,13 +64,6 @@ jobs:
         run: |
           rm -rf .deploy_git/*
           cp -r public/* .deploy_git/
-
-      - name: Checkout amphineko repo
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ env.AMPHINEKO_REPO }}
-          ref: ${{ env.AMPHINEKO_BRANCH }}
-          path: .deploy_git/about/
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1

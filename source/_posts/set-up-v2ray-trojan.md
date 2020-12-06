@@ -1,5 +1,5 @@
 ---
-title: 搭建V2Ray/Trojan
+title: 搭建V2Ray和Trojan
 date: 2020-03-04 23:47:32
 tags:
 - Linux

@@ -1,4 +1,4 @@
-/* global NexT, CONFIG, Velocity */
+/* global NexT, CONFIG */
 
 NexT.boot = {};
 
@@ -12,44 +12,60 @@ NexT.boot.registerEvents = function() {
     event.currentTarget.classList.toggle('toggle-close');
     const siteNav = document.querySelector('.site-nav');
     if (!siteNav) return;
-    const animateAction = siteNav.classList.contains('site-nav-on') ? 'slideUp' : 'slideDown';
-
-    if (typeof Velocity === 'function') {
-      Velocity(siteNav, animateAction, {
-        duration: 200,
-        complete: function() {
-          siteNav.classList.toggle('site-nav-on');
-        }
-      });
-    } else {
-      siteNav.classList.toggle('site-nav-on');
-    }
+    const animateAction = document.body.classList.contains('site-nav-on');
+    const height = NexT.utils.getComputedStyle(siteNav);
+    siteNav.style.height = animateAction ? height : 0;
+    const toggle = () => document.body.classList.toggle('site-nav-on');
+    const begin = () => {
+      siteNav.style.overflow = 'hidden';
+    };
+    const complete = () => {
+      siteNav.style.overflow = '';
+      siteNav.style.height = '';
+    };
+    window.anime(Object.assign({
+      targets : siteNav,
+      duration: 200,
+      height  : animateAction ? [height, 0] : [0, height],
+      easing  : 'linear'
+    }, animateAction ? {
+      begin,
+      complete: () => {
+        complete();
+        toggle();
+      }
+    } : {
+      begin: () => {
+        begin();
+        toggle();
+      },
+      complete
+    }));
   });
 
-  const TAB_ANIMATE_DURATION = 200;
+  const duration = 200;
   document.querySelectorAll('.sidebar-nav li').forEach((element, index) => {
-    element.addEventListener('click', event => {
-      const item = event.currentTarget;
-      if (item.matches('.sidebar-toc-active .sidebar-nav-toc, .sidebar-overview-active .sidebar-nav-overview')) return;
+    element.addEventListener('click', () => {
+      if (element.matches('.sidebar-toc-active .sidebar-nav-toc, .sidebar-overview-active .sidebar-nav-overview')) return;
       const sidebar = document.querySelector('.sidebar-inner');
-      const panel = document.querySelectorAll('.sidebar-panel');
+      const panel = document.querySelector('.sidebar-panel-container');
       const activeClassName = ['sidebar-toc-active', 'sidebar-overview-active'];
 
       window.anime({
-        targets : panel[1 - index],
-        duration: TAB_ANIMATE_DURATION,
-        easing  : 'linear',
-        opacity : 0,
-        complete: () => {
+        duration,
+        targets   : panel,
+        easing    : 'linear',
+        opacity   : 0,
+        translateY: [0, -20],
+        complete  : () => {
           // Prevent adding TOC to Overview if Overview was selected when close & open sidebar.
-          sidebar.classList.remove(activeClassName[1 - index]);
-          panel[index].style.opacity = 0;
-          sidebar.classList.add(activeClassName[index]);
+          sidebar.classList.replace(activeClassName[1 - index], activeClassName[index]);
           window.anime({
-            targets : panel[index],
-            duration: TAB_ANIMATE_DURATION,
-            easing  : 'linear',
-            opacity : 1
+            duration,
+            targets   : panel,
+            easing    : 'linear',
+            opacity   : [0, 1],
+            translateY: [-20, 0]
           });
         }
       });
@@ -71,7 +87,7 @@ NexT.boot.refresh = function() {
 
   /**
    * Register JS handlers by condition option.
-   * Need to add config option in Front-End at 'layout/_partials/head.njk' file.
+   * Need to add config option in Front-End at 'scripts/helpers/next-config.js' file.
    */
   CONFIG.prism && window.Prism.highlightAll();
   CONFIG.fancybox && NexT.utils.wrapImageWithFancyBox();
@@ -95,8 +111,7 @@ NexT.boot.motion = function() {
   // Define Motion Sequence & Bootstrap Motion.
   if (CONFIG.motion.enable) {
     NexT.motion.integrator
-      .add(NexT.motion.middleWares.logo)
-      .add(NexT.motion.middleWares.menu)
+      .add(NexT.motion.middleWares.header)
       .add(NexT.motion.middleWares.postList)
       .add(NexT.motion.middleWares.sidebar)
       .add(NexT.motion.middleWares.footer)

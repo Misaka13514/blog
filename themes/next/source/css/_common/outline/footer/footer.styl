@@ -13,9 +13,12 @@
   }
 }
 
+// Flexbox layout makes it possible to reorder the child
+// elements of .footer-inner through the `order` CSS property
 .footer-inner {
   box-sizing: border-box;
   text-align: center;
+  flex-column();
   main-container();
 }
 
@@ -70,8 +73,4 @@
   if (hexo-config('footer.icon.animated')) {
     animation: icon-animate 1.33s ease-in-out infinite;
   }
-}
-
-.powered-by, .theme-info {
-  display: inline-block;
 }

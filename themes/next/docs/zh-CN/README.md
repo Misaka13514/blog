@@ -5,20 +5,20 @@
   <a title="俄语" href="../ru/README.md">🇷🇺</a>
 </div>
 
-# <div align="center"><a title="NexT website repository" href="https://github.com/next-theme/theme-next-docs"><img align="center" width="56" height="56" src="https://raw.githubusercontent.com/next-theme/hexo-theme-next/master/source/images/logo.svg?sanitize=true"></a> e x T</div>
+![NexT preview](https://user-images.githubusercontent.com/16272760/99784261-872d3200-2b56-11eb-807c-869042d1f6e8.png)
 
-<p align="center">
-  «NexT» 是一款风格优雅的高质量 <a href="https://hexo.io">Hexo</a> 主题，自点点滴滴中用爱雕琢而成。
-<br>
-<br>
-  <a href="https://www.npmjs.com/package/hexo-theme-next"><img src="https://img.shields.io/npm/v/hexo-theme-next?color=red&logo=npm&style=flat-square"></a>
-  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/hexo-theme-next?color=green&logo=node.js&style=flat-square"></a>
-  <a href="https://hexo.io"><img src="https://img.shields.io/badge/hexo-%3E=4.0.0-blue?style=flat-square&logo=hexo"></a>
-  <a href="https://github.com/next-theme/hexo-theme-next/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-%20AGPL-orange?style=flat-square&logo=gnu"></a>
-  <a href="https://github.com/next-theme/hexo-theme-next/actions"><img src="https://img.shields.io/github/workflow/status/next-theme/hexo-theme-next/Linter?label=test&logo=github&style=flat-square"></a>
-<br>
-  <img src="https://user-images.githubusercontent.com/16272760/83972923-98baae80-a915-11ea-8142-3cf875dad8bf.png">
-</p>
+<a title="NexT 网站" href="https://theme-next.js.org"><img align="right" alt="NexT logo" width="100" height="100" src="https://raw.githubusercontent.com/next-theme/hexo-theme-next/master/source/images/logo.svg"></a>
+
+# NexT
+
+> «NexT» 是一款风格优雅的高质量 [Hexo](https://hexo.io) 主题，自点点滴滴中用爱雕琢而成。
+
+[![NPM version](https://img.shields.io/npm/v/hexo-theme-next?color=red&logo=npm&style=flat-square)](https://www.npmjs.com/package/hexo-theme-next)
+[![Required Hexo version](https://img.shields.io/badge/hexo-%3E=5.0.0-blue?style=flat-square&logo=hexo)](https://hexo.io)
+[![License](https://img.shields.io/badge/license-%20AGPL-orange?style=flat-square&logo=gnu)](https://github.com/next-theme/hexo-theme-next/blob/master/LICENSE.md)
+[![Build Status](https://img.shields.io/github/workflow/status/next-theme/hexo-theme-next/Linter?label=test&logo=github&style=flat-square)](https://github.com/next-theme/hexo-theme-next/actions?query=workflow%3ALinter)
+[![Build Status](https://img.shields.io/github/workflow/status/next-theme/hexo-theme-next/Tester?logo=github&style=flat-square)](https://github.com/next-theme/hexo-theme-next/actions?query=workflow%3ATester)
+[![jsDelivr hits](https://img.shields.io/jsdelivr/npm/hm/hexo-theme-next?style=flat-square&logo=jsdelivr)](https://www.jsdelivr.com/package/npm/hexo-theme-next)
 
 ## 即时预览
 
@@ -31,18 +31,39 @@
 
 ## 安装
 
-最简单的安装方式是直接克隆整个仓库：
+如果你在使用 Hexo 5.0 或更新版本，最简单的安装方式是通过 npm：
 
 ```sh
-$ cd hexo
+$ cd hexo-site
+$ npm install hexo-theme-next
+```
+
+你也可以直接克隆整个仓库：
+
+```sh
+$ cd hexo-site
 $ git clone https://github.com/next-theme/hexo-theme-next themes/next
 ```
 
-此外，如果你想要使用其他方式，你也可以参见[详细安装步骤][docs-installation-url]。
+此外，如果你想要使用其他方式，请参见[详细安装步骤][docs-installation-url]。
+
+安装完成后，在 Hexo 配置文件中将 `theme` 设置为 `next`。
+
+```yml
+theme: next
+```
+
+## 配置
+
+目前 NexT 鼓励用户使用 [Alternate Theme Config][docs-configuration-url] 进行配置。并且可以轻松地通过 [Custom Files][docs-custom-files-url] 自定义主题的布局和样式。
+
+不推荐直接修改 NexT 主题的文件。因为这可能导致错误（例如 git merge 冲突），并且在升级主题时修改的文件可能丢失。
+
+然而你也可以通过提交（`Commit`）、贮藏（`Stash`）或忽视（`Discard`）本地更改以绕过这种更新错误（例如 **«Commit your changes or stash them before you can merge»**）。具体方法请参考[这里](https://stackoverflow.com/a/15745424/5861495)。
 
 ## 插件
 
-插件丰富和拓展了 NexT 的功能。这些插件分为两种：核心插件和第三方插件。核心插件被 NexT 的基础功能所依赖。第三方插件默认通过 jsDelivr 的 CDN 服务加载，它们提供了大量的可选功能。
+插件丰富和拓展了 NexT 的功能。这些插件分为两种：核心插件和第三方插件。核心插件被 NexT 的基础功能所依赖。第三方插件提供了大量的可选功能。
 
 配置这些插件非常简单。例如，你想要在你的站点中使用 `pjax` 插件，请进入 NexT 配置文件，启用 `pjax` 配置项：
 
@@ -54,31 +75,37 @@ pjax: true
 
 ### 设置 CDN
 
-如果你想要通过自定义 CDN 而不是默认的 jsDelivr 来加载插件脚本，那么需要设置相关的 CDN 链接。
+第三方插件默认通过 [jsDelivr](https://www.jsdelivr.com) CDN 服务加载。我们也提供了其它的 CDN 服务供选择，包括著名的 [UNPKG](https://unpkg.com) 和 [CDNJS](https://cdnjs.com)。
 
-例如，你想要为 `mediumzoom` 插件设置 CDN 地址，进入 NexT 配置文件并找到如下内容：
+例如，你想要使用 `unpkg` 代替 `jsdelivr` 作为默认的 CDN 提供商，你需要在 NexT 配置文件中进行如下设置：
 
 ```yml
 vendors:
   # ...
   # Some contents...
   # ...
-  mediumzoom: # Set or update mediumzoom CDN URL.
+  plugins: unpkg
 ```
 
 ## 更新
 
-NexT 每个月都会发布新版本。你可以通过如下命令更新到最新的 master 分支：
+NexT 每个月都会发布新版本。你可以通过如下命令更新 NexT。
+
+通过 npm 安装最新版本：
+
+```sh
+$ cd hexo-site
+$ npm update hexo-theme-next
+```
+
+或者通过 git 更新到最新的 master 分支：
 
 ```sh
 $ cd themes/next
 $ git pull
 ```
 
-如果你在此过程中收到了任何错误报告 (例如 **«Commit your changes or stash them before you can merge»**)，我们推荐你使用 [Alternate Theme Config][docs-data-files-url] 特性。\
-然而你也可以通过提交（`Commit`）、贮藏（`Stash`）或忽视（`Discard`）本地更改以绕过这种更新错误。具体方法请参考[这里](https://stackoverflow.com/a/15745424/5861495)。
-
-**如果你想要从 v5.x / v7.x 更新到最新版本，阅读[这篇文档][docs-update-5-1-x-url]。**
+**如果你想要从 v5.x / v7.x 更新到最新版本，阅读[这篇文档][docs-upgrade-url]。**
 
 ## 反馈
 
@@ -97,9 +124,7 @@ $ git pull
 
 ## 贡献者
 
-- [iissnan/hexo-theme-next](https://github.com/iissnan/hexo-theme-next/graphs/contributors)
-- [theme-next/hexo-theme-next](https://github.com/theme-next/hexo-theme-next/graphs/contributors)
-- [next-theme/hexo-theme-next](https://github.com/next-theme/hexo-theme-next/graphs/contributors)
+[![Contributors][contributors-image]][contributors-url]
 
 ## 鸣谢
 
@@ -107,9 +132,9 @@ $ git pull
 
 <a href="https://github.com"><img height="40" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png"></a>
 
-> GitHub 容许我们托管 Git 仓库。
+> GitHub 容许我们托管 Git 仓库及运行测试。
 
-<a href="https://www.netlify.com"><img height="40" src="https://cdn.netlify.com/15ecf59b59c9d04b88097c6b5d2c7e8a7d1302d0/1b6d6/img/press/logos/full-logo-light.svg"></a>
+<a href="https://www.netlify.com"><img height="40" src="https://www.netlify.com/img/press/logos/full-logo-light.svg"></a>
 
 > Netlify 容许我们发布文档。
 
@@ -122,8 +147,9 @@ $ git pull
 > jsDelivr 提供了 CDN 服务。
 
 [docs-installation-url]: https://theme-next.js.org/docs/getting-started/installation.html
-[docs-data-files-url]: https://theme-next.js.org/docs/getting-started/configuration.html
-[docs-update-5-1-x-url]: https://theme-next.js.org/docs/getting-started/update-from-v5.html
+[docs-configuration-url]: https://theme-next.js.org/docs/getting-started/configuration.html
+[docs-custom-files-url]: https://theme-next.js.org/docs/advanced-settings/custom-files.html
+[docs-upgrade-url]: https://theme-next.js.org/docs/getting-started/upgrade.html
 
 [gitter-url]: https://gitter.im/hexo-next
 [i18n-url]: https://crowdin.com/project/hexo-theme-next
@@ -135,3 +161,5 @@ $ git pull
 
 [contributing-document-url]: https://github.com/next-theme/hexo-theme-next/blob/master/docs/zh-CN/CONTRIBUTING.md
 [official-plugins-url]: https://github.com/next-theme
+[contributors-image]: https://raw.githubusercontent.com/next-theme/contributors/master/contributors.svg
+[contributors-url]: https://github.com/next-theme/hexo-theme-next/blob/master/docs/AUTHORS.md

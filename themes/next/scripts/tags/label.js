@@ -2,18 +2,12 @@
  * label.js | https://theme-next.js.org/docs/tag-plugins/label
  */
 
-/* global hexo */
-
 'use strict';
 
-function postLabel(args) {
-  args = args.join(' ').split('@');
-  const classes = args[0] || 'default';
-  const text    = args[1] || '';
+module.exports = ctx => function(args) {
+  const [classes = 'default', text = ''] = args.join(' ').split('@');
 
-  !text && hexo.log.warn('Label text must be defined!');
+  if (!text) ctx.log.warn('Label text must be defined!');
 
   return `<mark class="label ${classes.trim()}">${text}</mark>`;
-}
-
-hexo.extend.tag.register('label', postLabel, {ends: false});
+};

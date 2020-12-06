@@ -2,16 +2,24 @@
 // --------------------------------------------------
 .posts-expand {
   &.index {
-    .post-title, .post-meta {
-      text-align: $site-meta-text-align;
+    .post-header {
+      text-align: left;
 
       +mobile() {
         text-align: center;
       }
     }
 
+    .post-meta-container {
+      margin-top: 5px;
+    }
+
     .post-meta {
-      margin: 5px 0 20px 0;
+      justify-content: flex-start;
+
+      +mobile() {
+        justify-content: center;
+      }
     }
   }
 
@@ -23,8 +31,8 @@
     margin-top: 120px;
   }
 
-  .post-title, .post-meta {
-    text-align: center;
+  .post-header {
+    margin-bottom: 20px;
   }
 
   .post-tags {

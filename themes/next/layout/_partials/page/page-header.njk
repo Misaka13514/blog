@@ -5,11 +5,11 @@
   {{- post_edit(page.source) }}
 </h1>
 
-<div class="post-meta">
+<div class="post-meta-container">
   {%- if page.description %}
     <div class="post-description">{{ page.description }}</div>
   {%- endif %}
-  {% include '_partials/page/breadcrumb.njk' %}
+  {%- include '_partials/page/breadcrumb.njk' -%}
 </div>
 
 </header>

@@ -1,8 +1,7 @@
 .reward-container {
-  margin: 20px auto;
-  padding: 10px 0;
+  margin: $post-card-margin;
+  padding: 1em 0;
   text-align: center;
-  width: 90%;
 
   button {
     background: transparent;
@@ -24,9 +23,9 @@
   }
 }
 
-#post-reward {
-  padding-top: 20px;
+.post-reward {
   display: none;
+  padding-top: 20px;
 
   &.active {
     display: block;
@@ -35,9 +34,13 @@
   div {
     display: inline-block;
 
+    span {
+      display: block;
+    }
+
     if (hexo-config('reward_settings.animation')) {
-      &:hover p {
-        animation: roll .1s infinite linear;
+      &:hover span {
+        animation: next-roll .1s infinite linear;
         // The animation may affect :hover of img in dark mode
         pointer-events: none;
       }
@@ -52,7 +55,7 @@
   }
 }
 
-@keyframes roll {
+@keyframes next-roll {
   from {
     transform: rotateZ(30deg);
   }

@@ -13,7 +13,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://moeneko.xyz
+url: https://blog.atri.tk
 root: /
 permalink: :year/:title/
 permalink_defaults:
@@ -65,6 +65,7 @@ index_generator:
   path: ''
   per_page: 10
   order_by: -date
+  single_language_index: true
 
 # Category & Tag
 default_category: uncategorized
@@ -104,7 +105,7 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/Misaka13514/Misaka13514.github.io
+  repo: https://github.com/Misaka13514/blog
   branch: master
 
 # Atom Feed

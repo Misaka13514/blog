@@ -3,6 +3,8 @@
 <meta name="theme-color" content="{{ theme.android_chrome_color }}">
 <meta name="generator" content="Hexo {{ hexo_version }}">
 
+{{ next_pre() }}
+
 {%- if theme.favicon.apple_touch_icon %}
   <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for(theme.favicon.apple_touch_icon) }}">
 {%- endif %}
@@ -17,9 +19,6 @@
 {%- endif %}
 {%- if theme.favicon.android_manifest %}
   <link rel="manifest" href="{{ url_for(theme.favicon.android_manifest) }}">
-{%- endif %}
-{%- if theme.favicon.ms_browserconfig %}
-  <meta name="msapplication-config" content="{{ url_for(theme.favicon.ms_browserconfig) }}">
 {%- endif %}
 
 {%- if theme.disable_baidu_transformation %}
@@ -43,19 +42,19 @@
 
 {{ next_font() }}
 
-{%- set font_awesome_uri = theme.vendors.fontawesome or url_for('lib/font-awesome/css/all.min.css') %}
-<link rel="stylesheet" href="{{ font_awesome_uri }}">
+<link rel="stylesheet" href="{{ theme.vendors.fontawesome }}">
 
-{%- if theme.fancybox %}
-  {%- set fancybox_css_uri = theme.vendors.fancybox_css or '//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css' %}
-  <link rel="stylesheet" href="{{ fancybox_css_uri }}">
+{%- if theme.motion.enable %}
+  <link rel="stylesheet" href="{{ theme.vendors.animate_css }}">
 {%- endif %}
 
-{%- if theme.pace.enable %}
-  {%- set pace_css_uri = theme.vendors.pace_css or '//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-' + theme.pace.theme + '.min.css' %}
-  {%- set pace_js_uri = theme.vendors.pace or '//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js' %}
-  <link rel="stylesheet" href="{{ pace_css_uri }}">
-  <script src="{{ pace_js_uri }}"></script>
+{%- if theme.fancybox %}
+  <link rel="stylesheet" href="{{ theme.vendors.fancybox_css }}">
+{%- endif %}
+
+{%- if theme.nprogress.enable %}
+  <link rel="stylesheet" href="{{ theme.vendors.nprogress_css }}">
+  <script src="{{ theme.vendors.nprogress_js }}"></script>
 {%- endif %}
 
 {{ next_config() }}

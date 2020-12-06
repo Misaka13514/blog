@@ -1,13 +1,12 @@
-{%- set valine_uri = theme.vendors.valine or '//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js' %}
-
+{%- set serverURLs = theme.valine.serverURLs or 'https://' + theme.valine.appId.slice(0, 8) | lower + '.api.lncldglobal.com' %}
 <script>
-NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('{{ valine_uri }}', () => {
-    new Valine(Object.assign({
-      el  : '#valine-comments',
-      path: location.pathname,
-    }, {{ theme.valine | json }}
-    ));
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('{{ theme.vendors.valine }}', () => {
+    new Valine(Object.assign({{ theme.valine | safedump }}, {
+      el: '#valine-comments',
+      path: {{ url_for(page.path) | replace(r/index\.html$/, '') | safedump }},
+      serverURLs: {{ serverURLs | safedump }}
+    }));
   }, window.Valine);
 });
 </script>

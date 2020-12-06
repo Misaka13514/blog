@@ -24,44 +24,31 @@
 // Desktop layout styles.
 // ==================================================
 // Post blocks.
-.main-inner {
-  background: initial;
-  box-shadow: initial;
-  padding: initial;
-}
+.main-inner > {
+  .sub-menu, .post-block, .tabs-comment, .comments, .pagination {
+    background: var(--content-bg-color);
+    border-radius: $border-radius-inner;
+    box-shadow: $box-shadow-inner;
 
-// Post & Comments blocks.
-.post-block {
-  background: var(--content-bg-color);
-  border-radius: $border-radius-inner;
-  box-shadow: $box-shadow-inner;
-  padding: $content-desktop-padding;
+    &:not(:first-child):not(.sub-menu) {
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      margin-top: $sidebar-offset;
 
-  // When blocks are siblings (homepage).
-  & + .post-block {
-    border-radius: $border-radius;
-    // Rewrite shadows & borders because all blocks have offsets.
-    box-shadow: $box-shadow;
-    margin-top: $sidebar-offset;
+      +tablet() {
+        margin-top: $content-tablet-padding;
+      }
+
+      +mobile() {
+        margin-top: $content-mobile-padding;
+      }
+    }
   }
 }
 
-// Comments blocks.
-.comments {
-  background: var(--content-bg-color);
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  margin-top: $sidebar-offset;
+// Post & Comments blocks.
+.post-block, .comments {
   padding: $content-desktop-padding;
-}
-
-.tabs-comment {
-  margin-top: 1em;
-}
-
-// Top main padding from header to posts (default 40px).
-.content {
-  padding-top: initial;
 }
 
 // Post delimiters.
@@ -71,32 +58,8 @@
 
 // Pagination.
 .pagination {
-  background: var(--content-bg-color);
-  border-radius: $border-radius;
   border-top: initial;
-  box-shadow: $box-shadow;
-  margin: $sidebar-offset 0 0;
   padding: 10px 0 10px;
-}
-
-// Sub-menu(s).
-.sub-menu {
-  border-bottom: initial;
-  box-shadow: $box-shadow-inner;
-
-  // Adapt submenu(s) with post-blocks.
-  + .content .post-block {
-    box-shadow: $box-shadow;
-    margin-top: $sidebar-offset;
-
-    +tablet() {
-      margin-top: $content-tablet-padding;
-    }
-
-    +mobile() {
-      margin-top: $content-mobile-padding;
-    }
-  }
 }
 
 // ==================================================
@@ -129,27 +92,14 @@
   }
 
   .post-block {
-    border-radius: $border-radius;
-    // Rewrite shadows & borders because all blocks have offsets.
-    box-shadow: $box-shadow;
     // Inside posts blocks content padding (default 40px).
     padding: ($content-tablet-padding * 2);
   }
 
-  // Only if blocks are siblings need bottom margin (homepage).
-  .post-block + .post-block {
-    margin-top: $content-tablet-padding;
-  }
-
   .comments {
-    margin-top: $content-tablet-padding;
     padding: $content-tablet-padding ($content-tablet-padding * 2);
     // padding: initial;
     // padding-top: $content-tablet-padding;
-  }
-
-  .pagination {
-    margin: $content-tablet-padding 0 0;
   }
 }
 
@@ -170,25 +120,11 @@
   }
 
   .post-block {
-    border-radius: $border-radius;
-    // Rewrite shadows & borders because all blocks have offsets.
-    box-shadow: $box-shadow;
-    min-height: auto;
     // Inside posts blocks content padding (default 40px).
     padding: $sidebar-offset;
   }
 
-  // Only if blocks are siblings need bottom margin (homepage).
-  .post-block + .post-block {
-    margin-top: $content-mobile-padding;
-  }
-
   .comments {
-    margin-top: $content-mobile-padding;
     padding: 10px $sidebar-offset;
-  }
-
-  .pagination {
-    margin: $content-mobile-padding 0 0;
   }
 }

@@ -2,19 +2,20 @@
 var pjax = new Pjax({
   selectors: [
     'head title',
-    '#page-configurations',
+    '.page-configurations',
     '.main-inner',
     '.post-toc-wrap',
     '.languages',
-    '#pjax'
+    '.pjax'
   ],
   analytics: false,
   cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
 });
 
 document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
   NexT.boot.refresh();
   // Define Motion Sequence & Bootstrap Motion.
   if (CONFIG.motion.enable) {
@@ -26,11 +27,7 @@ document.addEventListener('pjax:success', () => {
   }
   const hasTOC = document.querySelector('.post-toc');
   document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  if (hasTOC) {
-    document.querySelector('.sidebar-nav-toc').click();
-  } else {
-    document.querySelector('.sidebar-nav-overview').click();
-  }
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
   NexT.utils.updateSidebarPosition();
 });
 </script>

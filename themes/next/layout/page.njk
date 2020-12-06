@@ -23,40 +23,17 @@
     {### PAGE BLOCK ###}
     {##################}
     <div class="post-block" lang="{{ page.lang or config.language }}">
-      {% include '_partials/page/page-header.njk' %}
+      {%- include '_partials/page/page-header.njk' -%}
       {#################}
       {### PAGE BODY ###}
       {#################}
       <div class="post-body{%- if page.direction and page.direction.toLowerCase() === 'rtl' %} rtl{%- endif %}">
         {%- if page.type === 'tags' %}
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-              {{ _p('counter.tag_cloud', site.tags.length) }}
-            </div>
-            <div class="tag-cloud-tags">
-              {{ next_tagcloud({
-                min_font: theme.tagcloud.min,
-                max_font: theme.tagcloud.max,
-                amount  : theme.tagcloud.amount,
-                orderby : theme.tagcloud.orderby,
-                order   : theme.tagcloud.order
-                })
-              }}
-            </div>
-          </div>
+          {%- include '_partials/page/tags.njk' -%}
         {% elif page.type === 'categories' %}
-          <div class="category-all-page">
-            <div class="category-all-title">
-              {{ _p('counter.categories', site.categories.length) }}
-            </div>
-            <div class="category-all">
-              {{ list_categories() }}
-            </div>
-          </div>
+          {%- include '_partials/page/categories.njk' -%}
         {% elif page.type === 'schedule' %}
-          <div class="event-list">
-          </div>
-          {% include '_scripts/pages/schedule.njk' %}
+          {%- include '_partials/page/schedule.njk' -%}
         {% else %}
           {{ page.content }}
         {%- endif %}
@@ -65,7 +42,7 @@
       {### END PAGE BODY ###}
       {#####################}
     </div>
-    {% include '_partials/page/breadcrumb.njk' %}
+    {%- include '_partials/page/breadcrumb.njk' -%}
     {######################}
     {### END PAGE BLOCK ###}
     {######################}

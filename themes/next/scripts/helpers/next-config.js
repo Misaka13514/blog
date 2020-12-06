@@ -2,19 +2,19 @@
 
 'use strict';
 
-const url = require('url');
+const { parse } = require('url');
 
 /**
  * Export theme config to js
  */
 hexo.extend.helper.register('next_config', function() {
-  let { config, theme, next_version } = this;
-  config.algolia = config.algolia || {};
-  let exportConfig = {
-    hostname  : url.parse(config.url).hostname || config.url,
+  const { config, theme, url_for, __ } = this;
+  const exportConfig = {
+    hostname  : parse(config.url).hostname || config.url,
     root      : config.root,
+    images    : url_for(theme.images),
     scheme    : theme.scheme,
-    version   : next_version,
+    version   : this.next_version,
     exturl    : theme.exturl,
     sidebar   : theme.sidebar,
     copycode  : theme.codeblock.copy_button.enable,
@@ -24,21 +24,28 @@ hexo.extend.helper.register('next_config', function() {
     lazyload  : theme.lazyload,
     pangu     : theme.pangu,
     comments  : theme.comments,
-    algolia   : {
-      appID    : config.algolia.applicationID,
+    motion    : theme.motion,
+    prism     : config.prismjs.enable && !config.prismjs.preprocess,
+    i18n      : {
+      placeholder: __('search.placeholder'),
+      empty      : __('search.empty', '${query}'),
+      hits_time  : __('search.hits_time', '${hits}', '${time}'),
+      hits       : __('search.hits', '${hits}')
+    }
+  };
+  if (config.algolia && theme.algolia_search && theme.algolia_search.enable) {
+    exportConfig.algolia = {
+      appID    : config.algolia.applicationID || config.algolia.appId,
       apiKey   : config.algolia.apiKey,
       indexName: config.algolia.indexName,
-      hits     : theme.algolia_search.hits,
-      labels   : theme.algolia_search.labels
-    },
-    localsearch: theme.local_search,
-    motion     : theme.motion,
-    prism      : config.prismjs.enable && !config.prismjs.preprocess
-  };
-  if (config.search) {
-    exportConfig.path = config.search.path;
+      hits     : theme.algolia_search.hits
+    };
   }
-  return `<script id="hexo-configurations">
+  if (config.search && theme.local_search && theme.local_search.enable) {
+    exportConfig.path = url_for(config.search.path);
+    exportConfig.localsearch = theme.local_search;
+  }
+  return `<script class="hexo-configurations">
     var NexT = window.NexT || {};
     var CONFIG = ${JSON.stringify(exportConfig)};
   </script>`;

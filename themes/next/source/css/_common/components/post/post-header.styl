@@ -1,12 +1,13 @@
 .posts-expand .post-header {
   font-size: $font-size-large;
+  margin-bottom: 60px;
+  text-align: center;
 }
 
 .posts-expand .post-title {
   font-size: $font-size-largest;
   font-weight: normal;
   margin: initial;
-  text-align: center;
   word-wrap();
 
   if (hexo-config('post_edit.enable')) {
@@ -35,13 +36,14 @@
   color: var(--link-color);
   display: inline-block;
   position: relative;
-  vertical-align: top;
 
   &::before {
     background: var(--link-color);
     bottom: 0;
     content: '';
     height: 2px;
+    // Fix issue #75
+    left: 0;
     position: absolute;
     transform: scaleX(0);
     transition: transform $transition-ease;
@@ -58,12 +60,18 @@
   }
 }
 
-.posts-expand .post-meta {
+.post-sticky-flag {
+  display: inline-block;
+  // Fix issue #80 #140
+  margin-right: 8px;
+  transform: rotate(30deg);
+}
+
+.posts-expand .post-meta-container {
   color: $grey-dark;
   font-family: $font-family-posts;
   font-size: $font-size-smallest;
-  margin: 3px 0 60px 0;
-  text-align: center;
+  margin-top: 3px;
 
   .post-description {
     font-size: $font-size-small;
@@ -76,21 +84,20 @@
   }
 }
 
-.post-meta .post-meta-item + .post-meta-item::before {
-  content: '|';
-  margin: 0 .5em;
+// Flexbox layout makes it possible to reorder the child
+// elements of .post-meta through the `order` CSS property
+.post-meta {
+  flex-wrap();
 }
 
-.post-meta-divider {
+// .post-meta-item exists in .post-meta and footer
+.post-meta-item:not(:first-child)::before {
+  content: '|';
   margin: 0 .5em;
 }
 
 .post-meta-item-icon {
   margin-right: 3px;
-
-  +tablet-mobile() {
-    display: inline-block;
-  }
 }
 
 .post-meta-item-text {

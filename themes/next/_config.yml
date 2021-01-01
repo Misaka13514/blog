@@ -14,7 +14,7 @@ cache:
   enable: false
 
 # Remove unnecessary files after hexo generate.
-minify: false
+minify: true
 
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
@@ -80,12 +80,14 @@ creative_commons:
 # Value before `||` delimiter is the target link, value after `||` delimiter is the name of Font Awesome icon.
 # External url should start with http:// or https://
 menu:
-  home: / || fa fa-home
+  home: / || fa fa-book
   tags: /tags/ || fa fa-tags
   categories: /categories/ || fa fa-th
   archives: /archives/ || fa fa-archive
-  about: https://atri.tk/about/ || fa fa-user
   links: /links/ || fa fa-link
+  homepage: https://atri.tk || fa fa-home
+  about: https://atri.tk/about/ || fa fa-user
+  disk: https://drive.atri.tk || fa fa-hdd
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat

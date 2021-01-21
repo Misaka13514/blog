@@ -3,8 +3,8 @@ title: 修复macOS 10.15.4下部分软件「意外退出」
 date: 2020-03-26 08:50:58
 tags:
 - macOS
-- Catalina
-categories: 技术向
+- macOS Catalina
+categories: 笔记
 ---
 受影响的大多是破解软件,因为Apple在新系统中删除了TNT的证书
 <!-- more -->

@@ -5,8 +5,10 @@ tags:
 - Blog
 - Typecho
 - Linux
+- PHP
 - Nginx
 - MySQL
+- IaaS
 categories: 笔记
 ---
 搭建配置及自定义一个Typecho站点

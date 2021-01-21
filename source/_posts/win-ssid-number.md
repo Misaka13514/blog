@@ -5,7 +5,7 @@ tags:
 - Windows
 - Windows 10
 - Network
-categories: 笔记
+categories: 技术向
 author: <a href="https://nekosc.com/technology/win_ssid_number.html" target="_blank" rel="external noopenner nofollow">零件</a> 欠陥電気使用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank" data-pjax-state=""><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA 4.0</a>许可协议转载并修改增加了部分内容
 ---
 
@@ -70,6 +70,7 @@ netsh wlan delete profile name="*Network*" interface="*Wi-Fi*"
 以上方法可能并不能成功找到所有的配置，而使用「注册表编辑器」是一个彻底的方法。
 
 右键`Windows徽标`（快捷键：`Win`+`X`），选择`运行`
+
 （快捷键：`Win`+`R`）
 
 输入`regedit`打开注册表编辑器，找到如下路径:

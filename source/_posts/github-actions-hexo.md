@@ -1,5 +1,5 @@
 ---
-title: 使用Github Actions自动部署blog
+title: 使用 Github Actions 自动部署 blog
 date: 2020-07-29 12:41:05
 tags:
 - Blog
@@ -7,6 +7,7 @@ tags:
 - Github
 - Github Pages
 - Github Actions
+- CI/CD
 categories: 摸鱼
 ---
 

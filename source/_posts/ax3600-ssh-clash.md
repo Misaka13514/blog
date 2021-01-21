@@ -1,15 +1,18 @@
 ---
-title: AX3600开启ssh并使用clash实现透明代理
+title: AX3600开启ssh并使用Clash实现透明代理
 date: 2020-09-13 12:29:28
 tags:
 - OpenWRT
 - GFW
 - Shadowsocks
-- SSR
+- ShadowsocksR
 - V2Ray
 - Trojan
 - Proxy
 - Clash
+- Xiaomi
+- Router
+- ROM
 categories: 笔记
 ---
 

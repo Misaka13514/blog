@@ -10,6 +10,7 @@ tags:
 - Nginx
 - Caddy
 - HaProxy
+- IaaS
 categories: 笔记
 ---
 最近把SSR改成了v2ray,顺便把blog从VPS转到了Github Pages

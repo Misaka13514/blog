@@ -4,8 +4,10 @@ date: 2020-02-13 01:02:52
 tags:
 - Blog
 - Hexo
+- Hexo theme
 - Github
 - Github Pages
+- PaaS
 categories: 摸鱼
 ---
 如果您看到这篇文章,表示您的blog已经安装成功.

@@ -3,7 +3,7 @@ title: 玩Arduino开发板
 date: 2020-06-13 10:19:21
 tags:
 - Arduino
-- esp8266
+- Espressif Systems
 - AVR
 - Atmel
 categories: 摸鱼

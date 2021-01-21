@@ -1,11 +1,13 @@
 ---
-title: HP 39gs 改造 HP 48gII
+title: 将 HP 39gs 升级为 HP 48gII
 date: 2020-07-11 11:10:00
 tags:
 - Calculator
 - Graphing Calculator
 - HP
 - CAS
+- Hardware
+- ROM
 categories: 技术向
 mathjax: true
 ---

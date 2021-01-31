@@ -4,6 +4,8 @@ zh-CN:
     links: 友链
     homepage: 主页
     disk: 网盘
+  footer:
+    powered: Proudly powered by %s.
 ja:
   menu:
     links: フレンドサイト

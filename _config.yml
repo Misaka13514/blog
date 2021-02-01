@@ -106,7 +106,7 @@ theme: next
 deploy:
   type: git
   repo: https://github.com/Misaka13514/blog
-  branch: master
+  branch: gh-pages
 
 # Atom Feed
 feed:

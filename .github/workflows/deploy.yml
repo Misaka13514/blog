@@ -3,13 +3,14 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - hexo
+      - main
 
 env:
-  GIT_USER: Misaka13514
-  GIT_EMAIL: Misaka13514@gmail.com
-  DEPLOY_REPO: Misaka13514/blog
-  DEPLOY_BRANCH: master
+  GIT_USER:      ${{secrets.GIT_USER}}
+  GIT_EMAIL:     ${{secrets.GIT_EMAIL}}
+  DEPLOY_REPO:   ${{secrets.DEPLOY_REPO}}
+  DEPLOY_PRI:    ${{secrets.DEPLOY_PRI}}
+  DEPLOY_BRANCH: gh-pages
 
 jobs:
   build:
@@ -34,32 +35,23 @@ jobs:
           path: .deploy_git
 
       - name: Use Node.js ${{ matrix.node_version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node_version }}
 
-      - name: Use yarn
-        run: |
-          npm install --global yarn
-          yarn -v
-
       - name: Configuration environment
-        env:
-          HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_PRI}}
         run: |
-          wget https://github.com/jgm/pandoc/releases/download/2.11.3.1/pandoc-2.11.3.1-1-amd64.deb -O pandoc.deb
-          sudo dpkg -i pandoc.deb
-          rm pandoc.deb
+          ./env_config.sh
           mkdir -p ~/.ssh/
-          echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
+          echo "${{ env.DEPLOY_PRI }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          git config --global user.name $GIT_USER
-          git config --global user.email $GIT_EMAIL
+          git config --global user.name  ${{ env.GIT_USER }}
+          git config --global user.email ${{ env.GIT_EMAIL }}
 
       - name: Install dependencies
         run: |
-          yarn install
+          yarn
 
       - name: Build hexo pages
         run: |
@@ -74,6 +66,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           SSH: true
-          BRANCH: master
+          BRANCH: gh-pages
           FOLDER: .deploy_git
           CLEAN: true

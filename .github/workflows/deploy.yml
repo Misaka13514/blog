@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 env:
   GIT_USER:      ${{secrets.GIT_USER}}
@@ -39,7 +40,7 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
 
-      - name: Configuration environment
+      - name: Configure environment
         run: |
           ./env_config.sh
           mkdir -p ~/.ssh/
@@ -53,11 +54,11 @@ jobs:
         run: |
           yarn
 
-      - name: Build hexo pages
+      - name: Build pages
         run: |
           yarn run build
 
-      - name: replace new page
+      - name: Replace new pages
         run: |
           rm -rf .deploy_git/*
           cp -r public/* .deploy_git/

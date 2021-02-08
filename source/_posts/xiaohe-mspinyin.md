@@ -5,8 +5,8 @@ tags:
 - Windows
 - Windows 10
 - Microsoft pinyin
-- Shuangpin
-- Xiaohe Shaungpin
+- Double Pinyin
+- flyPY
 - Keyboard
 - Input Method
 categories: 技术向

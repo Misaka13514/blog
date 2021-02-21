@@ -32,5 +32,8 @@
   },
   "devDependencies": {
     "hexo-generator-sitemap": "^2.1.0"
+  },
+  "resolutions": {
+    "stylus": "^0.54.8"
   }
 }

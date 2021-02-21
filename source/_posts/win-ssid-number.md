@@ -2,14 +2,15 @@
 title: 删除 Win10 中不再使用的或重复的网络
 date: 2020-12-24 22:17:15
 tags:
-- Windows
-- Windows 10
-- Network
+  - Windows
+  - Windows 10
+  - Network
 categories: 技术向
 author: <a href="https://nekosc.com/technology/win_ssid_number.html" target="_blank" rel="external noopenner nofollow">零件</a> 欠陥電気使用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank" data-pjax-state=""><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA 4.0</a>许可协议转载并修改增加了部分内容
 ---
 
-Win 8 及 Win 10 重置路由器（或更换）后，再次连接路由器（还是原SSID的情况下）鼠标悬停右下角网络图标，显示的网络名称后边会跟一个数字，比如 `SSID 2` 或 `网络 2`，那么如何删除这个数字呢？
+Win 8 及 Win 10 重置路由器（或更换）后，再次连接路由器（还是原 SSID 的情况下）鼠标悬停右下角网络图标，显示的网络名称后边会跟一个数字，比如 `SSID 2` 或 `网络 2`，那么如何删除这个数字呢？
+
 <!-- more -->
 
 这个问题有多种方法可以解决
@@ -88,4 +89,4 @@ HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Prof
 ## 参考资料
 
 - [Remove the “2” after the SSID on Windows 8.0
-](https://superuser.com/questions/850438/remove-the-2-after-the-ssid-on-windows-8-0)
+  ](https://superuser.com/questions/850438/remove-the-2-after-the-ssid-on-windows-8-0)

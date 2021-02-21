@@ -2,33 +2,35 @@
 title: 欢迎使用hexo
 date: 2020-02-13 01:02:52
 tags:
-- Blog
-- Hexo
-- Hexo theme
-- Github
-- Github Pages
-- PaaS
+  - Blog
+  - Hexo
+  - Hexo theme
+  - Github
+  - Github Pages
+  - PaaS
 categories: 摸鱼
 ---
-如果您看到这篇文章,表示您的blog已经安装成功.
+
+如果您看到这篇文章,表示您的 blog 已经安装成功.
 
 <!-- more -->
+
 以上其实是**手动**写的
 
-自从2019-12-28白嫖这台GCP的VPS起,建个blog建了几个月,qwq
+自从 2019-12-28 白嫖这台 GCP 的 VPS 起,建个 blog 建了几个月,qwq
 
 顺手记录下我觉得有帮助的文章:
 
-* [Hexo官方文档](https://hexo.io/zh-cn/docs/)
+- [Hexo 官方文档](https://hexo.io/zh-cn/docs/)
 
-* [建立一个Hexo博客](https://hex.moe/p/9b3fb8b9/) by [LovelyWei](https://hex.moe/)
+- [建立一个 Hexo 博客](https://hex.moe/p/9b3fb8b9/) by [LovelyWei](https://hex.moe/)
 
-> PS:这个关于页面[在Github的repository](https://github.com/LovelyWei/aboutPage)也在我自定义[atomicneko](https://github.com/amphineko/atomicneko)时给我很大的帮助
+> PS:这个关于页面[在 Github 的 repository](https://github.com/LovelyWei/aboutPage)也在我自定义[atomicneko](https://github.com/amphineko/atomicneko)时给我很大的帮助
 
-* [Suka Theme](https://theme-suka.skk.moe)
+- [Suka Theme](https://theme-suka.skk.moe)
 
 建完这个站我自己也不清楚能一直运营多久。将来也有可能更换域名。
-文章又不会写，又没dalao带窝，只能做复读机/复制机维持生活（
+文章又不会写，又没 dalao 带窝，只能做复读机/复制机维持生活（
 
 ## 2020-4-21 更新
 

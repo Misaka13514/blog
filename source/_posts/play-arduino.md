@@ -2,22 +2,22 @@
 title: 玩Arduino开发板
 date: 2020-06-13 10:19:21
 tags:
-- Arduino
-- Espressif Systems
-- AVR
-- Atmel
+  - Arduino
+  - Espressif Systems
+  - AVR
+  - Atmel
 categories: 摸鱼
 ---
 
-在学校科技节比赛中稍稍玩了会Arduino
+在学校科技节比赛中稍稍玩了会 Arduino
 
 <!-- more -->
 
-以前在淘宝买过一个摇摇棒套件，用的单片机是Atmel的AT89S52，大致的原理是当晃动开关连通后延时控制发光二极管的亮暗，达到显示文字/图案的效果，按按钮可以切换存储的多套文字/图案。电路是卖家设计的，程序给了个模版。
+以前在淘宝买过一个摇摇棒套件，用的单片机是 Atmel 的 AT89S52，大致的原理是当晃动开关连通后延时控制发光二极管的亮暗，达到显示文字/图案的效果，按按钮可以切换存储的多套文字/图案。电路是卖家设计的，程序给了个模版。
 
-修改程序先用字模软件生成阴码/阳码，放到程序中后用Keil软件通过ISP串口烧写。
+修改程序先用字模软件生成阴码/阳码，放到程序中后用 Keil 软件通过 ISP 串口烧写。
 
-相较于那个套件，这次比赛中使用的Arduino开发版就显得简单些了。
+相较于那个套件，这次比赛中使用的 Arduino 开发版就显得简单些了。
 
 ## 关于比赛
 
@@ -29,19 +29,19 @@ categories: 摸鱼
 
 硬件：
 
-* Arduino MEGA 2560 开发板
-* Arduino MEGA 2560 扩展板
-* TM1637 数码管
-* LED灯
-* 杜邦线
-* esp8266 (自己加的)
+- Arduino MEGA 2560 开发板
+- Arduino MEGA 2560 扩展板
+- TM1637 数码管
+- LED 灯
+- 杜邦线
+- esp8266 (自己加的)
 
 软件：
 
-* [Mixly](http://mixly.org/) For Windows
-* 代码模版
-* 连接教程、效果示例视频
-* [Arduino](https://www.arduino.cc/) (要什么Mixly，Arduino不香吗)
+- [Mixly](http://mixly.org/) For Windows
+- 代码模版
+- 连接教程、效果示例视频
+- [Arduino](https://www.arduino.cc/) (要什么 Mixly，Arduino 不香吗)
 
 ## 部分代码实现及介绍
 
@@ -89,26 +89,26 @@ server.begin();                //启动Web服务器
 server.handleClient();
 ```
 
-它在这次的作品中通过串口与Arduino MEGA 2560建立数据连接，通过Wi-Fi与控制端建立数据连接，起到无线控制的作用。
+它在这次的作品中通过串口与 Arduino MEGA 2560 建立数据连接，通过 Wi-Fi 与控制端建立数据连接，起到无线控制的作用。
 
 ![Arduino MEGA 2560 连接 esp8266](ESP.webp)
 
-P.S.:为什么我会买这块Esp8266呢？
+P.S.:为什么我会买这块 Esp8266 呢？
 
-Jimmy Tian在他的视频中介绍过它：
+Jimmy Tian 在他的视频中介绍过它：
 
 [【百元科技神器-01】如何「黑」掉你学校的指纹考勤机？](https://www.bilibili.com/video/BV1sx411m7xq) by [Jimmy Tian](https://www.jimmytian.com/)
 
-我觉得比较有意思、价格也很亲民就买了(NodeMcu版本的便于开发，如果仅买一小块Esp8266也能用)
+我觉得比较有意思、价格也很亲民就买了(NodeMcu 版本的便于开发，如果仅买一小块 Esp8266 也能用)
 
-~~年轻人的第一块Wi-Fi模块~~
+~~年轻人的第一块 Wi-Fi 模块~~
 
-体验了一下这个固件，对于2.4Ghz的Wi-Fi来说deauth攻击的效果明显、且便于携带隐藏，但esp8266不支持工作在5Ghz，退一步讲就算它支持5Ghz，原先的攻击方式起不了作用，目前似乎也没有对5Ghz较为有效的deauth攻击方式
+体验了一下这个固件，对于 2.4Ghz 的 Wi-Fi 来说 deauth 攻击的效果明显、且便于携带隐藏，但 esp8266 不支持工作在 5Ghz，退一步讲就算它支持 5Ghz，原先的攻击方式起不了作用，目前似乎也没有对 5Ghz 较为有效的 deauth 攻击方式
 
 ## 写在后面
 
 ![Arduino Uno](UNO.webp)
 
-在另一个比赛中摸过Arduino Uno、PS 2手柄及接收模块，也是挺好玩的
+在另一个比赛中摸过 Arduino Uno、PS 2 手柄及接收模块，也是挺好玩的
 
-以前玩的比赛我都用的是[能力风暴](http://www.abilix.com/)的机器人，这次玩的Arduino能实现的功能要比它多，但相对的编写调试甚至于上传程序，Arduino都要比它麻烦一些
+以前玩的比赛我都用的是[能力风暴](http://www.abilix.com/)的机器人，这次玩的 Arduino 能实现的功能要比它多，但相对的编写调试甚至于上传程序，Arduino 都要比它麻烦一些

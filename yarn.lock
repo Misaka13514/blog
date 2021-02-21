@@ -65,6 +65,11 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
+argparse@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
+  integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
+
 asap@^2.0.3:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
@@ -619,6 +624,11 @@ hexo-server@^2.0.0:
     open "^7.0.0"
     serve-static "^1.14.1"
 
+hexo-theme-next@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.2.1.tgz#5a408444e8635aa9e76c631c36f56bd8325aa4f5"
+  integrity sha512-0DQPdMFIGTM/kJnpBn1snmYR7qfwaW2VfG/UyKxxLRXDbQeyWMSCr19DqNAKoTdIA33wNqWBzcWk4cGvaQtVZg==
+
 hexo-util@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/hexo-util/-/hexo-util-2.1.0.tgz#2c691a034a05d4ed254696c2e99d7cb686fdd350"
@@ -657,9 +667,9 @@ hexo-word-counter@0.0.2:
     hexo-util "2.1.0"
 
 hexo@^5.1.1:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/hexo/-/hexo-5.3.0.tgz#477362f13b676d7d79ecb353418ff830eb27761c"
-  integrity sha512-Q8JPpXYDemyIzRIjRx3555HALvnOqIeCj4NnW6T8aiZpi9hgZxTnpFDY2fBPdKIPNc5GvP4mL/705znxAM8kcA==
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/hexo/-/hexo-5.4.0.tgz#77d57fa1c29f3ab05964fe4ebd9c44e23df51b37"
+  integrity sha512-4vMDle5GjpMeOVrx0NKoTZCqrmpJVg3wNiNNUVjcoFfcpYcMzQUCZHBtQqLl7BzjJ8x2gs002VQ5yv0ZKtj8Jg==
   dependencies:
     abbrev "^1.1.1"
     archy "^1.0.0"
@@ -671,7 +681,7 @@ hexo@^5.1.1:
     hexo-i18n "^1.0.0"
     hexo-log "^2.0.0"
     hexo-util "^2.4.0"
-    js-yaml "^3.12.0"
+    js-yaml "^4.0.0"
     micromatch "^4.0.2"
     moment "^2.22.2"
     moment-timezone "^0.5.21"
@@ -776,13 +786,20 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
-js-yaml@^3.12.0, js-yaml@^3.13.1:
+js-yaml@^3.13.1:
   version "3.14.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.14.1.tgz#dae812fdb3825fa306609a8717383c50c36a0537"
   integrity sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
+
+js-yaml@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.0.0.tgz#f426bc0ff4b4051926cd588c71113183409a121f"
+  integrity sha512-pqon0s+4ScYUvX30wxQi3PogGFAlUyH0awepWvwkj4jD4v+ova3RiYw8bmA6x2rDrEaj8i/oWKoRxpVNW+Re8Q==
+  dependencies:
+    argparse "^2.0.1"
 
 jsonparse@^1.2.0:
   version "1.3.1"

@@ -41,3 +41,13 @@ categories: 摸鱼
 ## 2020-5-9 更新
 
 因 [Suka Theme](https://theme-suka.skk.moe) 长期未更新，且 [Sukka's Blog](https://blog.skk.moe) 不再使用该主题，所以把主题更改为 [NexT](https://theme-next.org)
+
+## 2021-3-4 更新
+
+据上次更新已有将近一年的时间。这段时间我发布了几篇日志，也部署了许多前段页面。域名做了更换，交换了许多友链。我给 blog 加上了 Cloudflare CDN，同时还在 Cloudflare Pages 部署了网站。
+
+### 关于站点主题色
+
+站点主题色是`#663399`，由 40％的红色，20％的绿色和 60％的蓝色组成。这个颜色初次被我使用时直接取自于バニラ的发带。于 2021-3-4 才发现它也被称为丽贝卡紫(Rebecca Purple)，[在 CSS 4 中被加入](https://lists.w3.org/Archives/Public/www-style/2014Jun/0312.html)，用来悼念埃里克·迈耶的女儿。我很有幸能使用这个颜色。如果你使用Android Chrome或macOS Safari，我想你可以在标题面板或网站图标中看到这个颜色。
+
+![Rebecca Purple](rebeccapurple.png)

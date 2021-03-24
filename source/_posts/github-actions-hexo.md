@@ -8,14 +8,14 @@ tags:
   - Github Pages
   - Github Actions
   - CI/CD
-categories: 摸鱼
+categories: 笔记
 ---
 
 最近把 hexo blog 修改成用 Github Actions 自动部署的了，发篇文章测试一下~~水一水~~
 
 <!-- more -->
 
-[照抄+乱改的配置文件](https://github.com/Misaka13514/blog/blob/main/.github/workflows/deploy.yml)
+[照抄+乱改的配置文件](https://github.com/Misaka13514/blog/blob/main/.github/workflows/deploy.yml) ~~还算有点样子~~
 
 我 blog 所有源文件基本都在 [blog](https://github.com/Misaka13514/blog) / [about](https://github.com/Misaka13514/about) 公开。~~如果想发现我的 blog 有错误就可以直接 pr 帮我解决啦~~
 

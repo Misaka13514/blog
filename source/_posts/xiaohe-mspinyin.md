@@ -56,8 +56,8 @@ HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputMethod\Settings\CHS
 
 接下来去「设置」中将小鹤双拼设为默认，也可以直接继续修改注册表，最终注册表可能是这样：
 
-| 名称                           | 类型      | 数据                                           |
-| ------------------------------ | --------- | ---------------------------------------------- |
+| 名称 | 类型 | 数据 |
+| -- | -- | -- |
 | UserDefinedDoublePinyinScheme0 | REG_SZ    | 小鹤双拼*2*^\*iuvdjhcwfg^xmlnpbksqszxkrltvyovt |
 | Enable Double Pinyin           | REG_DWORD | 00000001                                       |
 | DoublePinyinScheme             | REG_DWORD | 0000000a                                       |

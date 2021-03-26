@@ -92,6 +92,12 @@ Cloudflare Pages 比较易于配置。由于以前有过[配置 CI/CD 的相关�
 
   一般不需要设置，可以根据你的需求设置。
 
+## 设置自定义域名
+
+在项目设置中点击自定义域，点击设置。
+
+输入你想使用的域名，然后修改对应 DNS 记录：CNAME 到 Cloudflare 分配的默认域名。（如果域名解析托管在 Cloudflare 则会自动设置。
+
 ## 性能效果测试
 
 我使用[PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/)来测试网页性能表现。
@@ -103,5 +109,13 @@ Cloudflare Pages 比较易于配置。由于以前有过[配置 CI/CD 的相关�
 | GitHub Pages                  | 57       | 90       |
 | GitHub Pages + Cloudflare CDN | 67       | 94       |
 | Cloudflare Pages              | 58       | 93       |
+
+以下数据来自[UptimeRobot](https://uptimerobot.com)
+
+| 连接方式 | 24 小时平均延迟 |
+| -- | -- |
+| GitHub Pages                  | 246.66ms        |
+| GitHub Pages + Cloudflare CDN | 290.64ms        |
+| Cloudflare Pages              | 402.36ms        |
 
 未来可能会将 blog 迁移至 Cloudflare Pages，要是发现 blog 有什么异常欢迎联系我反馈。(◍•ᴗ•◍)❤

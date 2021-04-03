@@ -193,6 +193,7 @@ ROM 自带有时钟，可以用于查看时间日期。
 ## 更多请见
 
 - [HP 39gs 升级 48gII](https://www.cncalc.org/thread-11475-1-1.html)
+- [HP39gs计算器改装锂电池供电](https://lexsion.com/index.php/archives/204/)
 - [计算器百科](https://calcwiki.org)
 - [cncalc](https://www.cncalc.org)
 - [hpcalc](https://www.hpcalc.org/)

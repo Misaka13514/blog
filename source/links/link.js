@@ -1,7 +1,7 @@
 link = {
   init: function() {
       var that = this;
-      $.getJSON("/links/Friends/linklist.json",
+      $.getJSON("https://cdn.jsdelivr.net/gh/Misaka13514/Friends@main/linklist.json",
       function(data) {
           that.render(data);
       });

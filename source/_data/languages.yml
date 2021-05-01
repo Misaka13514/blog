@@ -3,11 +3,13 @@ zh-CN:
   menu:
     links: 友链
     homepage: 主页
-    disk: 网盘
+    drive: 网盘
+    dn42: DN42
   footer:
     powered: Proudly powered by %s.
 ja:
   menu:
     links: フレンドサイト
     homepage: ホームページ
-    disk: ネットディスク
+    drive: ネットディスク
+    dn42: DN42

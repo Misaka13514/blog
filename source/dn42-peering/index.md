@@ -29,8 +29,8 @@ date: 2021-04-02 04:42:42
 
 #### Server Info
 
-| Item                      | Value                                              |
-| ------------------------- | -------------------------------------------------- |
+| Item | Value |
+| -- | -- |
 | ASN                       | 4242421032                                         |
 | DN42 IPv4                 | 172.23.10.1                                        |
 | Link-Local                | fe80::1032                                         |
@@ -45,8 +45,8 @@ Valid before Jan. 15th, 2022.
 
 #### Contact Details
 
-| Item                | Value                                                                                                                                                  |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Item | Value |
+| -- | -- |
 | PGP Key Fingerprint | [AB5C D3C7 7BC2 5F51 2FED  B861 26D4 961C AB31 2A83](https://keybase.io/misaka13514/pgp_keys.asc?fingerprint=ab5cd3c77bc25f512fedb86126d4961cab312a83) |
 | E-mail              | [Misaka13514@gmail.com](mailto:Misaka13514@gmail.com)                                                                                                  |
 | Telegram            | [Misaka_0x34ca](https://t.me/Misaka_0x34ca)                                                                                                            |

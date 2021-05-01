@@ -15,12 +15,12 @@ Cloudflare Pages 可以供前端开发人员协作和部署网站。
 
 <!-- more -->
 
-目前似乎已开放公测。
+目前已成为稳定功能。
 
 - [官方介绍](https://pages.cloudflare.com)
 - [官方文档](https://developers.cloudflare.com/pages/)
 
-我在一个月前就通过了申请，开始使用这一平台。
+我在 2021/2 就通过了申请，开始使用这一平台。
 
 免费计划：
 
@@ -47,7 +47,7 @@ Cloudflare Pages 可以供前端开发人员协作和部署网站。
 - 必须使用 **GitHub 的**仓库
 - 自动从所有分支构建，无法忽略部分分支
 - 设置自定义域名后，不能设置访问默认域名后自动跳转自定义域名
-- 不添加`Access-Control-Allow-Origin` header，可能造成跨域访问异常
+- ~~不添加`Access-Control-Allow-Origin` header，可能造成跨域访问异常~~
 
 ## 开始使用
 
@@ -118,4 +118,4 @@ Cloudflare Pages 比较易于配置。由于以前有过[配置 CI/CD 的相关�
 | GitHub Pages + Cloudflare CDN | 290.64ms        |
 | Cloudflare Pages              | 402.36ms        |
 
-未来可能会将 blog 迁移至 Cloudflare Pages，要是发现 blog 有什么异常欢迎联系我反馈。(◍•ᴗ•◍)❤
+已将 blog 迁移至 Cloudflare Pages，要是发现 blog 有什么异常欢迎联系我反馈。(◍•ᴗ•◍)❤

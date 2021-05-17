@@ -9,7 +9,8 @@ permalink: /404
 {% note info %}
 
 <center>
-## **The site does not contain the requested file.**
+
+## The site does not contain the requested file.
 
 非常抱歉，没有找到您所访问的地址，请检查您输入的地址。
 
@@ -19,6 +20,8 @@ permalink: /404
 {% endnote %}
 <center>
 <small>
+
 [GitHub Status](https://www.githubstatus.com)　・　[Cloudflare Status](https://www.cloudflarestatus.com)
+
 </small>
 </center>

@@ -518,12 +518,12 @@ math:
   every_page: false
 
   mathjax:
-    enable: true
+    enable: false
     # Available values: none | ams | all
     tags: none
 
   katex:
-    enable: false
+    enable: true
     # See: https://github.com/KaTeX/KaTeX/tree/master/contrib/copy-tex
     copy_tex: false
 

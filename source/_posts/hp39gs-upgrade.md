@@ -9,7 +9,6 @@ tags:
   - Hardware
   - ROM
 categories: 技术向
-mathjax: true
 ---
 
 HP 39gs 是 HP 于 2006 年发布的 HP-39 系列中的一个图形计算器

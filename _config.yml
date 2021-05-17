@@ -122,3 +122,15 @@ symbols_count_time:
   total_time: true
   awl: 4
   wpm: 275
+
+# config of hexo-renderer-markdown-it
+markdown:
+  render:
+    html: true
+    xhtmlOut: false
+    breaks: true
+    linkify: true
+    typographer: true
+    quotes: '“”‘’'
+  plugins:
+    - '@iktakahiro/markdown-it-katex'

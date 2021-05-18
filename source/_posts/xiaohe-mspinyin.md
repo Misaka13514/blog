@@ -16,13 +16,13 @@ categories: 技术向
 
 <!-- more -->
 
-![macOS中选择使用小鹤双拼](macos.png)
+![macOS中选择使用小鹤双拼](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/xiaohe-mspinyin/macos.png)
 
 macOS 内置的输入法虽然不能自定义双拼键位，但含有我正在使用的小鹤双拼方案。
 
 ## 在「设置」应用中逐个添加
 
-![双拼方案](Settings.png)
+![双拼方案](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/xiaohe-mspinyin/Settings.png)
 
 Win10 安装微软拼音输入法后默认只含有这些双拼方案：
 
@@ -32,7 +32,7 @@ Win10 安装微软拼音输入法后默认只含有这些双拼方案：
 
 打开「设置」，进入`时间和语言`，在`区域和语言`中点击`中文`-`选项`，添加`微软拼音`输入法（如果未出现），随后点击`选项`-`常规`，将`拼音设置`修改为`双拼`。在下方创建自定义双拼方案并逐个绑定键位。如果不清楚键位可以看图对应设置。
 
-![小鹤双拼方案](layout.png)
+![小鹤双拼方案](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/xiaohe-mspinyin/layout.png)
 
 ## 使用「注册表编辑器」修改对应注册表
 
@@ -62,7 +62,7 @@ HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputMethod\Settings\CHS
 | Enable Double Pinyin           | REG_DWORD | 00000001                                       |
 | DoublePinyinScheme             | REG_DWORD | 0000000a                                       |
 
-![注册表中设置完成的数据](Registry.png)
+![注册表中设置完成的数据](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/xiaohe-mspinyin/Registry.png)
 
 ## 直接导入注册表
 

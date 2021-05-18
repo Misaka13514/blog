@@ -104,7 +104,7 @@ nanddump -f /tmp/bdata_mtd9.img /dev/mtd9
 scp root@192.168.31.1:/tmp/bdata_mtd9.img ~/
 ```
 
-下载[`fuckax3600`](fuckax3600)(作者：[paldier](https://www.right.com.cn/forum/space-uid-194813.html)) 并传到路由器的`/tmp`目录
+下载[`fuckax3600`](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/ax3600-ssh-clash/fuckax3600)(作者：[paldier](https://www.right.com.cn/forum/space-uid-194813.html)) 并传到路由器的`/tmp`目录
 
 ```bash
 scp ~/Downloads/fuckax3600 root@192.168.31.1:/tmp/

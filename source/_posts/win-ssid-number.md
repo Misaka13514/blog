@@ -29,11 +29,11 @@ Win 8 及 Win 10 重置路由器（或更换）后，再次连接路由器（还
 
 在开始菜单中打开设置，进入`网络和Internet`，选择`Wi-Fi`
 
-![Wi-Fi](Settings-Network.png)
+![Wi-Fi](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/win-ssid-number/Settings-Network.png)
 
 点击管理已保存的网络，找到需要删除的网络配置删除即可
 
-![管理已保存的网络](Settings-Network-Forget.png)
+![管理已保存的网络](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/win-ssid-number/Settings-Network-Forget.png)
 
 ## 使用命令行
 
@@ -48,7 +48,7 @@ netsh wlan show profiles #显示网络配置
 netsh wlan show all      #我 全 都 要
 ```
 
-![显示网络配置](netsh-show.png)
+![显示网络配置](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/win-ssid-number/netsh-show.png)
 
 > `Profiles on interface *Wi-Fi*`
 
@@ -62,7 +62,7 @@ netsh wlan show all      #我 全 都 要
 netsh wlan delete profile name="*Network*" interface="*Wi-Fi*"
 ```
 
-![删除网络配置](netsh-delete.png)
+![删除网络配置](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/win-ssid-number/netsh-delete.png)
 
 显示已删除，再次查看网络配置，发现删除成功
 
@@ -82,7 +82,7 @@ HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Prof
 
 删除掉相关的注册子键，如图所示:
 
-![注册子键](regedit.png)
+![注册子键](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/win-ssid-number/regedit.png)
 
 然后在控制面板（`Win`+`R`, control）中禁用再启用网卡即可。
 

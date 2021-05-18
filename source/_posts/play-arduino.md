@@ -91,7 +91,7 @@ server.handleClient();
 
 它在这次的作品中通过串口与 Arduino MEGA 2560 建立数据连接，通过 Wi-Fi 与控制端建立数据连接，起到无线控制的作用。
 
-![Arduino MEGA 2560 连接 esp8266](ESP.webp)
+![Arduino MEGA 2560 连接 esp8266](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/play-arduino/ESP.webp)
 
 P.S.:为什么我会买这块 Esp8266 呢？
 
@@ -107,7 +107,7 @@ Jimmy Tian 在他的视频中介绍过它：
 
 ## 写在后面
 
-![Arduino Uno](UNO.webp)
+![Arduino Uno](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/play-arduino/UNO.webp)
 
 在另一个比赛中摸过 Arduino Uno、PS 2 手柄及接收模块，也是挺好玩的
 

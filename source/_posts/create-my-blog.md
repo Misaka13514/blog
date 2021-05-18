@@ -50,4 +50,4 @@ categories: 摸鱼
 
 站点主题色是`#663399`，由 40％的红色，20％的绿色和 60％的蓝色组成。这个颜色初次被我使用时直接取自于バニラ的发带。于 2021-3-4 才发现它也被称为丽贝卡紫(Rebecca Purple)，[在 CSS 4 中被加入](https://lists.w3.org/Archives/Public/www-style/2014Jun/0312.html)，用来悼念埃里克·迈耶的女儿。我很有幸能使用这个颜色。如果你使用Android Chrome或macOS Safari，我想你可以在标题面板或网站图标中看到这个颜色。
 
-![Rebecca Purple](rebeccapurple.png)
+![Rebecca Purple](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/create-my-blog/rebeccapurple.png)

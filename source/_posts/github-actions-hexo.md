@@ -15,6 +15,10 @@ categories: 笔记
 
 <!-- more -->
 
+{% note info %}
+目前博客[迁移至CloudFlare Pages](/2021/deploy-frontend-to-cfpages/)，此Action不再生效。
+{% endnote %}
+
 [照抄+乱改的配置文件](https://github.com/Misaka13514/blog/blob/main/.github/workflows/deploy.yml) ~~还算有点样子~~
 
 我 blog 所有源文件基本都在 [blog](https://github.com/Misaka13514/blog) / [about](https://github.com/Misaka13514/about) 公开。~~如果想发现我的 blog 有错误就可以直接 pr 帮我解决啦~~

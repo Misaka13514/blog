@@ -1,5 +1,5 @@
 ---
-title: 搭建V2Ray和Trojan
+title: 搭建 V2Ray 和 Trojan
 date: 2020-03-04 23:47:32
 tags:
   - Linux
@@ -17,6 +17,9 @@ categories: 笔记
 最近把 SSR 改成了 v2ray,顺便把 blog 从 VPS 转到了 Github Pages
 
 <!-- more -->
+{% note warning %}
+本文已过期，请移步至官方文档。
+{% endnote %}
 
 自从 2019 年成功办完[中国银行长城跨境通卡](https://poplite.xyz/post/2018/03/05/boc-debit-card-guide-for-online-payment.html),并成功白嫖了 1 年的 GCP 后,我先搭建的是 SSR,不久后又安装了 nginx 来显示我的 blog.
 

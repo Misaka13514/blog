@@ -48,6 +48,7 @@ Cloudflare Pages 可以供前端开发人员协作和部署网站。
 - 自动从所有分支构建，无法忽略部分分支
 - 设置自定义域名后，不能设置访问默认域名后自动跳转自定义域名
 - 不添加`Access-Control-Allow-Origin` header，可能造成跨域访问异常
+- [Known issues](https://developers.cloudflare.com/pages/platform/known-issues)
 
 ## 开始使用
 

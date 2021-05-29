@@ -1,5 +1,5 @@
 ---
-title: 搭建Typecho
+title: 搭建 Typecho
 date: 2020-04-26 08:31:08
 tags:
   - Blog

@@ -1,5 +1,5 @@
 ---
-title: 破解macOS应用程序(Inklet)
+title: 破解 macOS 应用程序 (Inklet)
 date: 2020-04-30 10:55:38
 tags:
   - macOS
@@ -27,7 +27,7 @@ Demo 版有连续使用时间等限制
 - brew
 
 - vim
-  不会用的话用 [Hex Friend](http://ridiculousfish.com/hexfiend/)
+  不会用的话用 [Hex Fiend](http://ridiculousfish.com/hexfiend/)
 
 - otx
 
@@ -100,7 +100,7 @@ class-dump -f license  /Applications/Inklet.app/Contents/MacOS/Inklet
 
 ### 修改程序
 
-持续返回 True 的程序的机器码来自[这里](https://freemandealer.github.io/2015/10/10/hacking-osx-app/#%E5%87%86%E5%A4%87%E6%AF%92%E8%8D%AF)
+持续返回 True 的程序的机器码来自[这里](https://freemandealer.github.io/2015/10/10/hacking-osx-app/#准备毒药)
 省事很多 ww
 
 #### 使用 gdb 动态测试
@@ -144,7 +144,7 @@ vim /Applications/Inklet.app/Contents/MacOS/Inklet
 
 测试是否成功。不成功重复上述步骤，或者 google 高阶破解技巧，或者放弃。
 
-转自[技术总结 by Zhengyu Zhang](https://freemandealer.github.io/2015/10/10/hacking-osx-app/#%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93)
+转自[技术总结 by Zhengyu Zhang](https://freemandealer.github.io/2015/10/10/hacking-osx-app/#技术总结)
 
 ## 参考文章
 

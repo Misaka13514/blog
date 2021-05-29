@@ -1,5 +1,5 @@
 ---
-title: AX3600开启ssh并使用Clash实现透明代理
+title: AX3600 开启 ssh 并使用 Clash 实现透明代理
 date: 2020-09-13 12:29:28
 tags:
   - OpenWRT

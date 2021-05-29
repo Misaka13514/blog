@@ -173,9 +173,9 @@ HP 48gII 除了和 HP 39gs 在按键上不同外，软件上也有许多的变�
 
 ### 计算
 
-得益于 HP 48gII 带有[CAS](https://calcwiki.org/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BB%A3%E6%95%B0%E7%B3%BB%E7%BB%9F)功能(Erable-based)，在速度、精度上得到了较 HP 39gs 较大的提升。
+得益于 HP 48gII 带有[CAS](https://calcwiki.org/计算机代数系统)功能(Erable-based)，在速度、精度上得到了较 HP 39gs 较大的提升。
 
-HP 48gII 除了使用线性 Algebraic 输入，也能使用 EQW 自然书写。另外还支持大部分 HP 计算器都支持的[RPN](https://calcwiki.org/%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F)输入方式。
+HP 48gII 除了使用线性 Algebraic 输入，也能使用 EQW 自然书写。另外还支持大部分 HP 计算器都支持的[RPN](https://calcwiki.org/逆波兰表达式)输入方式。
 
 ### 其他软件
 

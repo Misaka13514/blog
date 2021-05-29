@@ -50,7 +50,8 @@ HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputMethod\Settings\CHS
 - 你没有设置其他自定义双拼方案
   > 如果有，请对应序号修改键名称
 - 你已安装并使用简体中文输入法
-  {% endnote %}
+
+{% endnote %}
 
 新建字符串值`UserDefinedDoublePinyinScheme0`，并将值设置为`小鹤双拼*2*^*iuvdjhcwfg^xmlnpbksqszxkrltvyovt`
 
@@ -72,9 +73,10 @@ HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputMethod\Settings\CHS
 - 你没有设置其他自定义双拼方案
   > 如果有，可能会被覆盖
 - 你已安装并使用简体中文输入法
-  {% endnote %}
 
-懒人专用，[点此下载](xiaohe.reg)并导入
+{% endnote %}
+
+懒人专用，[点此下载](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/xiaohe-mspinyin/xiaohe.reg)并导入
 
 文件内容：
 

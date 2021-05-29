@@ -30,7 +30,7 @@ categories: 笔记
 
 登录后浏览器地址栏应该是这样的：
 
-```url
+```text
 http://192.168.31.1/cgi-bin/luci/;stok=<STOK>/web/home#router
 ```
 
@@ -38,7 +38,7 @@ http://192.168.31.1/cgi-bin/luci/;stok=<STOK>/web/home#router
 
 把下面 URL 中的`<STOK>`替换成刚才的，并访问
 
-```url
+```text
 http://192.168.31.1/cgi-bin/luci/;stok=<STOK>/api/misystem/set_config_iotdev?bssid=Xiaomi&user_id=longdike&ssid=-h%3B%20nvram%20set%20ssh_en%3D1%3B%20nvram%20commit%3B%20sed%20-i%20's%2Fchannel%3D.*%2Fchannel%3D%5C%22debug%5C%22%2Fg'%20%2Fetc%2Finit.d%2Fdropbear%3B%20%2Fetc%2Finit.d%2Fdropbear%20start%3B
 ```
 
@@ -46,14 +46,14 @@ http://192.168.31.1/cgi-bin/luci/;stok=<STOK>/api/misystem/set_config_iotdev?bss
 
 再来一个 URL，注意替换`STOK`
 
-```url
+```text
 http://192.168.31.1/cgi-bin/luci/;stok=<STOK>/api/misystem/set_config_iotdev?bssid=Xiaomi&user_id=longdike&ssid=-h%3B%20echo%20-e%20'admin%5Cnadmin'%20%7C%20passwd%20root%3B
 ```
 
 到这里 ssh 就成功打开了
 可以使用用户名 root+密码 admin 来 ssh 登录路由器
 
-```bash
+```sh
 ssh root@192.168.31.1
 ```
 
@@ -84,7 +84,7 @@ root@XiaoQiang:~#
 
 重新设置 root 密码
 
-```bash
+```sh
 passwd root
 #在路由器shell执行
 ```
@@ -93,24 +93,24 @@ passwd root
 
 备份
 
-```bash
+```sh
 nanddump -f /tmp/bdata_mtd9.img /dev/mtd9
 #在路由器shell执行
 ```
 
 用你喜欢的方式下载`bdata_mtd9.img`，我使用 scp 命令
 
-```bash
+```sh
 scp root@192.168.31.1:/tmp/bdata_mtd9.img ~/
 ```
 
 下载[`fuckax3600`](https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/ax3600-ssh-clash/fuckax3600)(作者：[paldier](https://www.right.com.cn/forum/space-uid-194813.html)) 并传到路由器的`/tmp`目录
 
-```bash
+```sh
 scp ~/Downloads/fuckax3600 root@192.168.31.1:/tmp/
 ```
 
-```bash
+```sh
 chmod +x /tmp/fuckax3600
 /tmp/fuckax3600 unlock
 #在路由器shell执行
@@ -118,14 +118,14 @@ chmod +x /tmp/fuckax3600
 
 等待路由器重启后
 
-```bash
+```sh
 /tmp/fuckax3600 hack
 #在路由器shell执行
 ```
 
 会自动设置永久 ssh、telnet、uart 权限，同时会计算出默认的 root 密码，注意记录密码，恢复出厂后 telnet 和 ssh 需要用
 
-```bash
+```sh
 /tmp/fuckax3600 lock
 #在路由器shell执行
 ```
@@ -134,11 +134,11 @@ chmod +x /tmp/fuckax3600
 
 使用 telnet 登录
 
-```bash
+```sh
 telnet 192.168.31.1
 ```
 
-```bash
+```sh
 sed -i 's/channel=.*/channel="debug"/g' /etc/init.d/dropbear
 /etc/init.d/dropbear start
 #在路由器shell执行
@@ -148,7 +148,7 @@ sed -i 's/channel=.*/channel="debug"/g' /etc/init.d/dropbear
 
 这里使用一键脚本[`ShellClash`](https://github.com/juewuy/ShellClash)
 
-```bash
+```sh
 sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/juewuy/ShellClash@latest/install.sh)" && source /etc/profile &> /dev/null
 clash
 #在路由器shell执行

@@ -31,7 +31,7 @@ Demo 版有连续使用时间等限制
 
 - otx
 
-  ```bash
+  ```sh
   brew cask install otx
   ```
 
@@ -41,7 +41,7 @@ Demo 版有连续使用时间等限制
 
 - gdb
 
-  ```bash
+  ```sh
   brew install gdb
   ```
 
@@ -55,7 +55,7 @@ Demo 版有连续使用时间等限制
 
 - 使用 otx
 
-  ```bash
+  ```sh
   otx /Applications/Inklet.app/Contents/MacOS/Inklet > ~/Desktop/inklet.asm
   ```
 
@@ -63,7 +63,7 @@ Demo 版有连续使用时间等限制
 
 - 使用 class-dump
 
-  ```bash
+  ```sh
   class-dump -H /Applications/Inklet.app/Contents/MacOS/Inklet -o ~/classdump
   ```
 
@@ -71,11 +71,11 @@ Demo 版有连续使用时间等限制
 
 我先查找了`license`
 
-```bash
+```sh
 class-dump -f license  /Applications/Inklet.app/Contents/MacOS/Inklet
 ```
 
-> ```bash
+> ```sh
 > @interface InkletWelcomeLicense : InkletWelcomeBase
 > - (long long)licenseUpgradeState;
 >
@@ -105,7 +105,7 @@ class-dump -f license  /Applications/Inklet.app/Contents/MacOS/Inklet
 
 #### 使用 gdb 动态测试
 
-```bash
+```sh
 gdb inklet
 > b *0x000000010002856f   #InkletRegisterPreferences函数开始地址
 > r
@@ -120,7 +120,7 @@ gdb inklet
 
 #### 修改二进制文件
 
-```bash
+```sh
 vim /Applications/Inklet.app/Contents/MacOS/Inklet
 :%!xxd
 ```

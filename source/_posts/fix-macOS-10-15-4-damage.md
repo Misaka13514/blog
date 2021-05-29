@@ -23,7 +23,7 @@ categories: 笔记
 
 打开`终端`,输入以下命令:
 
-```bash
+```sh
 xcode-select --install
 ```
 
@@ -45,13 +45,13 @@ xcode-select --install
 
 打开`终端`,输入以下命令:
 
-```bash
+```sh
 sudo codesign --force --deep --sign - /PATH-TO-APP
 ```
 
 当然你可以可以先输入:
 
-```bash
+```sh
 sudo codesign --force --deep --sign -
 ```
 
@@ -77,13 +77,13 @@ sudo codesign --force --deep --sign -
 
   在`终端`执行
 
-  ```bash
+  ```sh
   xattr -cr /PATH-TO-APP
   ```
 
   再次执行
 
-  ```bash
+  ```sh
   sudo codesign --force --deep --sign - /PATH-TO-APP
   ```
 

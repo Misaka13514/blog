@@ -43,7 +43,7 @@ Win 8 及 Win 10 重置路由器（或更换）后，再次连接路由器（还
 
 输入：
 
-```shell
+```sh
 netsh wlan show profiles #显示网络配置
 netsh wlan show all      #我 全 都 要
 ```
@@ -58,7 +58,7 @@ netsh wlan show all      #我 全 都 要
 
 使用以下命令删除
 
-```shell
+```sh
 netsh wlan delete profile name="*Network*" interface="*Wi-Fi*"
 ```
 

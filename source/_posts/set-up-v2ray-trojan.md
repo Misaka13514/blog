@@ -14,7 +14,7 @@ tags:
 categories: 笔记
 ---
 
-最近把 SSR 改成了 v2ray,顺便把 blog 从 VPS 转到了 Github Pages
+最近把 SSR 改成了 v2ray,顺便把 blog 从 VPS 转到了 GitHub Pages
 
 <!-- more -->
 {% note warning %}
@@ -29,10 +29,10 @@ categories: 笔记
 
 ## 参考文章
 
-### Github Pages 启用自定义域名并开启 SSL
+### GitHub Pages 启用自定义域名并开启 SSL
 
 > - [为 Hexo 博客配置上 HTTPS](https://hex.moe/p/f17d42de/)
-> - [Github Pages 开始为自定义域名提供 HTTPS 支持（附启用方法）](https://poplite.xyz/post/2018/05/03/how-to-enable-https-for-custom-domain-on-github-pages.html)
+> - [GitHub Pages 开始为自定义域名提供 HTTPS 支持（附启用方法）](https://poplite.xyz/post/2018/05/03/how-to-enable-https-for-custom-domain-on-github-pages.html)
 
 ### 搭建 V2Ray/Trojan
 

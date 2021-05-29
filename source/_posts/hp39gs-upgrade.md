@@ -3,7 +3,7 @@ title: 将 HP 39gs 升级为 HP 48gII
 date: 2020-07-11 11:10:00
 tags:
   - Calculator
-  - Graphing Calculator
+  - Graphing calculator
   - HP
   - CAS
   - Hardware

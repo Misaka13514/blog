@@ -5,8 +5,9 @@ tags:
   - Blog
   - Hexo
   - Hexo theme
-  - Github
-  - Github Pages
+  - Web
+  - GitHub
+  - GitHub Pages
   - PaaS
 categories: 摸鱼
 ---
@@ -25,7 +26,7 @@ categories: 摸鱼
 
 - [建立一个 Hexo 博客](https://hex.moe/p/9b3fb8b9/) by [LovelyWei](https://hex.moe/)
 
-> PS:这个关于页面[在 Github 的 repository](https://github.com/LovelyWei/aboutPage)也在我自定义[atomicneko](https://github.com/amphineko/atomicneko)时给我很大的帮助
+> PS:这个关于页面[在 GitHub 的 repository](https://github.com/LovelyWei/aboutPage)也在我自定义[atomicneko](https://github.com/amphineko/atomicneko)时给我很大的帮助
 
 - [Suka Theme](https://theme-suka.skk.moe)
 

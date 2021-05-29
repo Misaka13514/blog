@@ -4,11 +4,11 @@ date: 2021-01-21 18:47:22
 tags:
   - Windows
   - Windows 10
-  - Microsoft pinyin
-  - Double Pinyin
+  - Microsoft Pinyin IME
+  - Double pinyin
   - flyPY
   - Keyboard
-  - Input Method
+  - IME
 categories: 技术向
 ---
 

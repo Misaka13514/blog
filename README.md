@@ -37,15 +37,15 @@ The formations of this project and its sub-projects are inseparable from:
 
   Exchanged link with me and bear watching.
 
-- [Github](https://github.com/about) [@github](https://github.com/github)
+- [GitHub](https://github.com/about) [@github](https://github.com/github)
 
   A supportive, welcoming place for users and GitHubbers alike.
 
-- [Github Pages](https://pages.github.com)
+- [GitHub Pages](https://pages.github.com)
 
   A static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub
 
-- [Github Actions](https://github.com/features/actions)
+- [GitHub Actions](https://github.com/features/actions)
 
   GitHub Actions makes it easy to automate all your software workflows.
 

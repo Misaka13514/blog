@@ -2,6 +2,7 @@
 title: Cloudflare Pages 配置方法与使用体验
 date: 2021-03-23 22:43:52
 tags:
+  - Web
   - Cloudflare
   - Cloudflare Pages
   - CI/CD

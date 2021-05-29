@@ -2,6 +2,7 @@
 title: 搭建 Typecho
 date: 2020-04-26 08:31:08
 tags:
+  - Web
   - Blog
   - Typecho
   - Linux

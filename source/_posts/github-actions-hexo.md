@@ -1,22 +1,22 @@
 ---
-title: 使用 Github Actions 自动部署 blog
+title: 使用 GitHub Actions 自动部署 blog
 date: 2020-07-29 12:41:05
 tags:
   - Blog
   - Hexo
-  - Github
-  - Github Pages
-  - Github Actions
+  - GitHub
+  - GitHub Pages
+  - GitHub Actions
   - CI/CD
 categories: 笔记
 ---
 
-最近把 hexo blog 修改成用 Github Actions 自动部署的了，发篇文章测试一下~~水一水~~
+最近把 hexo blog 修改成用 GitHub Actions 自动部署的了，发篇文章测试一下~~水一水~~
 
 <!-- more -->
 
 {% note info %}
-目前博客[迁移至CloudFlare Pages](/2021/deploy-frontend-to-cfpages/)，此Action不再生效。
+目前博客[迁移至Cloudflare Pages](/2021/deploy-frontend-to-cfpages/)，此Action不再生效。
 {% endnote %}
 
 [照抄+乱改的配置文件](https://github.com/Misaka13514/blog/blob/main/.github/workflows/deploy.yml) ~~还算有点样子~~
@@ -29,5 +29,5 @@ categories: 笔记
 
 参考链接：
 
-- [Hexo Action on Github Marketplace](https://github.com/marketplace/actions/hexo-action)
+- [Hexo Action on GitHub Marketplace](https://github.com/marketplace/actions/hexo-action)
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)

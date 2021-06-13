@@ -37,7 +37,9 @@ date: 2021-04-02 04:42:42
 | Hostname                  | sg.dn42.atri.tk                                    |
 | Endpoint                  | sg.dn42.atri.tk:「YourASNlast5digits(e.g. 21032)」 |
 | WireGuard public key      | x5i9qx8tglqzvghOckjXuRBcWQ8srWLNZOlt7VtFmwI=       |
-| Multiprotocol BGP Support | True                                               |
+| BGP software              | bird2                                              |
+| Extended next hop support | True                                               |
+| Multiprotocol BGP support | True                                               |
 | Hosting provider          | DigitalOcean                                       |
 | Location                  | Singapore                                          |
 
@@ -47,10 +49,10 @@ Valid before Jan. 15th, 2022.
 
 | Item | Value |
 | -- | -- |
-| PGP Key Fingerprint | [AB5C D3C7 7BC2 5F51 2FED  B861 26D4 961C AB31 2A83](https://keybase.io/misaka13514/pgp_keys.asc?fingerprint=ab5cd3c77bc25f512fedb86126d4961cab312a83) |
-| E-mail              | [Misaka13514@gmail.com](mailto:Misaka13514@gmail.com)                                                                                                  |
-| Telegram            | [Misaka_0x34ca](https://t.me/Misaka_0x34ca)                                                                                                            |
-| Supported Language  | zh_CN, zh_TW, en_US, en_GB, ja_JP                                                                                                                      |
+| PGP Key Fingerprint | [C4B7 1F9E D351 5AEB 8270 D5D7 189B B387 CF3A D95F](https://keys.openpgp.org/vks/v1/by-fingerprint/C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F) |
+| E-mail              | [Misaka13514@gmail.com](mailto:Misaka13514@gmail.com)                                                                                        |
+| Telegram            | [Misaka_0x34ca](https://t.me/Misaka_0x34ca)                                                                                                  |
+| Supported language  | zh_CN, zh_TW, en_US, en_GB, ja_JP                                                                                                            |
 
 ### Sample Config
 
@@ -75,7 +77,7 @@ AllowedIPs = 0.0.0.0/0, ::/0
 ```conf
 # Delete these below if MP-BGP
 protocol bgp dn42_1032 from dnpeers {
-    neighbor 172.20.143.50 as 4242421032;
+    neighbor 172.23.10.1 as 4242421032;
     direct;
 }
 # Delete these above if MP-BGP

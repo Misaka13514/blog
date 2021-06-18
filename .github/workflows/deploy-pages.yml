@@ -1,0 +1,37 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: True
+          persist-credentials: false
+
+      - name: Invoke Webpack build
+        run: |
+          yarn install
+          yarn build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: public
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          git-config-name: ${{ secrets.GIT_USER }}
+          git-config-email: ${{ secrets.GIT_EMAIL }}
+          clean: true
+          single-commit: true
+          silent: true

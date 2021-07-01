@@ -52,9 +52,9 @@ sub   cv25519 2021-05-16 [E] [expires: 2024-01-01]
 
 于是我寻找了其他发布公钥的途径，有`DNS CERT`、`DANE`、`Web Key Directory (wkd)`、`LDAP`、`NTDS`等。关于这些方法的说明可以`man gpg`或是在[GPG 文档](https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html)中看到。
 
-我选择了`Web Key Directory (wkd)`方法，它也是默认启用的除本地外的唯一一种方法。下面将以我的密钥为例，自己托管`Web Key Directory (wkd)`。如果你想为你的密钥添加 WKD，且你使用的邮箱服务[提供了这样的服务](https://wiki.gnupg.org/WKD#Mail_Service_Providers_offering_WKD)，你可以跳过下面的步骤。
+我选择了`Web Key Directory (wkd)`方法，它也是默认启用的除本地外的唯一一种方法。下面将以我的密钥为例，自己部署`Web Key Directory (wkd)`。你也可以使用在自己域名上[使用第三方提供的服务](#使用第三方服务)。如果你使用的邮箱的域名已经[提供了这样的服务](https://wiki.gnupg.org/WKD#Mail_Service_Providers_offering_WKD)，你可以跳过下面的步骤。
 
-## 操作方法
+## 自己部署
 
 ### 条件
 
@@ -124,7 +124,15 @@ $ git push -u origin your-branch-name
 
 将域名记录按照 GitHub 文档指向 GitHub Pages，然后到 GitHub 上启用 GitHub Pages，可以访问对应 URL 查看是否生效。
 
-### 测试
+## 使用第三方服务
+
+部分网站如[keys.openpgp.org](https://keys.openpgp.org/about/usage)提供了 WKD as a Service 的服务。
+
+在网站上上传自己的公钥后，就可以使用它提供的服务了。
+
+只需添加这样一条`CNAME`记录：将`openpgpkey.your.domain`指向`wkd.keys.openpgp.org`。
+
+## 测试
 
 ```sh
 $ gpg --no-default-keyring --keyring /tmp/gpg-$$ \

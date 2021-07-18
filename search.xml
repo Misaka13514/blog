@@ -1,0 +1,1262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>AX3600 开启 ssh 并使用 Clash 实现透明代理</title>
+    <url>/2020/ax3600-ssh-clash/</url>
+    <content><![CDATA[<p>整了台小米路由器 AX3600 玩 <s>我没有 root 权限会死所以</s>root 了下，发现还能用 clash</p>
+<span id="more"></span>
+<h2 id="获取-root-权限并打开-ssh">获取 root 权限并打开 ssh</h2>
+<h3 id="使用官方固件漏洞开启-ssh">使用官方固件漏洞开启 ssh</h3>
+<p>先需要将固件版本降级到<code>1.0.17</code>，固件可以在<span class="exturl" data-url="aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2RyaXZlL2ZvbGRlcnMvMXRJaktNTlNTcmtZbTh2Qkdtay1nUFRqVHJZdVJFR0x0">这里<i class="fa fa-external-link-alt"></i></span>下载。</p>
+<p>连接上 wifi 并打开<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMS8=">路由器管理页面<i class="fa fa-external-link-alt"></i></span></p>
+<p>登录后浏览器地址栏应该是这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.31.1/cgi-bin/luci/;stok=&lt;STOK&gt;/web/home#router</span><br></pre></td></tr></table></figure>
+<p>复制记下这个<code>&lt;STOK&gt;</code></p>
+<p>把下面 URL 中的<code>&lt;STOK&gt;</code>替换成刚才的，并访问</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.31.1/cgi-bin/luci/;stok=&lt;STOK&gt;/api/misystem/set_config_iotdev?bssid=Xiaomi&amp;user_id=longdike&amp;ssid=-h%3B%20nvram%20set%20ssh_en%3D1%3B%20nvram%20commit%3B%20sed%20-i%20&#x27;s%2Fchannel%3D.*%2Fchannel%3D%5C%22debug%5C%22%2Fg&#x27;%20%2Fetc%2Finit.d%2Fdropbear%3B%20%2Fetc%2Finit.d%2Fdropbear%20start%3B</span><br></pre></td></tr></table></figure>
+<p>会显示<code>&#123;&quot;code&quot;:0&#125;</code></p>
+<p>再来一个 URL，注意替换<code>STOK</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.31.1/cgi-bin/luci/;stok=&lt;STOK&gt;/api/misystem/set_config_iotdev?bssid=Xiaomi&amp;user_id=longdike&amp;ssid=-h%3B%20echo%20-e%20&#x27;admin%5Cnadmin&#x27;%20%7C%20passwd%20root%3B</span><br></pre></td></tr></table></figure>
+<p>到这里 ssh 就成功打开了<br>
+可以使用用户名 root+密码 admin 来 ssh 登录路由器</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">ssh root@192.168.31.1</span><br></pre></td></tr></table></figure>
+<p>输入密码回车后可以看到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BusyBox v1.25.1 (YYYY-MM-DD HH:mm:ss UTC) built-in shell (ash)</span><br><span class="line"></span><br><span class="line"> -----------------------------------------------------</span><br><span class="line">       Welcome to XiaoQiang!</span><br><span class="line"> -----------------------------------------------------</span><br><span class="line">  $$$$$$\  $$$$$$$\  $$$$$$$$\      $$\      $$\        $$$$$$\  $$\   $$\</span><br><span class="line"> $$  __$$\ $$  __$$\ $$  _____|     $$ |     $$ |      $$  __$$\ $$ | $$  |</span><br><span class="line"> $$ /  $$ |$$ |  $$ |$$ |           $$ |     $$ |      $$ /  $$ |$$ |$$  /</span><br><span class="line"> $$$$$$$$ |$$$$$$$  |$$$$$\         $$ |     $$ |      $$ |  $$ |$$$$$  /</span><br><span class="line"> $$  __$$ |$$  __$$&lt; $$  __|        $$ |     $$ |      $$ |  $$ |$$  $$&lt;</span><br><span class="line"> $$ |  $$ |$$ |  $$ |$$ |           $$ |     $$ |      $$ |  $$ |$$ |\$$\</span><br><span class="line"> $$ |  $$ |$$ |  $$ |$$$$$$$$\       $$$$$$$$$  |       $$$$$$  |$$ | \$$\</span><br><span class="line"> \__|  \__|\__|  \__|\________|      \_________/        \______/ \__|  \__|</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root@XiaoQiang:~#</span><br></pre></td></tr></table></figure>
+<p>这个 RUOK 就很灵性</p>
+<h3 id="更改密码及权限维持">更改密码及权限维持</h3>
+<p>重新设置 root 密码</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">passwd root</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>这样并不能保证升级后 ssh 仍能使用，如果留在这个版本漏洞还是有一定风险。</p>
+<p>备份</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">nanddump -f /tmp/bdata_mtd9.img /dev/mtd9</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>用你喜欢的方式下载<code>bdata_mtd9.img</code>，我使用 scp 命令</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">scp root@192.168.31.1:/tmp/bdata_mtd9.img ~/</span><br></pre></td></tr></table></figure>
+<p>下载<a href="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/ax3600-ssh-clash/fuckax3600"><code>fuckax3600</code></a>(作者：<span class="exturl" data-url="aHR0cHM6Ly93d3cucmlnaHQuY29tLmNuL2ZvcnVtL3NwYWNlLXVpZC0xOTQ4MTMuaHRtbA==">paldier<i class="fa fa-external-link-alt"></i></span>) 并传到路由器的<code>/tmp</code>目录</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">scp ~/Downloads/fuckax3600 root@192.168.31.1:/tmp/</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">chmod +x /tmp/fuckax3600</span><br><span class="line">/tmp/fuckax3600 unlock</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>等待路由器重启后</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/tmp/fuckax3600 hack</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>会自动设置永久 ssh、telnet、uart 权限，同时会计算出默认的 root 密码，注意记录密码，恢复出厂后 telnet 和 ssh 需要用</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">/tmp/fuckax3600 lock</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>然后就可以升级新版本了，如果升级完新版本 ssh 不能用</p>
+<p>使用 telnet 登录</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">telnet 192.168.31.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">&#x27;s/channel=.*/channel=&quot;debug&quot;/g&#x27;</span> /etc/init.d/dropbear</span><br><span class="line">/etc/init.d/dropbear start</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<h2 id="安装-clash-作为透明代理">安装 clash 作为透明代理</h2>
+<p>这里使用一键脚本<a href="https://github.com/juewuy/ShellClash"><code>ShellClash</code></a></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -kfsSl https://cdn.jsdelivr.net/gh/juewuy/ShellClash@latest/install.sh)</span>&quot;</span> &amp;&amp; <span class="built_in">source</span> /etc/profile &amp;&gt; /dev/null</span><br><span class="line">clash</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>使用<code>clash</code>命令就能打开管理脚本</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucmlnaHQuY29tLmNuL2ZvcnVtL2ZvcnVtLnBocD9tb2Q9dmlld3RocmVhZCZhbXA7dGlkPTQwNDYwMjA=">[AX3600] 小米 ax3600 获取 root 权限【简单快速】【修复丢 ssid】<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2p1ZXd1eS9TaGVsbENsYXNo">juewuy/ShellClash<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li>
+<p><span class="exturl" data-url="aHR0cHM6Ly9qdWV3dXkuZ2l0aHViLmlvL3Bvc3QvY2xhc2gtZm9yLW1pd2lmaS1hbi16aHVhbmctamktc2hpLXlvbmctamlhby1jaGVuZy8=">Clash for Miwifi 安装及使用教程<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>OpenWRT</tag>
+        <tag>GFW</tag>
+        <tag>Shadowsocks</tag>
+        <tag>ShadowsocksR</tag>
+        <tag>V2Ray</tag>
+        <tag>Trojan</tag>
+        <tag>Proxy</tag>
+        <tag>Clash</tag>
+        <tag>Xiaomi</tag>
+        <tag>Router</tag>
+        <tag>ROM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>欢迎使用 hexo</title>
+    <url>/2020/create-my-blog/</url>
+    <content><![CDATA[<p>如果您看到这篇文章,表示您的 blog 已经安装成功.</p>
+<span id="more"></span>
+<p>以上其实是<strong>手动</strong>写的</p>
+<p>自从 2019-12-28 白嫖这台 GCP 的 VPS 起,建个 blog 建了几个月,qwq</p>
+<p>顺手记录下我觉得有帮助的文章:</p>
+<ul>
+<li>
+<p><span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL3poLWNuL2RvY3Mv">Hexo 官方文档<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li>
+<p><span class="exturl" data-url="aHR0cHM6Ly9oZXgubW9lL3AvOWIzZmI4Yjkv">建立一个 Hexo 博客<i class="fa fa-external-link-alt"></i></span> by <span class="exturl" data-url="aHR0cHM6Ly9oZXgubW9lLw==">LovelyWei<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+<blockquote>
+<p>PS:这个关于页面<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xvdmVseVdlaS9hYm91dFBhZ2U=">在 GitHub 的 repository<i class="fa fa-external-link-alt"></i></span>也在我自定义<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtcGhpbmVrby9hdG9taWNuZWtv">atomicneko<i class="fa fa-external-link-alt"></i></span>时给我很大的帮助</p>
+</blockquote>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1zdWthLnNray5tb2U=">Suka Theme<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>建完这个站我自己也不清楚能一直运营多久。将来也有可能更换域名。<br>
+文章又不会写，又没 dalao 带窝，只能做复读机/复制机维持生活（</p>
+<h2 id="2020-4-21-更新">2020-4-21 更新</h2>
+<p>友链换了好几个了,非常感谢大家</p>
+<p>使用 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0VkaXNvbkp3YS9oZXhvLXRoZW1lLXN1a2EvdHJlZS9jYW5hcnk=">Dark Mode Support For Suka<i class="fa fa-external-link-alt"></i></span> 给站点增加了深色模式.</p>
+<h2 id="2020-5-9-更新">2020-5-9 更新</h2>
+<p>因 <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1zdWthLnNray5tb2U=">Suka Theme<i class="fa fa-external-link-alt"></i></span> 长期未更新，且 <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLnNray5tb2U=">Sukka’s Blog<i class="fa fa-external-link-alt"></i></span> 不再使用该主题，所以把主题更改为 <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0Lm9yZw==">NexT<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="2021-3-4-更新">2021-3-4 更新</h2>
+<p>据上次更新已有将近一年的时间。这段时间我发布了几篇日志，也部署了许多前段页面。域名做了更换，交换了许多友链。我给 blog 加上了 Cloudflare CDN，同时还在 Cloudflare Pages 部署了网站。</p>
+<h3 id="关于站点主题色">关于站点主题色</h3>
+<p>站点主题色是<code>#663399</code>，由 40％的红色，20％的绿色和 60％的蓝色组成。这个颜色初次被我使用时直接取自于バニラ的发带。于 2021-3-4 才发现它也被称为丽贝卡紫(Rebecca Purple)，<span class="exturl" data-url="aHR0cHM6Ly9saXN0cy53My5vcmcvQXJjaGl2ZXMvUHVibGljL3d3dy1zdHlsZS8yMDE0SnVuLzAzMTIuaHRtbA==">在 CSS 4 中被加入<i class="fa fa-external-link-alt"></i></span>，用来悼念埃里克·迈耶的女儿。我很有幸能使用这个颜色。如果你使用 Android Chrome 或 macOS Safari，我想你可以在标题面板或网站图标中看到这个颜色。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/create-my-blog/rebeccapurple.png" alt="Rebecca Purple"></p>
+]]></content>
+      <categories>
+        <category>摸鱼</category>
+      </categories>
+      <tags>
+        <tag>Blog</tag>
+        <tag>Hexo</tag>
+        <tag>Hexo theme</tag>
+        <tag>Web</tag>
+        <tag>GitHub</tag>
+        <tag>GitHub Pages</tag>
+        <tag>PaaS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cloudflare Pages 配置方法与使用体验</title>
+    <url>/2021/deploy-frontend-to-cfpages/</url>
+    <content><![CDATA[<p>Cloudflare Pages 可以供前端开发人员协作和部署网站。</p>
+<span id="more"></span>
+<p>目前已成为稳定功能。</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9wYWdlcy5jbG91ZGZsYXJlLmNvbQ==">官方介绍<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLmNsb3VkZmxhcmUuY29tL3BhZ2VzLw==">官方文档<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>我在 2021/2 就通过了申请，开始使用这一平台。</p>
+<p>免费计划：</p>
+<ul>
+<li>不能并行构建站点</li>
+<li>每月最多构建 500 次</li>
+<li>无站点数量限制</li>
+<li>无请求数限制</li>
+<li>无带宽限制</li>
+</ul>
+<p>嗯，够用。</p>
+<h2 id="特点">特点</h2>
+<ul>
+<li>网页性能较好</li>
+<li>配置简单</li>
+<li>开发环境与生产环境分离</li>
+<li>CI/CD 自动化</li>
+<li>支持绑定多域名</li>
+</ul>
+<h2 id="使用时遇到的问题">使用时遇到的问题</h2>
+<ul>
+<li><s>创建项目无法删除</s></li>
+<li><s>无法使用免费域名</s></li>
+<li>必须使用 <strong>GitHub 的</strong>仓库</li>
+<li>自动从所有分支构建，无法忽略部分分支</li>
+<li>设置自定义域名后，不能设置访问默认域名后自动跳转自定义域名</li>
+<li>不添加<code>Access-Control-Allow-Origin</code> header，可能造成跨域访问异常</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLmNsb3VkZmxhcmUuY29tL3BhZ2VzL3BsYXRmb3JtL2tub3duLWlzc3Vlcw==">Known issues<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="开始使用">开始使用</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kYXNoLmNsb3VkZmxhcmUuY29tLz90bz0vOmFjY291bnQvcGFnZXM=">点这里开始<i class="fa fa-external-link-alt"></i></span></p>
+<ul>
+<li>如果没有 Cloudflare 帐号，你需要<span class="exturl" data-url="aHR0cHM6Ly9kYXNoLmNsb3VkZmxhcmUuY29tL3NpZ24tdXA=">注册一个<i class="fa fa-external-link-alt"></i></span>。</li>
+<li>如果页面语言不符合你所需要的语言，可以在右上角切换。</li>
+<li>目前只能从 GitHub 仓库源码构建页面，所以你需要一个放有项目源码的 GitHub 仓库，并同步更新修改。（可能需要 Git 基础）</li>
+</ul>
+<p>注册后，你需要将 GitHub 全部仓库或部分仓库的访问权限授予 <code>Cloudflare Pages</code>。如果未来想修改，可以<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NldHRpbmdzL2luc3RhbGxhdGlvbnM=">在 GitHub 调整设置<i class="fa fa-external-link-alt"></i></span>。</p>
+<h2 id="配置">配置</h2>
+<p>Cloudflare Pages 比较易于配置。由于以前有过<a href="/2020/github-actions-hexo/">配置 CI/CD 的相关经验</a>，且<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0L2Jsb2c=">源码也已在 GitHub 上同步<i class="fa fa-external-link-alt"></i></span>，在配置上我没遇到什么问题。</p>
+<p>较 GitHub Actions 相比，Cloudflare Pages 配置更简单一些（自由度也少一些）</p>
+<p>打开<span class="exturl" data-url="aHR0cHM6Ly9kYXNoLmNsb3VkZmxhcmUuY29tLz90bz0vOmFjY291bnQvcGFnZXM=">Cloudflare 网页 配置面板<i class="fa fa-external-link-alt"></i></span>，在这里你可以查看和修改你目前的项目使用情况。</p>
+<h3 id="创建并配置一个新项目">创建并配置一个新项目</h3>
+<p>点击<code>创建项目</code>，选取项目所在仓库。</p>
+<p>然后设置构建和部署</p>
+<ul>
+<li>
+<p>给项目起一个名称</p>
+<p>如果与其它项目名不冲突，它将成为默认访问域名的一部分。即<code>*.pages.dev</code></p>
+</li>
+<li>
+<p>选择生产分支</p>
+<p>从这个分支获取的代码将会部署到生产环境，其它分支的代码将会部署到开发环境。</p>
+</li>
+<li>
+<p>构建设置</p>
+<p>有许多默认预设可选。如果预设不起作用或是你使用特殊配置，需要手动配置。</p>
+<blockquote>
+<p>我使用最多的构建命令是<code>yarn build</code>和<code>npm run build</code>。使用最多的构建目录是<code>public</code>和<code>dist</code>。你可以先在本地测试。<br>
+如果不需要构建过程，根目录就是要部署的网页：构建命令留空，构建目录设置为<code>/</code></p>
+</blockquote>
+</li>
+<li>
+<p>根目录、环境变量设置</p>
+<p>一般不需要设置，可以根据你的需求设置。</p>
+</li>
+</ul>
+<h2 id="设置自定义域名">设置自定义域名</h2>
+<p>在项目设置中点击自定义域，点击设置。</p>
+<p>输入你想使用的域名，然后修改对应 DNS 记录：CNAME 到 Cloudflare 分配的默认域名。（如果域名解析托管在 Cloudflare 则会自动设置。</p>
+<h2 id="性能效果测试">性能效果测试</h2>
+<p>我使用<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXJzLmdvb2dsZS5jb20vc3BlZWQvcGFnZXNwZWVkL2luc2lnaHRzLw==">PageSpeed Insights<i class="fa fa-external-link-alt"></i></span>来测试网页性能表现。</p>
+<p>以下是我 blog 的测试成绩</p>
+<table>
+<thead>
+<tr>
+<th>连接方式</th>
+<th>移动设备</th>
+<th>桌面设备</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub Pages</td>
+<td>57</td>
+<td>90</td>
+</tr>
+<tr>
+<td>GitHub Pages + Cloudflare CDN</td>
+<td>67</td>
+<td>94</td>
+</tr>
+<tr>
+<td>Cloudflare Pages</td>
+<td>58</td>
+<td>93</td>
+</tr>
+</tbody>
+</table>
+<p>以下数据来自<span class="exturl" data-url="aHR0cHM6Ly91cHRpbWVyb2JvdC5jb20=">UptimeRobot<i class="fa fa-external-link-alt"></i></span></p>
+<table>
+<thead>
+<tr>
+<th>连接方式</th>
+<th>24 小时平均延迟</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub Pages</td>
+<td>246.66ms</td>
+</tr>
+<tr>
+<td>GitHub Pages + Cloudflare CDN</td>
+<td>290.64ms</td>
+</tr>
+<tr>
+<td>Cloudflare Pages</td>
+<td>402.36ms</td>
+</tr>
+</tbody>
+</table>
+<p>已将 blog 迁移至 Cloudflare Pages，要是发现 blog 有什么异常欢迎联系我反馈。(◍•ᴗ•◍)❤</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Blog</tag>
+        <tag>Hexo</tag>
+        <tag>Web</tag>
+        <tag>GitHub</tag>
+        <tag>Cloudflare</tag>
+        <tag>Cloudflare Pages</tag>
+        <tag>CI/CD</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修复 macOS 10.15.4 下部分软件「意外退出」</title>
+    <url>/2020/fix-macOS-10-15-4-damage/</url>
+    <content><![CDATA[<p>受影响的大多是破解软件,因为 Apple 在新系统中删除了 TNT 的证书</p>
+<span id="more"></span>
+<h2 id="准备-Xcode-IDE-的命令行工具">准备 Xcode IDE 的命令行工具</h2>
+<p>即 <code>Command Line Tools</code><br>
+如果你已安装<code>Command Line Tools</code>或<code>Xcode</code>可以直接转到<a href="#%E7%BB%99%E8%BD%AF%E4%BB%B6%E7%AD%BE%E5%90%8D">给软件签名</a><br>
+如果有问题可以参考:</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25vZGVqcy9ub2RlLWd5cC9ibG9iL21hc3Rlci9tYWNPU19DYXRhbGluYS5tZA==">Installation notes for macOS Catalina (v10.15)<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h3 id="终端安装">终端安装</h3>
+<p>打开<code>终端</code>,输入以下命令:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
+<p>弹出安装窗口后选择<code>继续安装</code></p>
+<h3 id="下载安装">下载安装</h3>
+<p>打开<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYXBwbGUuY29tL2Rvd25sb2FkL21vcmUv">Apple Developer<i class="fa fa-external-link-alt"></i></span>下载<code>Command Line Tools for Xcode</code>后安装<br>
+(可能需要登录 Apple ID)</p>
+<h3 id="在-App-Store-安装完整-Xcode">在 App Store 安装完整 Xcode</h3>
+<p>不推荐,会占用很多磁盘空间<br>
+下载安装<span class="exturl" data-url="aHR0cHM6Ly9hcHBzLmFwcGxlLmNvbS9jbi9hcHAveGNvZGUvaWQ0OTc3OTk4MzU=">这个 App<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="给软件签名">给软件签名</h2>
+<h3 id="在终端中手动签名">在终端中手动签名</h3>
+<p>打开<code>终端</code>,输入以下命令:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo codesign --force --deep --sign - /PATH-TO-APP</span><br></pre></td></tr></table></figure>
+<p>当然你可以可以先输入:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo codesign --force --deep --sign -</span><br></pre></td></tr></table></figure>
+<p>(最后再打一个空格)</p>
+<p>再打开<code>访达</code>,前往<code>应用程序</code>(⇧⌘A),将「意外退出」的软件拖入终端<br>
+回车 ↩,自信输入本地用户密码,再回车 ↩</p>
+<ul>
+<li>
+<p>如果看到输出为:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/PATH-TO-APP : replacing existing signature</span><br></pre></td></tr></table></figure>
+<p>则成功</p>
+</li>
+<li>
+<p>如果输出为:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/PATH-TO-APP : replacing existing signature</span><br><span class="line">/PATH-TO-APP : resource fork,Finder information,or similar detritus not allowed</span><br></pre></td></tr></table></figure>
+<p>在<code>终端</code>执行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -cr /PATH-TO-APP</span><br></pre></td></tr></table></figure>
+<p>再次执行</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo codesign --force --deep --sign - /PATH-TO-APP</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="使用CodeSigner给软件签名">使用<code>CodeSigner</code>给软件签名</h3>
+<p>懒得写,咕咕咕</p>
+<h2 id="仍然无法解决">仍然无法解决</h2>
+<p>可以试试关闭<a href="https://en.wikipedia.org/wiki/System_Integrity_Protection"><code>SIP</code></a><br>
+再不行就坐等应用更新吧</p>
+<h3 id="10-15-4-目前不可用-APP">10.15.4 目前不可用 APP</h3>
+<ul>
+<li>Notability &lt;= 4.2.1</li>
+<li>Paste &lt;= 2.5.6 ( 官方版本 &gt;=2.6.2 可用 )</li>
+</ul>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>macOS</tag>
+        <tag>macOS Catalina</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 GitHub Actions 自动部署 blog</title>
+    <url>/2020/github-actions-hexo/</url>
+    <content><![CDATA[<p>最近把 hexo blog 修改成用 GitHub Actions 自动部署的了，发篇文章测试一下<s>水一水</s></p>
+<span id="more"></span>
+<div class="note info"><p>目前博客<a href="/2021/deploy-frontend-to-cfpages/">迁移至Cloudflare Pages</a>，此Action不再生效。</p>
+</div>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0L2Jsb2cvYmxvYi9tYWluLy5naXRodWIvd29ya2Zsb3dzL2RlcGxveS55bWw=">照抄+乱改的配置文件<i class="fa fa-external-link-alt"></i></span> <s>还算有点样子</s></p>
+<p>我 blog 所有源文件基本都在 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0L2Jsb2c=">blog<i class="fa fa-external-link-alt"></i></span> / <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0L2Fib3V0">about<i class="fa fa-external-link-alt"></i></span> 公开。<s>如果想发现我的 blog 有错误就可以直接 pr 帮我解决啦</s></p>
+<p>交换友链可以在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0L0ZyaWVuZHM=">这里<i class="fa fa-external-link-alt"></i></span>pr。</p>
+<p>总之，要是发现 blog 有什么异常欢迎联系我反馈。(◍•ᴗ•◍)❤</p>
+<p>参考链接：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hcmtldHBsYWNlL2FjdGlvbnMvaGV4by1hY3Rpb24=">Hexo Action on GitHub Marketplace<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdpdGh1Yi5jb20vZW4vYWN0aW9ucw==">GitHub Actions Documentation<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Blog</tag>
+        <tag>Hexo</tag>
+        <tag>GitHub</tag>
+        <tag>GitHub Pages</tag>
+        <tag>CI/CD</tag>
+        <tag>GitHub Actions</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>为 PGP Key 部署 Web Key Directory (WKD) 托管</title>
+    <url>/2021/host-a-web-key-directory/</url>
+    <content><![CDATA[<p>你现在可以快速地通过我的域名邮箱<code>admin@atri.tk</code>来自动获取我的 PGP 公钥。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">gpg --locate-key admin@atri.tk</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="起因">起因</h2>
+<p>前些日子想把原来的 RSA 公钥全部更换为 ECC 公钥，便重新生成了新的主密钥。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ gpg --list-keys C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F</span><br><span class="line">pub   ed25519 2021-05-15 [C] [expires: 2024-01-01]</span><br><span class="line">      C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F</span><br><span class="line">uid           [ultimate] 欠陥電気RadioNoise (御坂13514号のECC鍵) &lt;Misaka13514@gmail.com&gt;</span><br><span class="line">uid           [ultimate] Misaka13514 &lt;Misaka13514@gmail.com&gt;</span><br><span class="line">uid           [ultimate] Misaka &lt;admin@atri.tk&gt;</span><br><span class="line">sub   ed25519 2021-05-16 [S] [expires: 2024-01-01]</span><br><span class="line">sub   ed25519 2021-05-16 [A] [expires: 2024-01-01]</span><br><span class="line">sub   cv25519 2021-05-16 [E] [expires: 2024-01-01]</span><br></pre></td></tr></table></figure>
+<p>生成完就需要发布公钥供他人交换。以前我使用的是公钥服务器+在网页或其它平台发布公钥的下载链接或是公钥指纹的最后几位。</p>
+<p>假设有一个人只有我的邮箱信息而想要给我发送加密邮件，一般来说有这些交换方法，它们似乎仍不够快速或是不够安全。</p>
+<ul>
+<li>面对面交换显然太繁琐了。</li>
+<li><code>gpg --recv-keys</code>只能通过指纹从公钥服务器获取公钥。使用这个命令需要先通过其它途径知道正确的指纹。</li>
+<li>如果发布到 Web 或是 代码仓库 ，需要先在网页上查找到对应 URL 并下载。</li>
+<li>看见有人使用特殊方法生成了带有靓号指纹的密钥。碰撞出相同一部分指纹的密钥是有可能做到的。<br>
+（建议公开至少 64bit (16 位 16 进制)的指纹）</li>
+<li><code>gpg --search-keys</code>可以通过邮箱在公钥服务器搜索与下载。但公钥服务器接受任何人上传的公钥，任何人可以生成含有我的邮箱标识的密钥并发布。<br>
+（现在如<code>keys.openpgp.org</code>等服务器会在上传公钥后向对应邮箱发送验证邮件来验证身份）</li>
+</ul>
+<p>正如 IPv6 与 DNS 那样，有一个靓号不如配置了方便有效的交换方式。</p>
+<p>于是我寻找了其他发布公钥的途径，有<code>DNS CERT</code>、<code>DANE</code>、<code>Web Key Directory (wkd)</code>、<code>LDAP</code>、<code>NTDS</code>等。关于这些方法的说明可以<code>man gpg</code>或是在<span class="exturl" data-url="aHR0cHM6Ly93d3cuZ251cGcub3JnL2RvY3VtZW50YXRpb24vbWFudWFscy9nbnVwZy9HUEctQ29uZmlndXJhdGlvbi1PcHRpb25zLmh0bWw=">GPG 文档<i class="fa fa-external-link-alt"></i></span>中看到。</p>
+<p>我选择了<code>Web Key Directory (wkd)</code>方法，它也是默认启用的除本地外的唯一一种方法。下面将以我的密钥为例，自己部署 WKD。你也可以使用在自己域名上<a href="#%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1">使用第三方提供的服务</a>。如果你使用的邮箱的域名已经<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmdudXBnLm9yZy9XS0QjTWFpbF9TZXJ2aWNlX1Byb3ZpZGVyc19vZmZlcmluZ19XS0Q=">提供了这样的服务<i class="fa fa-external-link-alt"></i></span>，你可以跳过下面的步骤。</p>
+<h2 id="自己部署">自己部署</h2>
+<h3 id="条件">条件</h3>
+<ul>
+<li>有可以修改记录的域名<br>
+需要修改 apex 顶级域名或是 openpgpkey 子域名记录</li>
+<li>使用该域名邮箱</li>
+<li>有可使用的网页服务器或可信的第三方托管服务</li>
+<li>GPG 版本 &gt;= 2.2.12 （或自行查看<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmdudXBnLm9yZy9XS0RIb3N0aW5n">官方文档<i class="fa fa-external-link-alt"></i></span>中的其他可用客户端）</li>
+</ul>
+<h3 id="创建-WKD-文件夹">创建 WKD 文件夹</h3>
+<p>创建一个文件夹，并作为<code>openpgpkey.your.domain</code>的站点根目录。然后创建 WKD 的目录结构。</p>
+<p>下面的部分命令需要根据你的情况来修改。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ mkdir openpgpkey-WKD &amp;&amp; <span class="built_in">cd</span> openpgpkey-WKD</span><br><span class="line">$ mkdir -p .well-known/openpgpkey</span><br><span class="line">$ <span class="built_in">cd</span> .well-known</span><br><span class="line">$ gpg --list-options show-only-fpr-mbox -k <span class="string">&quot;@your.domain&quot;</span> | $(gpgconf --list-dirs libexecdir)/gpg-wks-client -v --install-key</span><br><span class="line"><span class="comment">#如果需要，也可以替换为指定单个 Key</span></span><br><span class="line">$ <span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
+<p>输出将会类似这样</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gpg-wks-client: gpg: Total number processed: 1</span><br><span class="line">gpg-wks-client: using key with user id &#x27;Misaka &lt;admin@atri.tk&gt;&#x27;</span><br><span class="line">gpg-wks-client: gpg: Total number processed: 1</span><br><span class="line">gpg-wks-client: directory &#x27;openpgpkey/atri.tk&#x27; created</span><br><span class="line">gpg-wks-client: directory &#x27;openpgpkey/atri.tk/hu&#x27; created</span><br><span class="line">gpg-wks-client: policy file &#x27;openpgpkey/atri.tk/policy&#x27; created</span><br><span class="line">gpg-wks-client: key C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F published for &#x27;admin@atri.tk&#x27;</span><br></pre></td></tr></table></figure>
+<p>站点目录结构将会类似这样</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ tree -a</span><br><span class="line">.</span><br><span class="line">`-- openpgpkey</span><br><span class="line">    `-- atri.tk</span><br><span class="line">        |-- hu</span><br><span class="line">        |   `-- 4y36rkzdjnzmk3oxaekyi5biowgr5kcz</span><br><span class="line">        `-- policy</span><br></pre></td></tr></table></figure>
+<h3 id="在-GitHub-Pages-上发布">在 GitHub Pages 上发布</h3>
+<p>你也可以使用其它任何你喜爱的 Web 托管方式。</p>
+<p>在 GitHub 上创建一个公开仓库。</p>
+<div class="note info"><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdpdGh1Yi5jb20vY24vcGFnZXMvc2V0dGluZy11cC1hLWdpdGh1Yi1wYWdlcy1zaXRlLXdpdGgtamVreWxsL2Fib3V0LWdpdGh1Yi1wYWdlcy1hbmQtamVreWxs">GitHub Pages 默认启用了 Jekyll<i class="fa fa-external-link-alt"></i></span>，而它默认不会构建开头为<code>.</code>的文件夹，所以需要额外的配置。</p>
+<p>可以通过在根目录创建<code>.nojekyll</code>文件以直接禁用 Jekyll；也可以创建一个配置文件<code>_config.yml</code>，并写入<code>include: [&quot;.well-known&quot;]</code>。</p>
+</div>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ touch .nojekyll</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;openpgpkey.your.domain&quot;</span> &gt; CNAME</span><br><span class="line">$ git init &amp;&amp; git add . &amp;&amp; git commit -m <span class="string">&quot;Initial commit&quot;</span></span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> ~/openpgpkey-WKD/.git/</span><br><span class="line">[main (root-commit) 114514 ] Initial commit</span><br><span class="line"> 3 files changed, 3 insertions(+)</span><br><span class="line"> create mode 100644 .well-known/openpgpkey/your.domain/hu/1145141919810aaaaaa</span><br><span class="line"> create mode 100644 .well-known/openpgpkey/your.domain/policy</span><br><span class="line"> create mode 100644 CNAME</span><br><span class="line">$ git remote add origin your-url</span><br><span class="line">$ git push -u origin your-branch-name</span><br></pre></td></tr></table></figure>
+<p>将域名记录按照 GitHub 文档指向 GitHub Pages，然后到 GitHub 上启用 GitHub Pages，可以访问对应 URL 查看是否生效。</p>
+<h2 id="使用第三方服务">使用第三方服务</h2>
+<p>部分网站如<span class="exturl" data-url="aHR0cHM6Ly9rZXlzLm9wZW5wZ3Aub3JnL2Fib3V0L3VzYWdl">keys.openpgp.org<i class="fa fa-external-link-alt"></i></span>提供了 WKD as a Service 的服务。</p>
+<p>在网站上上传自己的公钥后，就可以使用它提供的服务了。</p>
+<p>只需添加这样一条<code>CNAME</code>记录：将<code>openpgpkey.your.domain</code>指向<code>wkd.keys.openpgp.org</code>。</p>
+<h2 id="测试">测试</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ gpg --no-default-keyring --keyring /tmp/gpg-$$ \</span><br><span class="line">    --auto-key-locate clear,wkd,nodefault --verbose --locate-key you@your.domain</span><br><span class="line">gpg: key 189BB387CF3AD95F: public key <span class="string">&quot;Misaka &lt;admin@atri.tk&gt;&quot;</span> imported</span><br><span class="line">gpg: Total number processed: 1</span><br><span class="line">gpg:               imported: 1</span><br><span class="line">pub   ed25519 2021-05-15 [C] [expires: 2024-01-01]</span><br><span class="line">      C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F</span><br><span class="line">uid           [ unknown] Misaka &lt;admin@atri.tk&gt;</span><br><span class="line">sub   ed25519 2021-05-16 [S] [expires: 2024-01-01]</span><br><span class="line">sub   ed25519 2021-05-16 [A] [expires: 2024-01-01]</span><br><span class="line">sub   cv25519 2021-05-16 [E] [expires: 2024-01-01]</span><br></pre></td></tr></table></figure>
+<h2 id="推荐阅读">推荐阅读</h2>
+<p>2021 年，用更现代的方法使用 PGP by <span class="exturl" data-url="aHR0cHM6Ly91bHljLmdpdGh1Yi5pby8=">UlyC<i class="fa fa-external-link-alt"></i></span></p>
+<ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly91bHljLmdpdGh1Yi5pby8yMDIxLzAxLzEzLzIwMjElRTUlQjklQjQtJUU3JTk0JUE4JUU2JTlCJUI0JUU3JThFJUIwJUU0JUJCJUEzJUU3JTlBJTg0JUU2JTk2JUI5JUU2JUIzJTk1JUU0JUJEJUJGJUU3JTk0JUE4UEdQLSVFNCVCOCU4QS8=">PGP 基础<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91bHljLmdpdGh1Yi5pby8yMDIxLzAxLzE4LzIwMjElRTUlQjklQjQtJUU3JTk0JUE4JUU2JTlCJUI0JUU3JThFJUIwJUU0JUJCJUEzJUU3JTlBJTg0JUU2JTk2JUI5JUU2JUIzJTk1JUU0JUJEJUJGJUU3JTk0JUE4UEdQLSVFNCVCOCVBRC8=">安全使用<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91bHljLmdpdGh1Yi5pby8yMDIxLzAxLzI2LzIwMjElRTUlQjklQjQtJUU3JTk0JUE4JUU2JTlCJUI0JUU3JThFJUIwJUU0JUJCJUEzJUU3JTlBJTg0JUU2JTk2JUI5JUU2JUIzJTk1JUU0JUJEJUJGJUU3JTk0JUE4UEdQLSVFNCVCOCU4Qi8=">公钥的发布与交换<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmdudXBnLm9yZy9XS0Q=">Web Key Directory<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmdudXBnLm9yZy9XS0RIb3N0aW5n">Hosting a Web Key Directory (without dynamic WKS)<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9nbnVwZy5vcmcvYmxvZy8yMDE2MTAyNy1ob3N0aW5nLWEtd2ViLWtleS1kaXJlY3RvcnkuaHRtbA==">Hosting a Web Key Directory<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21paGFseXIvb3BlbnBncGtleQ==">Hosting a Web Key Directory on GitHub Pages<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuZ251cGcub3JnL2RvY3VtZW50YXRpb24vbWFudWFscy9nbnVwZy9HUEctQ29uZmlndXJhdGlvbi1PcHRpb25zLmh0bWw=">GPG Configuration Options<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>Web</tag>
+        <tag>GitHub</tag>
+        <tag>GitHub Pages</tag>
+        <tag>PGP</tag>
+        <tag>GnuPG</tag>
+        <tag>Security</tag>
+        <tag>Asymmetric cryptography</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将 HP 39gs 升级为 HP 48gII</title>
+    <url>/2020/hp39gs-upgrade/</url>
+    <content><![CDATA[<p>HP 39gs 是 HP 于 2006 年发布的 HP-39 系列中的一个图形计算器</p>
+<span id="more"></span>
+<table>
+<thead>
+<tr>
+<th>HP 39gs</th>
+<th>信息</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>SAMSUNG S3C2410A ARM920T 75Mhz（可调至 203Mhz+）</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>256KB</td>
+</tr>
+<tr>
+<td>屏幕</td>
+<td>131×64 单色 LCD 可调对比度</td>
+</tr>
+<tr>
+<td>通信</td>
+<td>Mini USB / RS232 / IrDA</td>
+</tr>
+<tr>
+<td>供电</td>
+<td>4×AAA + CR2032</td>
+</tr>
+<tr>
+<td>尺寸</td>
+<td>9.4×3.1×18.7 cm</td>
+</tr>
+<tr>
+<td>重量</td>
+<td>248g</td>
+</tr>
+<tr>
+<td>输入</td>
+<td>线性 Algebraic</td>
+</tr>
+<tr>
+<td>Aplet 语言</td>
+<td>RPL</td>
+</tr>
+<tr>
+<td>Program 语言</td>
+<td>HP Basic</td>
+</tr>
+<tr>
+<td>CAS</td>
+<td>无</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>有蜂鸣器</td>
+</tr>
+</tbody>
+</table>
+<div class="note info"><p>HP 39gs 售价非常低廉（通常低于 50 人民币/台），但它运算功能差，速度慢，不建议用于日常计算使用。如果想要购买建议先使用模拟器体验。</p>
+</div>
+<h2 id="HP-39gs-使用体验">HP 39gs 使用体验</h2>
+<p>2019 年底我购买了 HP 39gs，这是我接触到的第一台图形编程计算器。</p>
+<p>没有 HP 计算器也想体验一下？</p>
+<p>可以使用<span class="exturl" data-url="aHR0cHM6Ly9wbGF5Lmdvb2dsZS5jb20vc3RvcmUvYXBwcy9kZXRhaWxzP2lkPW9yZy5lbXVsYXRvci5mb3J0eS5laWdodA==">Emu48 for Android<i class="fa fa-external-link-alt"></i></span>等模拟器。</p>
+<h3 id="操作">操作</h3>
+<p>它使用线性输入，所以拿到手后我很快就学会了如何使用它。</p>
+<p>不足的是字母等需要按 ALPHA 后输入的键标识位于实体键下方，需要适应。</p>
+<h3 id="计算及绘图">计算及绘图</h3>
+<p>计算只能是小数或是通过小数化成的分数，部分计算甚至不及我的<code>CASIO fx-82ES + A</code>函数计算器。</p>
+<blockquote>
+<p>计算<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>2</mn></msqrt><mo>+</mo><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">\sqrt{2}+\sqrt{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.13278em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.90722em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord">2</span></span></span><span style="top:-2.86722em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.13278em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.13278em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.90722em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord">2</span></span></span><span style="top:-2.86722em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.13278em;"><span></span></span></span></span></span></span></span></span></p>
+</blockquote>
+<p>得不到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">2\sqrt{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.13278em;"></span><span class="mord">2</span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.90722em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord">2</span></span></span><span style="top:-2.86722em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.13278em;"><span></span></span></span></span></span></span></span></span></p>
+<p>将只能得到近似结果<code>2.82842712474</code></p>
+<p>如果在分数模式下就会得到<code>1217471/430441</code>(精度 11)、<code>478/169</code>(精度 4)</p>
+<p>绘图画简单的函数还是 OK 的</p>
+<ul>
+<li>可以同时画多条</li>
+<li>有几种坐标方式可选</li>
+<li>可以求根、极值、面积、切线角度</li>
+</ul>
+<h3 id="其他程序">其他程序</h3>
+<p>游戏非常多</p>
+<p>我能想到的经典的几个：超级马里奥、贪吃蛇、BABAL、俄罗斯方块、扫雷</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMUR4NDExRzdaSA==">【百元科技神器-03】如何玩坏一个图形计算器（<i class="fa fa-external-link-alt"></i></span> by <span class="exturl" data-url="aHR0cHM6Ly93d3cuamltbXl0aWFuLmNvbS8=">Jimmy Tian<i class="fa fa-external-link-alt"></i></span></p>
+<p>群友编写的程序也很多，如中文阅读器、电子琴、摩尔斯电码、各种音乐、时钟、五子棋…</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuaHBjYWxjLm9yZy8=">hpcalc<i class="fa fa-external-link-alt"></i></span>上也有很多程序</p>
+<p>我认为比较重要的一个程序是<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FybmllOTcvY2xvY2stdHVuZXI=">时钟调节器<i class="fa fa-external-link-alt"></i></span>，降频可以省电或是减缓游戏速度，升频可以是作图和计算更快速。</p>
+<h2 id="HP-39gs-改造">HP 39gs 改造</h2>
+<div class="note warning"><p>需要有一定的电子知识和集成电路焊接技术。有一定的危险性。若您对自己的操作技术没有把握，请勿尝试，以免受伤或是计算器受损。必要的话请找人帮忙改。</p>
+</div>
+<h3 id="拆开-HP-39gs">拆开 HP 39gs</h3>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/hp39gs-upgrade/open.webp" alt="先取下屏幕前的贴纸"></p>
+<p>旋下两颗十字螺丝，打开电池盖，部分批次的计算器可能还有两颗螺丝也须取下。</p>
+<p>打开后盖（由卡扣固定），小心不要弄断电池盒或蜂鸣器的连接线。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/hp39gs-upgrade/opened.webp" alt="打开后如图(因为我已做部分改造 会有少许不同)"></p>
+<h3 id="供电改造">供电改造</h3>
+<p>HP 39gs 采用 4 节 AAA 电池供电(1.5V×4=6V)，但它实在有些太费电了，4 节全新电池 1 周-1 个月就需要更换。</p>
+<p>一种解决方法是使用 Mini USB 和移动电源为 HP 39gs 供电。实在不是很方便，我决定为 HP 39gs 安装锂电池。</p>
+<h4 id="我的方案">我的方案</h4>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/hp39gs-upgrade/power.webp" alt="材料：锂电池充电+保护板 DC升压板 锂电池"></p>
+<ul>
+<li>
+<p>锂电池充电+保护板<br>
+我用的是带有 Type-C 接口的(也能选用 Micro-B)，比 Mini USB 更通用</p>
+</li>
+<li>
+<p>DC 升压板<br>
+锂电池没有找到 6V 的，使用它由 3.7V 升压至 6V 给计算器供电</p>
+<p>如果不使用它也可以点亮计算器，只是计算器会判定电量低，开机就会有提示出现</p>
+<p>如果使用 7.4V 电池给计算器供电可能会导致花屏</p>
+</li>
+<li>
+<p>锂电池<br>
+HP 39gs 内部空间较大 要使用尺寸合适的</p>
+</li>
+</ul>
+<p>小心调节升压板的电位器使它输出 6V</p>
+<p>接线：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">电池+ -- B+ , OUT+ -- VIN+ , VOUT+ -- 计算器+</span><br><span class="line">电池- -- B- , OUT- -- VIN- , VOUT- -- 计算器-</span><br></pre></td></tr></table></figure>
+<p>全部塞到计算器里固定好</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/hp39gs-upgrade/battery.webp" alt="一堆胶带"></p>
+<p><s>别打我</s></p>
+<h4 id="其他方案">其他方案</h4>
+<p>我的方案只是最基础的，最小程度破坏原机设计的修改。</p>
+<p>评论区有大佬指出：可以通过 修改 ADC 电阻的阻值 以实现 系统自带低电量提醒 的功能，并且可以 省略升压板、减少能源损耗，同时增加内部空间。有兴趣使用此方案的话可以去评论区查看详细信息。</p>
+<p>理论上可以做的改进还有不少，比如从 Mini USB 的接口引出电源线来为电池充电等。在下文提到的 ROM 升级中也有人通过修改电阻和显示屏，将 HP 39gs 升级为 HP 50g。</p>
+<h3 id="升级到-HP-48gII">升级到 HP 48gII</h3>
+<blockquote>
+<p>更换 HP 39gs 的 ROM 芯片为更大容量的芯片并刷入 HP 48gII 计算器的操作系统后，HP 39gs 就会获得 HP 48gII 计算器的全部功能。——由 cncalc 计算器论坛的 nbzwt 研究发现</p>
+</blockquote>
+<div class="note info"><p>HP 39gs 的按键功能在升级后会变为 HP 48gII 的按键功能，不再与按键标记对应。需要使用键盘贴等重新标记按键</p>
+<p>如果不想更换按键位置，可以考虑升级到 HP 40gs</p>
+</div>
+<p>我使用的芯片是<code>SST39VF1601-70-4I-EKE</code>，购买时可以让卖家烧写好系统，就不需要自己用 JTAG 烧写了。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/hp39gs-upgrade/chip.webp" alt="HP 39gs的芯片 购买的芯片"></p>
+<p>取下主板上的电磁屏蔽纸，使用烙铁或风枪更换图示芯片，注意方向，能否成功基本看焊接技术。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/hp39gs-upgrade/replace.webp" alt="芯片位置及朝向"></p>
+<p>开机后应该就是 HP 48gII 的操作界面了</p>
+<p>安装计算器，贴键盘贴。键盘贴可以自制，也能在网上购买</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/hp39gs-upgrade/key.webp" alt="买来的键盘贴"></p>
+<h2 id="HP-48gII-使用体验">HP 48gII 使用体验</h2>
+<p>HP 48gII 除了和 HP 39gs 在按键上不同外，软件上也有许多的变化。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/hp39gs-upgrade/version.webp" alt="改机后查看版本"></p>
+<h3 id="计算">计算</h3>
+<p>得益于 HP 48gII 带有<span class="exturl" data-url="aHR0cHM6Ly9jYWxjd2lraS5vcmcvJUU4JUFFJUExJUU3JUFFJTk3JUU2JTlDJUJBJUU0JUJCJUEzJUU2JTk1JUIwJUU3JUIzJUJCJUU3JUJCJTlG">CAS<i class="fa fa-external-link-alt"></i></span>功能(Erable-based)，在速度、精度上得到了较 HP 39gs 较大的提升。</p>
+<p>HP 48gII 除了使用线性 Algebraic 输入，也能使用 EQW 自然书写。另外还支持大部分 HP 计算器都支持的<span class="exturl" data-url="aHR0cHM6Ly9jYWxjd2lraS5vcmcvJUU5JTgwJTg2JUU2JUIzJUEyJUU1JTg1JUIwJUU4JUExJUE4JUU4JUJFJUJFJUU1JUJDJThG">RPN<i class="fa fa-external-link-alt"></i></span>输入方式。</p>
+<h3 id="其他软件">其他软件</h3>
+<p>HP 48gII 游戏体验我认为不如 HP 39gs，游戏较少（但 ROM 自带俄罗斯方块彩蛋），频率调节不便…</p>
+<p>ROM 自带有时钟，可以用于查看时间日期。</p>
+<p>编程语言使用<span class="exturl" data-url="aHR0cHM6Ly9jYWxjd2lraS5vcmcvUlBM">RPL<i class="fa fa-external-link-alt"></i></span>或 Algebraic RPL。</p>
+<h3 id="连接-PC">连接 PC</h3>
+<p>在 Windows 上，HP 48gII 使用 conn4x。原先 HP 39gs 使用的 conn3x 将不能继续用于连接 HP 48gII，传输时一般使用<code>Xmodem Server</code></p>
+<h2 id="更多请见">更多请见</h2>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25jYWxjLm9yZy90aHJlYWQtMTE0NzUtMS0xLmh0bWw=">HP 39gs 升级 48gII<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9sZXhzaW9uLmNvbS9pbmRleC5waHAvYXJjaGl2ZXMvMjA0Lw==">HP39gs计算器改装锂电池供电<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9jYWxjd2lraS5vcmc=">计算器百科<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25jYWxjLm9yZw==">cncalc<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuaHBjYWxjLm9yZy8=">hpcalc<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8xNDgzOTI4NjY=">登月 50 年：计算器与计算器游戏发展简史<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>ROM</tag>
+        <tag>Calculator</tag>
+        <tag>Graphing calculator</tag>
+        <tag>HP</tag>
+        <tag>CAS</tag>
+        <tag>Hardware</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>破解 macOS 应用程序 (Inklet)</title>
+    <url>/2020/mac-app-crack/</url>
+    <content><![CDATA[<p><span class="exturl" data-url="aHR0cHM6Ly90ZW5vbmVkZXNpZ24uY29tL2lua2xldC5waHA=">Inklet<i class="fa fa-external-link-alt"></i></span> 是一个可以把笔记本触摸板变成简易数位板的 macOS 应用程序</p>
+<span id="more"></span>
+<p>软件售价 $19.98, 软件加<s>没什么用的</s>笔售价 $24.98<br>
+<span class="exturl" data-url="aHR0cHM6Ly90ZW5vbmVkZXNpZ24uY29tL2FwcHMvaW5rbGV0L2lua2xldC5waHA=">Demo 版下载<i class="fa fa-external-link-alt"></i></span><br>
+Demo 版有连续使用时间等限制</p>
+<p>上网课我需要用到, 所以我就在网上找了个 v2.1.1 的破解版用</p>
+<p>发现官方更新到了 v2.2.0, 但是网上找不到此版本破解版/激活码</p>
+<p>那就自己动手吧, <s>先棒读:</s><strong>仅供学习交流使用，严禁用于商业用途，请于 24 小时内删除。请支持正版</strong></p>
+<h2 id="工具准备">工具准备</h2>
+<ul>
+<li>
+<p>brew</p>
+</li>
+<li>
+<p>vim<br>
+不会用的话用 <span class="exturl" data-url="aHR0cDovL3JpZGljdWxvdXNmaXNoLmNvbS9oZXhmaWVuZC8=">Hex Fiend<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li>
+<p>otx</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew cask install otx</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可选工具:</p>
+<ul>
+<li>
+<p><span class="exturl" data-url="aHR0cDovL3N0ZXZlbnlnYXJkLmNvbS9wcm9qZWN0cy9jbGFzcy1kdW1wLw==">class-dump<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li>
+<p>gdb</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brew install gdb</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Hopper Disassembler</p>
+</li>
+</ul>
+<h2 id="开始破解">开始破解</h2>
+<p>程序的二进制文件位于<code>/Applications/Inklet.app/Contents/MacOS/Inklet</code></p>
+<h3 id="反汇编程序">反汇编程序</h3>
+<ul>
+<li>
+<p>使用 otx</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">otx /Applications/Inklet.app/Contents/MacOS/Inklet &gt; ~/Desktop/inklet.asm</span><br></pre></td></tr></table></figure>
+<p>打开<code>inklet.asm</code></p>
+</li>
+<li>
+<p>使用 class-dump</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">class-dump -H /Applications/Inklet.app/Contents/MacOS/Inklet -o ~/classdump</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="找到返回注册信息程序的对应位置">找到返回注册信息程序的对应位置</h3>
+<p>我先查找了<code>license</code></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">class-dump -f license  /Applications/Inklet.app/Contents/MacOS/Inklet</span><br></pre></td></tr></table></figure>
+<blockquote>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">@interface InkletWelcomeLicense : InkletWelcomeBase</span><br><span class="line">- (long long)licenseUpgradeState;</span><br><span class="line"></span><br><span class="line">@interface InkletRegisterPreferences : NSPreferencesModule</span><br><span class="line">- (BOOL)licenseState;</span><br><span class="line">- (BOOL)unlicensedWithPreviousLicense;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>在<code>inklet.asm</code>中:</p>
+<blockquote>
+<figure class="highlight x86asm"><table><tr><td class="code"><pre><span class="line">-(BOOL)[InkletRegisterPreferences licenseState]:</span><br><span class="line">    +<span class="number">0</span>  000000010002856f  <span class="number">55</span>                        pushq         %rbp</span><br><span class="line">    +<span class="number">1</span>  <span class="number">0000000100028570</span>  4889e5                    <span class="keyword">movq</span>          %rsp,                         %rbp</span><br><span class="line">    +<span class="number">4</span>  <span class="number">0000000100028573</span>  488b0516060500            <span class="keyword">movq</span>          <span class="number">0x50616</span>(%rip),                %rax</span><br><span class="line">   +<span class="number">11</span>  000000010002857a  0fbe0407                  movsbl        (%rdi,%rax),                  %eax</span><br><span class="line">   +<span class="number">15</span>  000000010002857e  <span class="number">5d</span>                        popq          %rbp</span><br><span class="line">   +<span class="number">16</span>  000000010002857f  c3                        retq</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>猜测是<code>InkletRegisterPreferences</code>中的<code>(BOOL)licenseState</code>返回注册状态, 所以只需要让它的值一直返回 True 就很可能破解成功</p>
+<h3 id="修改程序">修改程序</h3>
+<p>持续返回 True 的程序的机器码来自<span class="exturl" data-url="aHR0cHM6Ly9mcmVlbWFuZGVhbGVyLmdpdGh1Yi5pby8yMDE1LzEwLzEwL2hhY2tpbmctb3N4LWFwcC8jJUU1JTg3JTg2JUU1JUE0JTg3JUU2JUFGJTkyJUU4JThEJUFG">这里<i class="fa fa-external-link-alt"></i></span><br>
+省事很多 ww</p>
+<h4 id="使用-gdb-动态测试">使用 gdb 动态测试</h4>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">gdb inklet</span><br><span class="line">&gt; b *0x000000010002856f   <span class="comment">#InkletRegisterPreferences函数开始地址</span></span><br><span class="line">&gt; r</span><br><span class="line">&gt; <span class="built_in">set</span> *0x0000000100028573 = 0x000001b8</span><br><span class="line">&gt; <span class="built_in">set</span> *0x0000000100028577 = 0x0fc35d00</span><br><span class="line">&gt; <span class="built_in">set</span> *0x000000010002857b = 0x0000441f</span><br><span class="line">&gt; disas 0x000000010002856f, +10</span><br><span class="line">&gt; <span class="built_in">continue</span></span><br></pre></td></tr></table></figure>
+<p>测试成功, 原来的时间限制已经解锁了</p>
+<h4 id="修改二进制文件">修改二进制文件</h4>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim /Applications/Inklet.app/Contents/MacOS/Inklet</span><br><span class="line">:%!xxd</span><br></pre></td></tr></table></figure>
+<p>找到<code>554889e5488b05160605000fbe04075d</code><br>
+改为<code>554889e5b8010000005dc30f1f440000</code></p>
+<p>如果修改后打不开那就给它<a href="/2020/fix-macOS-10-15-4-damage/">签个名</a>试试?(我这直接就能打开了)</p>
+<h2 id="技术总结">技术总结</h2>
+<p>收集信息和探索：对二进制文件展开成人类可读的形式后，使用关键词进行搜索，定位阻碍我们流畅使用该应用的函数。这一步耗时最长，需要仔细摆弄软件获得灵感，并且直接决定能否成功。一般搜索关键词如 activate、purchase、register、trial 之类，也可以结合具体应用和想要的效果选取。例如对于弹窗的应用，不一定非要“破解”，只要能屏蔽广告就行，那么可以使用 dialog、window 之类的关键词搜索。这个阶段使用的工具主要目的是为了把 binary format 妆换成 human-readable format，工具例如：hopper、otx、class-dump 都可以满足，class-dump 信息清晰一些。</p>
+<p>如果上一步定位了目标函数，则需要弄清这个函数的输入输出，并撰写编译自己后面用来替换的函数。比如目标函数通过判断用户身份返回是否合法，合法 true 不合法 false。那么我们就建立一个 C 文件写一个永远返回 true 的函数编译出二进制。如果一个目标是一个返回 void 的弹窗函数，那么我们就让这个函数调用后立马 return，跳过后面花里胡哨的广告展示逻辑。这个阶段用到的工具是 C 语言编译器，如 gcc。</p>
+<p>找到目标函数的虚拟内存地址。工具: hopper 或 otx 都可以满足。</p>
+<p>通过上面的内存地址获取代码在二进制文件中的位置。工具： offset 脚本。</p>
+<p>使用自己的函数逻辑替换二进制文件 offset 处原逻辑。工具：vim &amp;&amp; xxds</p>
+<p>测试是否成功。不成功重复上述步骤，或者 google 高阶破解技巧，或者放弃。</p>
+<p>转自<span class="exturl" data-url="aHR0cHM6Ly9mcmVlbWFuZGVhbGVyLmdpdGh1Yi5pby8yMDE1LzEwLzEwL2hhY2tpbmctb3N4LWFwcC8jJUU2JThBJTgwJUU2JTlDJUFGJUU2JTgwJUJCJUU3JUJCJTkz">技术总结 by Zhengyu Zhang<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="参考文章">参考文章</h2>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9mcmVlbWFuZGVhbGVyLmdpdGh1Yi5pby8yMDE1LzEwLzEwL2hhY2tpbmctb3N4LWFwcC8=">记录一次 OSX 软件破解<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9iZXN0c3dpZnRlci5jb20vYXBwLWNyYWNrLw==">一个数字的魔法——破解 Mac 上 198 元的 Paw<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>如果没有这些文章, 这次破解将会变得非常耗时且难以成功, 感谢!</p>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>macOS</tag>
+        <tag>Hack</tag>
+        <tag>Reverse</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的 2020</title>
+    <url>/2021/my-2020/</url>
+    <content><![CDATA[<p>2020 总结</p>
+<span id="more"></span>
+<p>标题虽然是 2020，但从 2020/12 咕到了 2021/2（故文中信息以编写时间为准</p>
+<div class="note warning"><p>本文不使用 CC BY-NC-SA 协议公开。</p>
+<p>保留所有权利，未经许可禁止转载，请知悉。</p>
+</div>
+<h2 id="Learnt">Learnt</h2>
+<p>学习的内容几乎都是随用随学，不成体系</p>
+<p>欢迎推荐教材</p>
+<h3 id="General">General</h3>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/my-2020/history_statics.png" alt="根据浏览器历史记录的统计"></p>
+<h3 id="git">git</h3>
+<ul>
+<li>90 contributions in 2020 on GitHub</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9za3lsaW5lLmdpdGh1Yi5jb20vTWlzYWthMTM1MTQvMjAyMA==">2020 GitHub Skyline<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9za3lsaW5lLmdpdGh1Yi5jb20vTWlzYWthMTM1MTQvMjAyMQ==">2021 GitHub Skyline<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>从只会<code>add</code>、<code>commit</code>、<code>push</code></p>
+<p>到 rebase、多 branch、多 remote~~、force push、带来一堆 conflicts、篡改 git 历史、冒用他人信息 commit~~</p>
+<h3 id="Program">Program</h3>
+<p>学习了一些 Python</p>
+<ul>
+<li>基础语法</li>
+<li>数据分析</li>
+<li>爬虫</li>
+</ul>
+<p>日常不怎么写，编写时需要随时看文档复制，经常会写<code>os.system</code>这种能用就行的代码（</p>
+<p>似乎从未贡献代码 太菜了</p>
+<p>在比赛中会尝试写 C</p>
+<p>对以下语言有了似懂非懂的了解</p>
+<ul>
+<li>css</li>
+<li>javascript</li>
+<li>php</li>
+<li>swift</li>
+<li>C</li>
+<li>MySQL</li>
+</ul>
+<h3 id="CTF">CTF</h3>
+<p>比较擅长 misc，crypto 和 web 一般般，Assembly、Executable、Pwn 和 Reverse 都下手</p>
+<p>个人感觉比 OI 有趣</p>
+<p>比赛参加的不多，感觉总是比别人需要用更多的时间，会跟题过不去~~，自己卷自己~~</p>
+<p>想找人一起打比赛哇</p>
+<h3 id="Amateur-Radio">Amateur Radio</h3>
+<p>学习了一些电子电路知识和业余无线电通信简语</p>
+<p>拿到了中国业余无线电 B 证</p>
+<p>30Mhz 以下的业余频段也能使用了（大概没机会用）</p>
+<p>背完了莫尔斯码和字母表示法</p>
+<p>实际操作能力仍有欠缺</p>
+<p>设备有 DM-5R 和 RTL-SDR</p>
+<p>申请电台执照因年龄不足而被拒绝</p>
+<h3 id="Japanese">Japanese</h3>
+<p>日常听歌看番都需要日语，而且我所在的上海日语浓度感觉挺高的（可以去下面的文章看看），所以在学习，大概有点进步（</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9oZXgubW9lL3AvYjIyNjZjZDEv">上海之旅<i class="fa fa-external-link-alt"></i></span> by LovelyWei</p>
+<p>标日初级仍在学习中</p>
+<p>主要会在 Twitter 使用，有时在 Telegram 也会使用~~，甚至能用日语跟乌克兰人交流~~</p>
+<p>总喜欢把多种语言混合在一起用</p>
+<h3 id="Double-Pinyin">Double Pinyin</h3>
+<p>学习并使用小鹤双拼</p>
+<p>提升了打字效率</p>
+<p>（然而连指法都不会）</p>
+<h2 id="Social">Social</h2>
+<p>不去比较数字</p>
+<p>对于每一位 Follower 我都表示感谢</p>
+<table>
+<thead>
+<tr>
+<th>Site</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0VNZmllbGQ=">Telegram 频道<i class="fa fa-external-link-alt"></i></span></td>
+<td>44</td>
+</tr>
+<tr>
+<td>Telegram PM</td>
+<td>20</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0P3RhYj1mb2xsb3dlcnM=">GitHub<i class="fa fa-external-link-alt"></i></span></td>
+<td>50</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9NaXNha2FfMHgzNGNhL2ZvbGxvd2Vycw==">Twitter<i class="fa fa-external-link-alt"></i></span></td>
+<td>61</td>
+</tr>
+<tr>
+<td><a href="/links/">blog 友链</a> （双向）</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/my-2020/EMfield.png" alt="频道折线统计"></p>
+<p><s>（去除了减的部分）</s></p>
+<p>自制图，因为还没到 50 人，看不到官方统计</p>
+<p>加入了许多群，认识了许多人</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/my-2020/twitter.jpg" alt="Twitter interaction circle"></p>
+<p>虽然很少主动发起聊天，但是要是想找我随时欢迎 w</p>
+<h2 id="Site">Site</h2>
+<p>一句话总结：fork, modify, deploy</p>
+<p>建立了博客、关于、主页等等页面</p>
+<p><s>别人好看的页面被我看上后下一秒就是我的了</s></p>
+<p>写了 11 篇文章</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9hdHJpLnRrL3NpdGVtYXAueG1s">Sitemap<i class="fa fa-external-link-alt"></i></span></p>
+<p>没钱钱买域名，<code>moeneko.xyz</code>无力续费，更换为免费域名<code>atri.tk</code></p>
+<h2 id="ACG">ACG</h2>
+<p>完成了</p>
+<ul>
+<li>とある科学の超電磁砲 T</li>
+<li>ヴァイオレット・エヴァーガーデン</li>
+<li>ヴァイオレット・エヴァーガーデン 外伝 - 永遠と自動手記人形 -</li>
+<li>ご注文はうさぎですか？</li>
+<li>ご注文はうさぎですか？？</li>
+<li>かぐや様は告らせたい ～天才たちの恋愛頭脳戦～</li>
+<li>かぐや様は告らせたい？<s>～天才たちの恋愛頭脳戦～</s></li>
+<li>マギアレコード 魔法少女まどか ☆ マギカ外伝</li>
+<li>デート・ア・バレット デッド・オア・バレット</li>
+<li>デート・ア・バレット ナイトメア・オア・クイーン</li>
+<li>泣きたい私は猫をかぶる</li>
+<li>プラスティック・メモリーズ</li>
+<li>ネコぱら</li>
+<li>ネコぱら vol.4 ネコとパティシェのノエル</li>
+<li>ATRI -My Dear Moments-</li>
+<li>サノバウィッチ</li>
+<li>千恋＊万花 （未全通）</li>
+<li>RIDDLE JOKER</li>
+<li>喫茶ステラと死神の蝶 （未全通）</li>
+<li>リトルバスターズ！</li>
+<li>リトルバスターズ！エクスタシー （100% CG 达成）</li>
+<li>クドわふたー</li>
+<li>美少女万華鏡 ―呪われし伝説の少女―</li>
+<li>美少女万華鏡 ―忘れな草と永遠の少女―</li>
+<li>美少女万華鏡 ―神が造りたもうた少女たち―</li>
+<li>美少女万華鏡 ―理と迷宮の少女― （未全通）</li>
+</ul>
+<p>在看</p>
+<ul>
+<li>ご注文はうさぎですか？BLOOM</li>
+<li>リトルバスターズ！～ Refrain ～</li>
+<li>リトルバスターズ！EX</li>
+</ul>
+<p>想看&amp;搁置了</p>
+<ul>
+<li>劇場版 ヴァイオレット・エヴァーガーデン</li>
+<li>CLANNAD</li>
+<li>智代アフター ～ It’s a Wonderful Life ～</li>
+<li>美少女万華鏡 ―罪と罰の少女―</li>
+<li>ATRI -My Dear Moments- （REPLAY）</li>
+<li>ドラクリオット！</li>
+<li>天色＊アイルノーツ</li>
+<li>あまいろショコラータ</li>
+<li>ネコ神さまと、ななつぼし -妹の姉-</li>
+</ul>
+<div class="note warning"><p>本文不使用 CC BY-NC-SA 协议公开。</p>
+<p>保留所有权利，未经许可禁止转载，请知悉。</p>
+</div>
+]]></content>
+      <categories>
+        <category>摸鱼</category>
+      </categories>
+      <tags>
+        <tag>Personal</tag>
+        <tag>Summary</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>玩 Arduino 开发板</title>
+    <url>/2020/play-arduino/</url>
+    <content><![CDATA[<p>在学校科技节比赛中稍稍玩了会 Arduino</p>
+<span id="more"></span>
+<p>以前在淘宝买过一个摇摇棒套件，用的单片机是 Atmel 的 AT89S52，大致的原理是当晃动开关连通后延时控制发光二极管的亮暗，达到显示文字/图案的效果，按按钮可以切换存储的多套文字/图案。电路是卖家设计的，程序给了个模版。</p>
+<p>修改程序先用字模软件生成阴码/阳码，放到程序中后用 Keil 软件通过 ISP 串口烧写。</p>
+<p>相较于那个套件，这次比赛中使用的 Arduino 开发版就显得简单些了。</p>
+<h2 id="关于比赛">关于比赛</h2>
+<h3 id="介绍">介绍</h3>
+<p>设计一个十字路口，搭建交通灯系统，可以有自己的创新</p>
+<h3 id="材料">材料</h3>
+<p>硬件：</p>
+<ul>
+<li>Arduino MEGA 2560 开发板</li>
+<li>Arduino MEGA 2560 扩展板</li>
+<li>TM1637 数码管</li>
+<li>LED 灯</li>
+<li>杜邦线</li>
+<li>esp8266 (自己加的)</li>
+</ul>
+<p>软件：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cDovL21peGx5Lm9yZy8=">Mixly<i class="fa fa-external-link-alt"></i></span> For Windows</li>
+<li>代码模版</li>
+<li>连接教程、效果示例视频</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuYXJkdWluby5jYy8=">Arduino<i class="fa fa-external-link-alt"></i></span> (要什么 Mixly，Arduino 不香吗)</li>
+</ul>
+<h2 id="部分代码实现及介绍">部分代码实现及介绍</h2>
+<h3 id="Arduino-MEGA-2560">Arduino MEGA 2560</h3>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;TM1637.h&gt;</span>            <span class="comment">//使用Grove4Display的库</span></span></span><br><span class="line"><span class="function">TM1637 <span class="title">digit1</span><span class="params">(CLK,DIO)</span></span>;        <span class="comment">//设置数码管管脚</span></span><br><span class="line">digit1.<span class="built_in">init</span>();                 <span class="comment">//初始化数码管digit1</span></span><br><span class="line">digit1.<span class="built_in">set</span>(BRIGHT_TYPICAL);    <span class="comment">//数码管设置亮度</span></span><br><span class="line">digit1.<span class="built_in">display</span>(<span class="number">0</span><span class="number">-3</span>,<span class="number">0</span><span class="number">-9</span>);       <span class="comment">//使某位显示数字</span></span><br><span class="line"><span class="built_in">pinMode</span>(R/Y/G, <span class="literal">OUTPUT</span>);        <span class="comment">//设置输出管脚</span></span><br><span class="line"><span class="built_in">digitalWrite</span>(R/Y/G,<span class="literal">HIGH</span>/<span class="literal">LOW</span>);  <span class="comment">//使R/Y/G 亮/暗</span></span><br><span class="line"><span class="built_in">Serial</span>.<span class="built_in">begin</span>(<span class="number">115200</span>);          <span class="comment">//使用串口通信 速率115200</span></span><br></pre></td></tr></table></figure>
+<p>基本就这些，再加几个判断和循环就没问题</p>
+<h3 id="Esp8266">Esp8266</h3>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ESP8266WiFi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> APSSID <span class="meta-string">&quot;SSID&quot;</span>          <span class="comment">//设置无线接入点名称</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> APPSK <span class="meta-string">&quot;password&quot;</span>       <span class="comment">//设置无线接入点密码</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ESP8266WebServer.h&gt;</span></span></span><br><span class="line"><span class="function">ESP8266WebServer <span class="title">server</span><span class="params">(<span class="number">80</span>)</span></span>;   <span class="comment">//Web服务器在80端口运行</span></span><br><span class="line"><span class="built_in">Serial</span>.<span class="built_in">begin</span>(<span class="number">115200</span>);          <span class="comment">//使用串口通信 速率115200</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//设置Web服务器路径及相应内容</span></span><br><span class="line">server.<span class="built_in">on</span>(<span class="string">&quot;/&quot;</span>, []() &#123;</span><br><span class="line">server.<span class="built_in">send</span>(<span class="number">200</span>, <span class="string">&quot;text/html&quot;</span>, <span class="string">&quot;&lt;h1&gt;Traffic Light&lt;/h1&gt;&lt;br /&gt;&lt;a href=\&quot;/ns\&quot;&gt;Turn N-S to green&lt;/a&gt;&lt;br /&gt;&lt;a href=\&quot;/we\&quot;&gt;Turn W-E to green&lt;/a&gt;&lt;br /&gt;&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.<span class="built_in">on</span>(<span class="string">&quot;/ns&quot;</span>, []() &#123;</span><br><span class="line">server.<span class="built_in">send</span>(<span class="number">200</span>, <span class="string">&quot;text/plain&quot;</span>, <span class="string">&quot;N-S turned to green&quot;</span>);</span><br><span class="line"><span class="built_in">Serial</span>.<span class="built_in">print</span>(<span class="string">&quot;NS&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.<span class="built_in">on</span>(<span class="string">&quot;/we&quot;</span>, []() &#123;</span><br><span class="line">server.<span class="built_in">send</span>(<span class="number">200</span>, <span class="string">&quot;text/plain&quot;</span>, <span class="string">&quot;W-E turned to green&quot;</span>);</span><br><span class="line"><span class="built_in">Serial</span>.<span class="built_in">print</span>(<span class="string">&quot;WE&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.<span class="built_in">begin</span>();                <span class="comment">//启动Web服务器</span></span><br><span class="line">server.<span class="built_in">handleClient</span>();</span><br></pre></td></tr></table></figure>
+<p>它在这次的作品中通过串口与 Arduino MEGA 2560 建立数据连接，通过 Wi-Fi 与控制端建立数据连接，起到无线控制的作用。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/play-arduino/ESP.webp" alt="Arduino MEGA 2560 连接 esp8266"></p>
+<p>P.S.:为什么我会买这块 Esp8266 呢？</p>
+<p>Jimmy Tian 在他的视频中介绍过它：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMXN4NDExbTd4cQ==">【百元科技神器-01】如何「黑」掉你学校的指纹考勤机？<i class="fa fa-external-link-alt"></i></span> by <span class="exturl" data-url="aHR0cHM6Ly93d3cuamltbXl0aWFuLmNvbS8=">Jimmy Tian<i class="fa fa-external-link-alt"></i></span></p>
+<p>我觉得比较有意思、价格也很亲民就买了(NodeMcu 版本的便于开发，如果仅买一小块 Esp8266 也能用)</p>
+<p><s>年轻人的第一块 Wi-Fi 模块</s></p>
+<p>体验了一下这个固件，对于 2.4Ghz 的 Wi-Fi 来说 deauth 攻击的效果明显、且便于携带隐藏，但 esp8266 不支持工作在 5Ghz，退一步讲就算它支持 5Ghz，原先的攻击方式起不了作用，目前似乎也没有对 5Ghz 较为有效的 deauth 攻击方式</p>
+<h2 id="写在后面">写在后面</h2>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/play-arduino/UNO.webp" alt="Arduino Uno"></p>
+<p>在另一个比赛中摸过 Arduino Uno、PS 2 手柄及接收模块，也是挺好玩的</p>
+<p>以前玩的比赛我都用的是<span class="exturl" data-url="aHR0cDovL3d3dy5hYmlsaXguY29tLw==">能力风暴<i class="fa fa-external-link-alt"></i></span>的机器人，这次玩的 Arduino 能实现的功能要比它多，但相对的编写调试甚至于上传程序，Arduino 都要比它麻烦一些</p>
+]]></content>
+      <categories>
+        <category>摸鱼</category>
+      </categories>
+      <tags>
+        <tag>Arduino</tag>
+        <tag>Espressif Systems</tag>
+        <tag>AVR</tag>
+        <tag>Atmel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建 Typecho</title>
+    <url>/2020/set-up-typecho/</url>
+    <content><![CDATA[<p>搭建配置及自定义一个 Typecho 站点</p>
+<span id="more"></span>
+<p>–&gt; <span class="exturl" data-url="aHR0cHM6Ly9hbnlhbi5tbA==">安言的个人博客<i class="fa fa-external-link-alt"></i></span> &lt;–<br>
+来玩呀(编者不是我哦)</p>
+<p><s>Kora! 我一个搭了那么久的 blog 还没搭了几天的 blog 热闹</s></p>
+<p>我的 blog 运行在 PaaS,这次搭建的 Typecho 运行在 IaaS<br>
+VPS 来自我的 GCP(2020.4)</p>
+<h2 id="免费域名申请">免费域名申请</h2>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZnJlZW5vbS5jb20=">Freenom<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h2 id="搭建-Typecho">搭建 Typecho</h2>
+<p>先是直接装一套 LNMP,安装替代产品也行</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cDovL2RvY3MudHlwZWNoby5vcmcvaW5zdGFsbA==">开始安装 - Typecho 文档站点<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>下载 Typecho 放网站目录,访问即可配置</p>
+<p>数据库可以提前创建</p>
+<h2 id="自定义-Typecho">自定义 Typecho</h2>
+<h3 id="伪静态">伪静态</h3>
+<p>Nginx 配置文件:</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">if</span> (!-e $request_filename) &#123;</span><br><span class="line">    <span class="attribute">rewrite</span><span class="regexp"> ^(.*)$</span> /index.php<span class="variable">$1</span> <span class="literal">last</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 Typecho 后台-设置-永久链接<br>
+启用地址重写功能</p>
+<h3 id="使用一言-API">使用一言 API</h3>
+<p>在页脚显示一句话</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuaGl0b2tvdG8uY24vc2VudGVuY2Uv">使用示例 - 一言开发者中心<i class="fa fa-external-link-alt"></i></span><br>
+Hexo 用户可以看看: <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmJpbGwubW9lL2FkZC1oaXRva290by8=">为您的 Hexo 博客添加 Hitokoto 一言功能<i class="fa fa-external-link-alt"></i></span></p>
+<p><s>复制粘贴不就好?</s></p>
+<p>在<code>header.php</code>中加入</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">  fetch(<span class="string">&quot;https://v1.hitokoto.cn&quot;</span>)</span></span><br><span class="line"><span class="javascript">    .then(<span class="function">(<span class="params">response</span>) =&gt;</span> response.json())</span></span><br><span class="line"><span class="javascript">    .then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> hitokoto = <span class="built_in">document</span>.getElementById(<span class="string">&quot;hitokoto&quot;</span>);</span></span><br><span class="line"><span class="javascript">      hitokoto.innerText = data.hitokoto;</span></span><br><span class="line"><span class="javascript">    &#125;)</span></span><br><span class="line"><span class="javascript">    .catch(<span class="built_in">console</span>.error);</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在页脚加入</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;hitokoto&quot;</span>&gt;</span>:D 获取中...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>为了防止<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvSFRUUC9BY2Nlc3NfY29udHJvbF9DT1JT">跨域访问<i class="fa fa-external-link-alt"></i></span>出错,在 Nginx 配置中加入</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line"><span class="attribute">add_header</span> Access-Control-Allow-Origin *;</span><br><span class="line"><span class="attribute">add_header</span> Access-Control-Allow-Methods <span class="string">&#x27;GET, POST, OPTIONS&#x27;</span>;</span><br><span class="line"><span class="attribute">add_header</span> Access-Control-Allow-Headers <span class="string">&#x27;DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization&#x27;</span>;</span><br><span class="line"><span class="attribute">if</span> ($request_method = <span class="string">&#x27;OPTIONS&#x27;</span>) &#123;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">204</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个问题也能使用反向代理的方法来解决</p>
+<h2 id="写在后面">写在后面</h2>
+<p>至此目前的修改就基本都在这了<br>
+以后的更改再回来更新</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Blog</tag>
+        <tag>Web</tag>
+        <tag>Typecho</tag>
+        <tag>Linux</tag>
+        <tag>PHP</tag>
+        <tag>Nginx</tag>
+        <tag>MySQL</tag>
+        <tag>IaaS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建 V2Ray 和 Trojan</title>
+    <url>/2020/set-up-v2ray-trojan/</url>
+    <content><![CDATA[<p>最近把 SSR 改成了 v2ray,顺便把 blog 从 VPS 转到了 GitHub Pages</p>
+<span id="more"></span>
+<div class="note warning"><p>本文已过期，请移步至官方文档。</p>
+</div>
+<p>自从 2019 年成功办完<span class="exturl" data-url="aHR0cHM6Ly9wb3BsaXRlLnh5ei9wb3N0LzIwMTgvMDMvMDUvYm9jLWRlYml0LWNhcmQtZ3VpZGUtZm9yLW9ubGluZS1wYXltZW50Lmh0bWw=">中国银行长城跨境通卡<i class="fa fa-external-link-alt"></i></span>,并成功白嫖了 1 年的 GCP 后,我先搭建的是 SSR,不久后又安装了 nginx 来显示我的 blog.</p>
+<p>可是这 nginx 又不好配,更新 blog 也不方便,SSR 又不抗封,就产生了前文所说的改动的想法.</p>
+<p><s>复读机又上线了</s></p>
+<h2 id="参考文章">参考文章</h2>
+<h3 id="GitHub-Pages-启用自定义域名并开启-SSL">GitHub Pages 启用自定义域名并开启 SSL</h3>
+<blockquote>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9oZXgubW9lL3AvZjE3ZDQyZGUv">为 Hexo 博客配置上 HTTPS<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9wb3BsaXRlLnh5ei9wb3N0LzIwMTgvMDUvMDMvaG93LXRvLWVuYWJsZS1odHRwcy1mb3ItY3VzdG9tLWRvbWFpbi1vbi1naXRodWItcGFnZXMuaHRtbA==">GitHub Pages 开始为自定义域名提供 HTTPS 支持（附启用方法）<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+</blockquote>
+<h3 id="搭建-V2Ray-Trojan">搭建 V2Ray/Trojan</h3>
+<h4 id="V2Ray-TLS">V2Ray+TLS</h4>
+<ul>
+<li>+WebSocket+Web(Nginx):
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMjAwNDE0MDUyMzQwL2h0dHBzOi8vd3d3LmVjc29lLmNvbS9hcmNoaXZlcy8zOC5odG1s">V2Ray 进阶配置 WebSocket+TLS+Nginx<i class="fa fa-external-link-alt"></i></span><br>
+使用人数多,兼容性好</p>
+</blockquote>
+</li>
+<li>+HTTP/2+Web(Caddy):
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ndWlkZS52MmZseS5vcmcvYWR2YW5jZWQvaDJfdGxzX3dlYi5odG1s">HTTP/2+TLS+WEB | 新 V2Ray 白话文指南<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+</li>
+<li>+TCP+HaProxy+Web:
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ndWlkZS52MmZseS5vcmcvYWR2YW5jZWQvdGNwX3Rsc193ZWIuaHRtbA==">TCP + TLS + Web | 新 V2Ray 白话文指南<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+</li>
+<li>+DomainSocket+HaProxy+Web:
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXN0LmdpdGh1Yi5jb20vbGliZXJhbC1ib3kvYjJkNTU5NzI4NWI0MjAyYjZkNjA3ZmFhYTEwNzhkMjc=">HaProxy 通过 Domain Socket 与 V2Ray 通讯<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="Trojan">Trojan</h4>
+<blockquote>
+<p>直接一键脚本,舒适</p>
+</blockquote>
+<h2 id="实战搭建-V2Ray-WebSocket-TLS-Nginx">实战搭建 V2Ray+WebSocket+TLS+Nginx</h2>
+<p><strong>建议搭建前检查自己的客户端是否支持</strong><br>
+<s>照着文档装就行了</s></p>
+<p>再装个 BBR 等基本就没问题了</p>
+<p>上述文章均能与部分网页共存(通过转发)</p>
+<p>部分网页可能转发不正确/不完整(比如 Trojan+Typecho 登录好像会有问题)</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>GFW</tag>
+        <tag>V2Ray</tag>
+        <tag>Trojan</tag>
+        <tag>Proxy</tag>
+        <tag>Linux</tag>
+        <tag>Nginx</tag>
+        <tag>IaaS</tag>
+        <tag>Caddy</tag>
+        <tag>HaProxy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>删除 Win10 中不再使用的或重复的网络</title>
+    <url>/2020/win-ssid-number/</url>
+    <content><![CDATA[<p>Win 8 及 Win 10 重置路由器（或更换）后，再次连接路由器（还是原 SSID 的情况下）鼠标悬停右下角网络图标，显示的网络名称后边会跟一个数字，比如 <code>SSID 2</code> 或 <code>网络 2</code>，那么如何删除这个数字呢？</p>
+<span id="more"></span>
+<p>这个问题有多种方法可以解决</p>
+<div class="note info"><p>删除配置后，如果再次连接需要输入密码</p>
+</div>
+<div class="note warning"><p>如果你曾经连接过很多网络，可能会有很多数据，一定要看清楚再删除！</p>
+<p>在操作过程中可能需要<code>Administrator</code>权限</p>
+</div>
+<h2 id="使用「设置」应用">使用「设置」应用</h2>
+<p>在开始菜单中打开设置，进入<code>网络和Internet</code>，选择<code>Wi-Fi</code></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/win-ssid-number/Settings-Network.png" alt="Wi-Fi"></p>
+<p>点击管理已保存的网络，找到需要删除的网络配置删除即可</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/win-ssid-number/Settings-Network-Forget.png" alt="管理已保存的网络"></p>
+<h2 id="使用命令行">使用命令行</h2>
+<p>如果你正在远程操作一台服务器或是习惯命令行的操作方式，这种方法会更快捷。</p>
+<p>右键<code>Windows徽标</code>（快捷键：<code>Win</code>+<code>X</code>），选择<code>命令提示符（管理员）</code>或<code>Powershell（管理员）</code></p>
+<p>输入：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">netsh wlan show profiles <span class="comment">#显示网络配置</span></span><br><span class="line">netsh wlan show all      <span class="comment">#我 全 都 要</span></span><br></pre></td></tr></table></figure>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/win-ssid-number/netsh-show.png" alt="显示网络配置"></p>
+<blockquote>
+<p><code>Profiles on interface *Wi-Fi*</code></p>
+</blockquote>
+<p>其中的<code>*Wi-Fi*</code>是网络接口名称，不同设备可能显示结果不同</p>
+<p>找到要删除的配置名称<code>*Network*</code></p>
+<p>使用以下命令删除</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">netsh wlan delete profile name=<span class="string">&quot;*Network*&quot;</span> interface=<span class="string">&quot;*Wi-Fi*&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/win-ssid-number/netsh-delete.png" alt="删除网络配置"></p>
+<p>显示已删除，再次查看网络配置，发现删除成功</p>
+<h2 id="使用「注册表编辑器」">使用「注册表编辑器」</h2>
+<p>以上方法可能并不能成功找到所有的配置，而使用「注册表编辑器」是一个彻底的方法。</p>
+<p>右键<code>Windows徽标</code>（快捷键：<code>Win</code>+<code>X</code>），选择<code>运行</code></p>
+<p>（快捷键：<code>Win</code>+<code>R</code>）</p>
+<p>输入<code>regedit</code>打开注册表编辑器，找到如下路径:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles</span><br></pre></td></tr></table></figure>
+<p>删除掉相关的注册子键，如图所示:</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/win-ssid-number/regedit.png" alt="注册子键"></p>
+<p>然后在控制面板（<code>Win</code>+<code>R</code>, control）中禁用再启用网卡即可。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://superuser.com/questions/850438/remove-the-2-after-the-ssid-on-windows-8-0">Remove the “2” after the SSID on Windows 8.0<br>
+</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>Windows</tag>
+        <tag>Windows 10</tag>
+        <tag>Network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在微软拼音中快速添加双拼方案</title>
+    <url>/2021/xiaohe-mspinyin/</url>
+    <content><![CDATA[<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZmx5cHkuY29tL3Bpbi5odG1s">小鹤双拼<i class="fa fa-external-link-alt"></i></span>是双拼输入法中的一种键盘方案。在 macOS 自带输入法、Gboard、搜狗输入法等输入法中都内置了这种方案。但是在 Win10 的微软拼音中，并没有内置这种方案，那么如何添加这种方案呢？<!-- 这个开头绝对受上一篇影响了 --></p>
+<span id="more"></span>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/xiaohe-mspinyin/macos.png" alt="macOS中选择使用小鹤双拼"></p>
+<p>macOS 内置的输入法虽然不能自定义双拼键位，但含有我正在使用的小鹤双拼方案。</p>
+<h2 id="在「设置」应用中逐个添加">在「设置」应用中逐个添加</h2>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/xiaohe-mspinyin/Settings.png" alt="双拼方案"></p>
+<p>Win10 安装微软拼音输入法后默认只含有这些双拼方案：</p>
+<ul>
+<li>微软双拼</li>
+<li>智能 ABC</li>
+<li>自然码</li>
+</ul>
+<p>打开「设置」，进入<code>时间和语言</code>，在<code>区域和语言</code>中点击<code>中文</code>-<code>选项</code>，添加<code>微软拼音</code>输入法（如果未出现），随后点击<code>选项</code>-<code>常规</code>，将<code>拼音设置</code>修改为<code>双拼</code>。在下方创建自定义双拼方案并逐个绑定键位。如果不清楚键位可以看图对应设置。</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/xiaohe-mspinyin/layout.png" alt="小鹤双拼方案"></p>
+<h2 id="使用「注册表编辑器」修改对应注册表">使用「注册表编辑器」修改对应注册表</h2>
+<p>右键<code>Windows徽标</code>，选择<code>运行</code>（快捷键：<code>Win</code>+<code>R</code>）</p>
+<p>输入<code>regedit</code>打开注册表编辑器，跳转到以下路径:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputMethod\Settings\CHS</span><br></pre></td></tr></table></figure>
+<div class="note info"><p>默认情况：</p>
+<ul>
+<li>你没有设置其他自定义双拼方案
+<blockquote>
+<p>如果有，请对应序号修改键名称</p>
+</blockquote>
+</li>
+<li>你已安装并使用简体中文输入法</li>
+</ul>
+</div>
+<p>新建字符串值<code>UserDefinedDoublePinyinScheme0</code>，并将值设置为<code>小鹤双拼*2*^*iuvdjhcwfg^xmlnpbksqszxkrltvyovt</code></p>
+<p>接下来去「设置」中将小鹤双拼设为默认，也可以直接继续修改注册表，最终注册表可能是这样：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UserDefinedDoublePinyinScheme0</td>
+<td>REG_SZ</td>
+<td>小鹤双拼<em>2</em>^*iuvdjhcwfg^xmlnpbksqszxkrltvyovt</td>
+</tr>
+<tr>
+<td>Enable Double Pinyin</td>
+<td>REG_DWORD</td>
+<td>00000001</td>
+</tr>
+<tr>
+<td>DoublePinyinScheme</td>
+<td>REG_DWORD</td>
+<td>0000000a</td>
+</tr>
+</tbody>
+</table>
+<p><img data-src="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/xiaohe-mspinyin/Registry.png" alt="注册表中设置完成的数据"></p>
+<h2 id="直接导入注册表">直接导入注册表</h2>
+<div class="note info"><p>默认情况：</p>
+<ul>
+<li>你没有设置其他自定义双拼方案
+<blockquote>
+<p>如果有，可能会被覆盖</p>
+</blockquote>
+</li>
+<li>你已安装并使用简体中文输入法</li>
+</ul>
+</div>
+<p>懒人专用，<span class="exturl" data-url="aHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL01pc2FrYTEzNTE0L2Fzc2V0QG1haW4vYmxvZy9fcG9zdHMveGlhb2hlLW1zcGlueWluL3hpYW9oZS5yZWc=">点此下载<i class="fa fa-external-link-alt"></i></span>并导入</p>
+<p>文件内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Windows Registry Editor Version 5.00</span><br><span class="line"></span><br><span class="line">[HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputMethod\Settings\CHS]</span><br><span class="line">&quot;Enable Double Pinyin&quot;=dword:00000001</span><br><span class="line">&quot;UserDefinedDoublePinyinScheme0&quot;=&quot;小鹤双拼*2*^*iuvdjhcwfg^xmlnpbksqszxkrltvyovt&quot;</span><br><span class="line">&quot;DoublePinyinScheme&quot;=dword:0000000a</span><br></pre></td></tr></table></figure>
+<div class="note warning"><p>无论何时，在导入注册表前</p>
+<ul>
+<li>检查该文件，确保该文件可信</li>
+<li>了解这将带给系统的修改并造成的影响</li>
+</ul>
+</div>
+]]></content>
+      <categories>
+        <category>技术向</category>
+      </categories>
+      <tags>
+        <tag>Windows</tag>
+        <tag>Windows 10</tag>
+        <tag>Microsoft Pinyin IME</tag>
+        <tag>Double pinyin</tag>
+        <tag>flyPY</tag>
+        <tag>Keyboard</tag>
+        <tag>IME</tag>
+      </tags>
+  </entry>
+</search>

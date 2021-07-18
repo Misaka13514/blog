@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#663399">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#663399">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.atri.tk","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":true,"nav":null,"activeClass":"disqus"},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Peering Requirement  Tunnel: Wireguard Latency: ≦100ms Currently does not accept strangers’ peering unless their conditions are perfect. Abnormal use will be blocked. THE SERVICE IS PROVIDED &quot;AS">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Peer AS4242421032">
+<meta property="og:url" content="https://blog.atri.tk/dn42-peering/">
+<meta property="og:site_name" content="欠陥電気の摸鱼小池">
+<meta property="og:description" content="Peering Requirement  Tunnel: Wireguard Latency: ≦100ms Currently does not accept strangers’ peering unless their conditions are perfect. Abnormal use will be blocked. THE SERVICE IS PROVIDED &quot;AS">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-01T20:42:42.000Z">
+<meta property="article:modified_time" content="2021-04-01T20:42:42.000Z">
+<meta property="article:author" content="Misaka13514">
+<meta property="article:tag" content="Misaka,欠陥電気,摸鱼">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.atri.tk/dn42-peering/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://blog.atri.tk/dn42-peering/","path":"dn42-peering/index.html","title":"Peer AS4242421032"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Peer AS4242421032 | 欠陥電気の摸鱼小池
+</title>
+  
+
+
+
+  <script data-pjax defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2a9b8e2d8b7848908d4a9848b825637b"}'></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="欠陥電気の摸鱼小池" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">欠陥電気の摸鱼小池</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Misaka13514的小站</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-book fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-dn42"><a href="/dn42-peering/" rel="section"><i class="fa fa-network-wired fa-fw"></i>DN42</a></li>
+        <li class="menu-item menu-item-homepage"><span class="exturl" data-url="aHR0cHM6Ly9hdHJpLnRr"><i class="fa fa-home fa-fw"></i>主页</span></li>
+        <li class="menu-item menu-item-about"><span class="exturl" data-url="aHR0cHM6Ly9hdHJpLnRrL2Fib3V0Lw=="><i class="fa fa-user fa-fw"></i>关于</span></li>
+        <li class="menu-item menu-item-drive"><span class="exturl" data-url="aHR0cHM6Ly9kcml2ZS5hdHJpLnRr"><i class="fa fa-hdd fa-fw"></i>网盘</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Peering"><span class="nav-number">1.</span> <span class="nav-text">Peering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Requirement"><span class="nav-number">1.1.</span> <span class="nav-text">Requirement</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Your-Information-Required"><span class="nav-number">1.1.1.</span> <span class="nav-text">Your Information Required</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#My-Information"><span class="nav-number">1.2.</span> <span class="nav-text">My Information</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Server-Info"><span class="nav-number">1.2.1.</span> <span class="nav-text">Server Info</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Contact-Details"><span class="nav-number">1.2.2.</span> <span class="nav-text">Contact Details</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample-Config"><span class="nav-number">1.3.</span> <span class="nav-text">Sample Config</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Autonomous-System-Info"><span class="nav-number">2.</span> <span class="nav-text">Autonomous System Info</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Misaka13514"
+      src="/img/default_avatar.webp">
+  <p class="site-author-name" itemprop="name">Misaka13514</p>
+  <div class="site-description" itemprop="description">划水摸鱼最快乐啦～<br />写blog什么的才不要呢</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90ZWxlZ3JhbS5tZS9NaXNha2FfMHgzNGNh" title="Telegram → https:&#x2F;&#x2F;telegram.me&#x2F;Misaka_0x34ca"><i class="fab fa-telegram fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9NaXNha2FfMHgzNGNh" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Misaka_0x34ca"><i class="fab fa-twitter fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Misaka13514"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOk1pc2FrYTEzNTE0QGdtYWlsLmNvbQ==" title="E-Mail → mailto:Misaka13514@gmail.com"><i class="fa fa-envelope fa-fw"></i></span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9zLmF0cmkudGs=" title="https:&#x2F;&#x2F;s.atri.tk">缩短链接</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9zdWIuYXRyaS50aw==" title="https:&#x2F;&#x2F;sub.atri.tk">订阅转换</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9wcm94eS5hdHJpLnRr" title="https:&#x2F;&#x2F;proxy.atri.tk">在线代理</span>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+  
+  
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">Peer AS4242421032<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0L2Jsb2cvdHJlZS9tYWluL3NvdXJjZS9kbjQyLXBlZXJpbmcvaW5kZXgubWQ=" title="编辑"><i class="fa fa-pen-nib"></i></span>
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <h2 id="Peering">Peering</h2>
+<h3 id="Requirement">Requirement</h3>
+<ul>
+<li>Tunnel: Wireguard</li>
+<li>Latency: ≦100ms</li>
+<li>Currently does not accept strangers’ peering unless their conditions are perfect.</li>
+<li>Abnormal use will be blocked.</li>
+<li><code>THE SERVICE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY ...(sth really long and nobody want to read)... OTHER DEALINGS IN THE SERVICE.</code></li>
+<li>All rights reserved.</li>
+</ul>
+<h4 id="Your-Information-Required">Your Information Required</h4>
+<ul>
+<li>ASN</li>
+<li>DN42 IPv4</li>
+<li>Link-Local</li>
+<li>Endpoint</li>
+<li>WireGuard port</li>
+<li>WireGuard public key</li>
+<li>Social contact</li>
+<li>Latency between ours</li>
+</ul>
+<h3 id="My-Information">My Information</h3>
+<h4 id="Server-Info">Server Info</h4>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASN</td>
+<td>4242421032</td>
+</tr>
+<tr>
+<td>DN42 IPv4</td>
+<td>172.23.10.1</td>
+</tr>
+<tr>
+<td>Link-Local</td>
+<td>fe80::1032</td>
+</tr>
+<tr>
+<td>Hostname</td>
+<td><span class="exturl" data-url="aHR0cDovL3NnLmRuNDIuYXRyaS50aw==">sg.dn42.atri.tk<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td>Endpoint</td>
+<td><span class="exturl" data-url="aHR0cDovL3NnLmRuNDIuYXRyaS50aw==">sg.dn42.atri.tk<i class="fa fa-external-link-alt"></i></span>:「YourASNlast5digits(e.g. 21032)」</td>
+</tr>
+<tr>
+<td>WireGuard public key</td>
+<td>x5i9qx8tglqzvghOckjXuRBcWQ8srWLNZOlt7VtFmwI=</td>
+</tr>
+<tr>
+<td>BGP software</td>
+<td>bird2</td>
+</tr>
+<tr>
+<td>Extended next hop support</td>
+<td>True</td>
+</tr>
+<tr>
+<td>Multiprotocol BGP support</td>
+<td>True</td>
+</tr>
+<tr>
+<td>Hosting provider</td>
+<td>DigitalOcean</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>Singapore</td>
+</tr>
+</tbody>
+</table>
+<p>Valid before Jan. 15th, 2022.</p>
+<h4 id="Contact-Details">Contact Details</h4>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PGP Key Fingerprint</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9rZXlzLm9wZW5wZ3Aub3JnL3Zrcy92MS9ieS1maW5nZXJwcmludC9DNEI3MUY5RUQzNTE1QUVCODI3MEQ1RDcxODlCQjM4N0NGM0FEOTVG">C4B7 1F9E D351 5AEB 8270 D5D7 189B B387 CF3A D95F<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td>E-mail</td>
+<td><span class="exturl" data-url="bWFpbHRvOk1pc2FrYTEzNTE0QGdtYWlsLmNvbQ==">Misaka13514@gmail.com<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td>Telegram</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly90Lm1lL01pc2FrYV8weDM0Y2E=">Misaka_0x34ca<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td>Supported language</td>
+<td>zh_CN, zh_TW, en_US, en_GB, ja_JP</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Sample-Config">Sample Config</h3>
+<p><code>/etc/wireguard/wg1032.conf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Interface]</span><br><span class="line">ListenPort = &lt;Your WireGuard port&gt;</span><br><span class="line">PrivateKey = &lt;Your PrivateKey&gt;</span><br><span class="line">PostUp = ip addr add dev wg1032 &lt;Your DN42 IPv4&gt;/32 peer 172.23.10.1/32</span><br><span class="line">PostUp = ip addr add dev wg1032 &lt;Your Link-Local&gt;/64</span><br><span class="line">Table = off</span><br><span class="line"></span><br><span class="line">[Peer]</span><br><span class="line">PublicKey = x5i9qx8tglqzvghOckjXuRBcWQ8srWLNZOlt7VtFmwI=</span><br><span class="line">Endpoint = sg.dn42.atri.tk:&lt;YourASNlast5digits(e.g. 21032)&gt;</span><br><span class="line">AllowedIPs = 0.0.0.0/0, ::/0</span><br></pre></td></tr></table></figure>
+<p><code>/etc/bird/peers/1032.conf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Delete these below if MP-BGP</span><br><span class="line">protocol bgp dn42_1032 from dnpeers &#123;</span><br><span class="line">    neighbor 172.23.10.1 as 4242421032;</span><br><span class="line">    direct;</span><br><span class="line">&#125;</span><br><span class="line"># Delete these above if MP-BGP</span><br><span class="line"></span><br><span class="line">protocol bgp dn42_1032_v6 from dnpeers &#123;</span><br><span class="line">    neighbor fe80::1032%wg1032 as 4242421032;</span><br><span class="line">    direct;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> --now wg-quick@wg1032</span><br></pre></td></tr></table></figure>
+<h2 id="Autonomous-System-Info">Autonomous System Info</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Information related to AS4242421032</span><br><span class="line">aut-num:            AS4242421032</span><br><span class="line">as-name:            RADIONOISE-AS</span><br><span class="line">admin-c:            RADIONOISE-DN42</span><br><span class="line">tech-c:             RADIONOISE-DN42</span><br><span class="line">mnt-by:             RADIONOISE-MNT</span><br><span class="line"></span><br><span class="line">Routes for AS4242421032</span><br><span class="line">route4:             172.23.10.0/27</span><br><span class="line">route6:             fdbd:8e82:8b88::/48</span><br></pre></td></tr></table></figure>
+<h2 id="Reference">Reference</h2>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kbjQyLnVz">Decentralized network 42<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cud2lyZWd1YXJkLmNvbQ==">WireGuard<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9iaXJkLm5ldHdvcmsuY3o=">The BIRD Internet Routing Daemon<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"><a href="/">Misaka13514</a> | <a href="https://icp.gov.moe/?keyword=20213514" target="_blank" rel="external noopenner nofollow">萌ICP备 20213514号</a></span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">22k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">20 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">Proudly powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span>.
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/firebase@8.6.8/firebase-app.js" integrity="sha256-3hdiTmkDsofqAYaeI/xZx6N7xYgnG+aXWangXu+jtCg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/firebase@8.6.8/firebase-firestore.js" integrity="sha256-Itvsoir8vLRlK5Xg9Mz8vQqzJ6gVmc5GQ27rNTOZSOY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="firestore" type="application/json">{"enable":true,"collection":"articles","apiKey":"AIzaSyDTboPkf_mxdDtpHeUE0qWDC8Ex7NB5MIA","projectId":"misaka-blog-analytics"}</script>
+  <script src="/js/third-party/statistics/firestore.js"></script>
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha256-hFAmQt2dGk6G99nu2cEWz8/1JGRnBP/BsGoZwQ7WeLE=" crossorigin="anonymous">
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"misaka13514","count":false,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

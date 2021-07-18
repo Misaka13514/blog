@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#663399">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#663399">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.atri.tk","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":true,"nav":null,"activeClass":"disqus"},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="你现在可以快速地通过我的域名邮箱admin@atri.tk来自动获取我的 PGP 公钥。 1gpg --locate-key admin@atri.tk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为 PGP Key 部署 Web Key Directory (WKD) 托管">
+<meta property="og:url" content="https://blog.atri.tk/2021/host-a-web-key-directory/">
+<meta property="og:site_name" content="欠陥電気の摸鱼小池">
+<meta property="og:description" content="你现在可以快速地通过我的域名邮箱admin@atri.tk来自动获取我的 PGP 公钥。 1gpg --locate-key admin@atri.tk">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-20T04:44:41.000Z">
+<meta property="article:modified_time" content="2021-05-20T04:44:41.000Z">
+<meta property="article:author" content="Misaka13514">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="GitHub Pages">
+<meta property="article:tag" content="PGP">
+<meta property="article:tag" content="GnuPG">
+<meta property="article:tag" content="Security">
+<meta property="article:tag" content="Asymmetric cryptography">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.atri.tk/2021/host-a-web-key-directory/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.atri.tk/2021/host-a-web-key-directory/","path":"2021/host-a-web-key-directory/","title":"为 PGP Key 部署 Web Key Directory (WKD) 托管"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>为 PGP Key 部署 Web Key Directory (WKD) 托管 | 欠陥電気の摸鱼小池</title>
+  
+
+
+
+  <script data-pjax defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2a9b8e2d8b7848908d4a9848b825637b"}'></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="欠陥電気の摸鱼小池" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">欠陥電気の摸鱼小池</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Misaka13514的小站</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-book fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-dn42"><a href="/dn42-peering/" rel="section"><i class="fa fa-network-wired fa-fw"></i>DN42</a></li>
+        <li class="menu-item menu-item-homepage"><span class="exturl" data-url="aHR0cHM6Ly9hdHJpLnRr"><i class="fa fa-home fa-fw"></i>主页</span></li>
+        <li class="menu-item menu-item-about"><span class="exturl" data-url="aHR0cHM6Ly9hdHJpLnRrL2Fib3V0Lw=="><i class="fa fa-user fa-fw"></i>关于</span></li>
+        <li class="menu-item menu-item-drive"><span class="exturl" data-url="aHR0cHM6Ly9kcml2ZS5hdHJpLnRr"><i class="fa fa-hdd fa-fw"></i>网盘</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%B7%B1%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">自己部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-WKD-%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">2.2.</span> <span class="nav-text">创建 WKD 文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-GitHub-Pages-%E4%B8%8A%E5%8F%91%E5%B8%83"><span class="nav-number">2.3.</span> <span class="nav-text">在 GitHub Pages 上发布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">使用第三方服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="nav-number">5.</span> <span class="nav-text">推荐阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Misaka13514"
+      src="/img/default_avatar.webp">
+  <p class="site-author-name" itemprop="name">Misaka13514</p>
+  <div class="site-description" itemprop="description">划水摸鱼最快乐啦～<br />写blog什么的才不要呢</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90ZWxlZ3JhbS5tZS9NaXNha2FfMHgzNGNh" title="Telegram → https:&#x2F;&#x2F;telegram.me&#x2F;Misaka_0x34ca"><i class="fab fa-telegram fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9NaXNha2FfMHgzNGNh" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Misaka_0x34ca"><i class="fab fa-twitter fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Misaka13514"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOk1pc2FrYTEzNTE0QGdtYWlsLmNvbQ==" title="E-Mail → mailto:Misaka13514@gmail.com"><i class="fa fa-envelope fa-fw"></i></span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9zLmF0cmkudGs=" title="https:&#x2F;&#x2F;s.atri.tk">缩短链接</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9zdWIuYXRyaS50aw==" title="https:&#x2F;&#x2F;sub.atri.tk">订阅转换</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9wcm94eS5hdHJpLnRr" title="https:&#x2F;&#x2F;proxy.atri.tk">在线代理</span>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.atri.tk/2021/host-a-web-key-directory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/default_avatar.webp">
+      <meta itemprop="name" content="Misaka13514">
+      <meta itemprop="description" content="划水摸鱼最快乐啦～<br />写blog什么的才不要呢">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欠陥電気の摸鱼小池">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          为 PGP Key 部署 Web Key Directory (WKD) 托管<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0L2Jsb2cvdHJlZS9tYWluL3NvdXJjZS9fcG9zdHMvaG9zdC1hLXdlYi1rZXktZGlyZWN0b3J5Lm1k" title="编辑"><i class="fa fa-pen-nib"></i></span>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-05-20 12:44:41" itemprop="dateCreated datePublished" datetime="2021-05-20T12:44:41+08:00">2021-05-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">技术向</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="firestore-visitors-count"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>你现在可以快速地通过我的域名邮箱<code>admin@atri.tk</code>来自动获取我的 PGP 公钥。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --locate-key admin@atri.tk</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="起因">起因</h2>
+<p>前些日子想把原来的 RSA 公钥全部更换为 ECC 公钥，便重新生成了新的主密钥。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ gpg --list-keys C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F</span><br><span class="line">pub   ed25519 2021-05-15 [C] [expires: 2024-01-01]</span><br><span class="line">      C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F</span><br><span class="line">uid           [ultimate] 欠陥電気RadioNoise (御坂13514号のECC鍵) &lt;Misaka13514@gmail.com&gt;</span><br><span class="line">uid           [ultimate] Misaka13514 &lt;Misaka13514@gmail.com&gt;</span><br><span class="line">uid           [ultimate] Misaka &lt;admin@atri.tk&gt;</span><br><span class="line">sub   ed25519 2021-05-16 [S] [expires: 2024-01-01]</span><br><span class="line">sub   ed25519 2021-05-16 [A] [expires: 2024-01-01]</span><br><span class="line">sub   cv25519 2021-05-16 [E] [expires: 2024-01-01]</span><br></pre></td></tr></table></figure>
+<p>生成完就需要发布公钥供他人交换。以前我使用的是公钥服务器+在网页或其它平台发布公钥的下载链接或是公钥指纹的最后几位。</p>
+<p>假设有一个人只有我的邮箱信息而想要给我发送加密邮件，一般来说有这些交换方法，它们似乎仍不够快速或是不够安全。</p>
+<ul>
+<li>面对面交换显然太繁琐了。</li>
+<li><code>gpg --recv-keys</code>只能通过指纹从公钥服务器获取公钥。使用这个命令需要先通过其它途径知道正确的指纹。</li>
+<li>如果发布到 Web 或是 代码仓库 ，需要先在网页上查找到对应 URL 并下载。</li>
+<li>看见有人使用特殊方法生成了带有靓号指纹的密钥。碰撞出相同一部分指纹的密钥是有可能做到的。<br>
+（建议公开至少 64bit (16 位 16 进制)的指纹）</li>
+<li><code>gpg --search-keys</code>可以通过邮箱在公钥服务器搜索与下载。但公钥服务器接受任何人上传的公钥，任何人可以生成含有我的邮箱标识的密钥并发布。<br>
+（现在如<code>keys.openpgp.org</code>等服务器会在上传公钥后向对应邮箱发送验证邮件来验证身份）</li>
+</ul>
+<p>正如 IPv6 与 DNS 那样，有一个靓号不如配置了方便有效的交换方式。</p>
+<p>于是我寻找了其他发布公钥的途径，有<code>DNS CERT</code>、<code>DANE</code>、<code>Web Key Directory (wkd)</code>、<code>LDAP</code>、<code>NTDS</code>等。关于这些方法的说明可以<code>man gpg</code>或是在<span class="exturl" data-url="aHR0cHM6Ly93d3cuZ251cGcub3JnL2RvY3VtZW50YXRpb24vbWFudWFscy9nbnVwZy9HUEctQ29uZmlndXJhdGlvbi1PcHRpb25zLmh0bWw=">GPG 文档<i class="fa fa-external-link-alt"></i></span>中看到。</p>
+<p>我选择了<code>Web Key Directory (wkd)</code>方法，它也是默认启用的除本地外的唯一一种方法。下面将以我的密钥为例，自己部署 WKD。你也可以使用在自己域名上<a href="#%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1">使用第三方提供的服务</a>。如果你使用的邮箱的域名已经<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmdudXBnLm9yZy9XS0QjTWFpbF9TZXJ2aWNlX1Byb3ZpZGVyc19vZmZlcmluZ19XS0Q=">提供了这样的服务<i class="fa fa-external-link-alt"></i></span>，你可以跳过下面的步骤。</p>
+<h2 id="自己部署">自己部署</h2>
+<h3 id="条件">条件</h3>
+<ul>
+<li>有可以修改记录的域名<br>
+需要修改 apex 顶级域名或是 openpgpkey 子域名记录</li>
+<li>使用该域名邮箱</li>
+<li>有可使用的网页服务器或可信的第三方托管服务</li>
+<li>GPG 版本 &gt;= 2.2.12 （或自行查看<span class="exturl" data-url="aHR0cHM6Ly93aWtpLmdudXBnLm9yZy9XS0RIb3N0aW5n">官方文档<i class="fa fa-external-link-alt"></i></span>中的其他可用客户端）</li>
+</ul>
+<h3 id="创建-WKD-文件夹">创建 WKD 文件夹</h3>
+<p>创建一个文件夹，并作为<code>openpgpkey.your.domain</code>的站点根目录。然后创建 WKD 的目录结构。</p>
+<p>下面的部分命令需要根据你的情况来修改。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir openpgpkey-WKD &amp;&amp; <span class="built_in">cd</span> openpgpkey-WKD</span><br><span class="line">$ mkdir -p .well-known/openpgpkey</span><br><span class="line">$ <span class="built_in">cd</span> .well-known</span><br><span class="line">$ gpg --list-options show-only-fpr-mbox -k <span class="string">&quot;@your.domain&quot;</span> | $(gpgconf --list-dirs libexecdir)/gpg-wks-client -v --install-key</span><br><span class="line"><span class="comment">#如果需要，也可以替换为指定单个 Key</span></span><br><span class="line">$ <span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
+<p>输出将会类似这样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gpg-wks-client: gpg: Total number processed: 1</span><br><span class="line">gpg-wks-client: using key with user id &#x27;Misaka &lt;admin@atri.tk&gt;&#x27;</span><br><span class="line">gpg-wks-client: gpg: Total number processed: 1</span><br><span class="line">gpg-wks-client: directory &#x27;openpgpkey/atri.tk&#x27; created</span><br><span class="line">gpg-wks-client: directory &#x27;openpgpkey/atri.tk/hu&#x27; created</span><br><span class="line">gpg-wks-client: policy file &#x27;openpgpkey/atri.tk/policy&#x27; created</span><br><span class="line">gpg-wks-client: key C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F published for &#x27;admin@atri.tk&#x27;</span><br></pre></td></tr></table></figure>
+<p>站点目录结构将会类似这样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ tree -a</span><br><span class="line">.</span><br><span class="line">`-- openpgpkey</span><br><span class="line">    `-- atri.tk</span><br><span class="line">        |-- hu</span><br><span class="line">        |   `-- 4y36rkzdjnzmk3oxaekyi5biowgr5kcz</span><br><span class="line">        `-- policy</span><br></pre></td></tr></table></figure>
+<h3 id="在-GitHub-Pages-上发布">在 GitHub Pages 上发布</h3>
+<p>你也可以使用其它任何你喜爱的 Web 托管方式。</p>
+<p>在 GitHub 上创建一个公开仓库。</p>
+<div class="note info"><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdpdGh1Yi5jb20vY24vcGFnZXMvc2V0dGluZy11cC1hLWdpdGh1Yi1wYWdlcy1zaXRlLXdpdGgtamVreWxsL2Fib3V0LWdpdGh1Yi1wYWdlcy1hbmQtamVreWxs">GitHub Pages 默认启用了 Jekyll<i class="fa fa-external-link-alt"></i></span>，而它默认不会构建开头为<code>.</code>的文件夹，所以需要额外的配置。</p>
+<p>可以通过在根目录创建<code>.nojekyll</code>文件以直接禁用 Jekyll；也可以创建一个配置文件<code>_config.yml</code>，并写入<code>include: [&quot;.well-known&quot;]</code>。</p>
+</div>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ touch .nojekyll</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;openpgpkey.your.domain&quot;</span> &gt; CNAME</span><br><span class="line">$ git init &amp;&amp; git add . &amp;&amp; git commit -m <span class="string">&quot;Initial commit&quot;</span></span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> ~/openpgpkey-WKD/.git/</span><br><span class="line">[main (root-commit) 114514 ] Initial commit</span><br><span class="line"> 3 files changed, 3 insertions(+)</span><br><span class="line"> create mode 100644 .well-known/openpgpkey/your.domain/hu/1145141919810aaaaaa</span><br><span class="line"> create mode 100644 .well-known/openpgpkey/your.domain/policy</span><br><span class="line"> create mode 100644 CNAME</span><br><span class="line">$ git remote add origin your-url</span><br><span class="line">$ git push -u origin your-branch-name</span><br></pre></td></tr></table></figure>
+<p>将域名记录按照 GitHub 文档指向 GitHub Pages，然后到 GitHub 上启用 GitHub Pages，可以访问对应 URL 查看是否生效。</p>
+<h2 id="使用第三方服务">使用第三方服务</h2>
+<p>部分网站如<span class="exturl" data-url="aHR0cHM6Ly9rZXlzLm9wZW5wZ3Aub3JnL2Fib3V0L3VzYWdl">keys.openpgp.org<i class="fa fa-external-link-alt"></i></span>提供了 WKD as a Service 的服务。</p>
+<p>在网站上上传自己的公钥后，就可以使用它提供的服务了。</p>
+<p>只需添加这样一条<code>CNAME</code>记录：将<code>openpgpkey.your.domain</code>指向<code>wkd.keys.openpgp.org</code>。</p>
+<h2 id="测试">测试</h2>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ gpg --no-default-keyring --keyring /tmp/gpg-$$ \</span><br><span class="line">    --auto-key-locate clear,wkd,nodefault --verbose --locate-key you@your.domain</span><br><span class="line">gpg: key 189BB387CF3AD95F: public key <span class="string">&quot;Misaka &lt;admin@atri.tk&gt;&quot;</span> imported</span><br><span class="line">gpg: Total number processed: 1</span><br><span class="line">gpg:               imported: 1</span><br><span class="line">pub   ed25519 2021-05-15 [C] [expires: 2024-01-01]</span><br><span class="line">      C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F</span><br><span class="line">uid           [ unknown] Misaka &lt;admin@atri.tk&gt;</span><br><span class="line">sub   ed25519 2021-05-16 [S] [expires: 2024-01-01]</span><br><span class="line">sub   ed25519 2021-05-16 [A] [expires: 2024-01-01]</span><br><span class="line">sub   cv25519 2021-05-16 [E] [expires: 2024-01-01]</span><br></pre></td></tr></table></figure>
+<h2 id="推荐阅读">推荐阅读</h2>
+<p>2021 年，用更现代的方法使用 PGP by <span class="exturl" data-url="aHR0cHM6Ly91bHljLmdpdGh1Yi5pby8=">UlyC<i class="fa fa-external-link-alt"></i></span></p>
+<ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly91bHljLmdpdGh1Yi5pby8yMDIxLzAxLzEzLzIwMjElRTUlQjklQjQtJUU3JTk0JUE4JUU2JTlCJUI0JUU3JThFJUIwJUU0JUJCJUEzJUU3JTlBJTg0JUU2JTk2JUI5JUU2JUIzJTk1JUU0JUJEJUJGJUU3JTk0JUE4UEdQLSVFNCVCOCU4QS8=">PGP 基础<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91bHljLmdpdGh1Yi5pby8yMDIxLzAxLzE4LzIwMjElRTUlQjklQjQtJUU3JTk0JUE4JUU2JTlCJUI0JUU3JThFJUIwJUU0JUJCJUEzJUU3JTlBJTg0JUU2JTk2JUI5JUU2JUIzJTk1JUU0JUJEJUJGJUU3JTk0JUE4UEdQLSVFNCVCOCVBRC8=">安全使用<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly91bHljLmdpdGh1Yi5pby8yMDIxLzAxLzI2LzIwMjElRTUlQjklQjQtJUU3JTk0JUE4JUU2JTlCJUI0JUU3JThFJUIwJUU0JUJCJUEzJUU3JTlBJTg0JUU2JTk2JUI5JUU2JUIzJTk1JUU0JUJEJUJGJUU3JTk0JUE4UEdQLSVFNCVCOCU4Qi8=">公钥的发布与交换<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
+<h2 id="参考">参考</h2>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmdudXBnLm9yZy9XS0Q=">Web Key Directory<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93aWtpLmdudXBnLm9yZy9XS0RIb3N0aW5n">Hosting a Web Key Directory (without dynamic WKS)<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9nbnVwZy5vcmcvYmxvZy8yMDE2MTAyNy1ob3N0aW5nLWEtd2ViLWtleS1kaXJlY3RvcnkuaHRtbA==">Hosting a Web Key Directory<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21paGFseXIvb3BlbnBncGtleQ==">Hosting a Web Key Directory on GitHub Pages<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuZ251cGcub3JnL2RvY3VtZW50YXRpb24vbWFudWFscy9nbnVwZy9HUEctQ29uZmlndXJhdGlvbi1PcHRpb25zLmh0bWw=">GPG Configuration Options<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Misaka13514
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.atri.tk/2021/host-a-web-key-directory/" title="为 PGP Key 部署 Web Key Directory (WKD) 托管">https://blog.atri.tk/2021/host-a-web-key-directory/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://twitter.com/Misaka_0x34ca">
+          <span class="icon">
+            <i class="fab fa-twitter"></i>
+          </span>
+
+          <span class="label">Twitter</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://t.me/Emfield">
+          <span class="icon">
+            <i class="fab fa-telegram"></i>
+          </span>
+
+          <span class="label">Telegram</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://github.com/Misaka13514">
+          <span class="icon">
+            <i class="fab fa-github"></i>
+          </span>
+
+          <span class="label">GitHub</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Web/" rel="tag"><i class="fa fa-tag"></i> Web</a>
+              <a href="/tags/GitHub/" rel="tag"><i class="fa fa-tag"></i> GitHub</a>
+              <a href="/tags/GitHub-Pages/" rel="tag"><i class="fa fa-tag"></i> GitHub Pages</a>
+              <a href="/tags/PGP/" rel="tag"><i class="fa fa-tag"></i> PGP</a>
+              <a href="/tags/GnuPG/" rel="tag"><i class="fa fa-tag"></i> GnuPG</a>
+              <a href="/tags/Security/" rel="tag"><i class="fa fa-tag"></i> Security</a>
+              <a href="/tags/Asymmetric-cryptography/" rel="tag"><i class="fa fa-tag"></i> Asymmetric cryptography</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/deploy-frontend-to-cfpages/" rel="prev" title="Cloudflare Pages 配置方法与使用体验">
+                  <i class="fa fa-chevron-left"></i> Cloudflare Pages 配置方法与使用体验
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"><a href="/">Misaka13514</a> | <a href="https://icp.gov.moe/?keyword=20213514" target="_blank" rel="external noopenner nofollow">萌ICP备 20213514号</a></span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">22k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">20 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">Proudly powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span>.
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/firebase@8.6.8/firebase-app.js" integrity="sha256-3hdiTmkDsofqAYaeI/xZx6N7xYgnG+aXWangXu+jtCg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/firebase@8.6.8/firebase-firestore.js" integrity="sha256-Itvsoir8vLRlK5Xg9Mz8vQqzJ6gVmc5GQ27rNTOZSOY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="firestore" type="application/json">{"enable":true,"collection":"articles","apiKey":"AIzaSyDTboPkf_mxdDtpHeUE0qWDC8Ex7NB5MIA","projectId":"misaka-blog-analytics"}</script>
+  <script src="/js/third-party/statistics/firestore.js"></script>
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha256-hFAmQt2dGk6G99nu2cEWz8/1JGRnBP/BsGoZwQ7WeLE=" crossorigin="anonymous">
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"misaka13514","count":false,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

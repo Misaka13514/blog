@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#663399">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#663399">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.atri.tk","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":true,"nav":null,"activeClass":"disqus"},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Inklet 是一个可以把笔记本触摸板变成简易数位板的 macOS 应用程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="破解 macOS 应用程序 (Inklet)">
+<meta property="og:url" content="https://blog.atri.tk/2020/mac-app-crack/">
+<meta property="og:site_name" content="欠陥電気の摸鱼小池">
+<meta property="og:description" content="Inklet 是一个可以把笔记本触摸板变成简易数位板的 macOS 应用程序">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-30T02:55:38.000Z">
+<meta property="article:modified_time" content="2020-04-30T02:55:38.000Z">
+<meta property="article:author" content="Misaka13514">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="Hack">
+<meta property="article:tag" content="Reverse">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.atri.tk/2020/mac-app-crack/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.atri.tk/2020/mac-app-crack/","path":"2020/mac-app-crack/","title":"破解 macOS 应用程序 (Inklet)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>破解 macOS 应用程序 (Inklet) | 欠陥電気の摸鱼小池</title>
+  
+
+
+
+  <script data-pjax defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2a9b8e2d8b7848908d4a9848b825637b"}'></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="欠陥電気の摸鱼小池" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">欠陥電気の摸鱼小池</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Misaka13514的小站</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-book fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-dn42"><a href="/dn42-peering/" rel="section"><i class="fa fa-network-wired fa-fw"></i>DN42</a></li>
+        <li class="menu-item menu-item-homepage"><span class="exturl" data-url="aHR0cHM6Ly9hdHJpLnRr"><i class="fa fa-home fa-fw"></i>主页</span></li>
+        <li class="menu-item menu-item-about"><span class="exturl" data-url="aHR0cHM6Ly9hdHJpLnRrL2Fib3V0Lw=="><i class="fa fa-user fa-fw"></i>关于</span></li>
+        <li class="menu-item menu-item-drive"><span class="exturl" data-url="aHR0cHM6Ly9kcml2ZS5hdHJpLnRr"><i class="fa fa-hdd fa-fw"></i>网盘</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">工具准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E7%A0%B4%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">开始破解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.1.</span> <span class="nav-text">反汇编程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BE%E5%88%B0%E8%BF%94%E5%9B%9E%E6%B3%A8%E5%86%8C%E4%BF%A1%E6%81%AF%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%AF%B9%E5%BA%94%E4%BD%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">找到返回注册信息程序的对应位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.3.</span> <span class="nav-text">修改程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-gdb-%E5%8A%A8%E6%80%81%E6%B5%8B%E8%AF%95"><span class="nav-number">2.3.1.</span> <span class="nav-text">使用 gdb 动态测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-number">2.3.2.</span> <span class="nav-text">修改二进制文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">技术总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Misaka13514"
+      src="/img/default_avatar.webp">
+  <p class="site-author-name" itemprop="name">Misaka13514</p>
+  <div class="site-description" itemprop="description">划水摸鱼最快乐啦～<br />写blog什么的才不要呢</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90ZWxlZ3JhbS5tZS9NaXNha2FfMHgzNGNh" title="Telegram → https:&#x2F;&#x2F;telegram.me&#x2F;Misaka_0x34ca"><i class="fab fa-telegram fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9NaXNha2FfMHgzNGNh" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Misaka_0x34ca"><i class="fab fa-twitter fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Misaka13514"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOk1pc2FrYTEzNTE0QGdtYWlsLmNvbQ==" title="E-Mail → mailto:Misaka13514@gmail.com"><i class="fa fa-envelope fa-fw"></i></span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9zLmF0cmkudGs=" title="https:&#x2F;&#x2F;s.atri.tk">缩短链接</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9zdWIuYXRyaS50aw==" title="https:&#x2F;&#x2F;sub.atri.tk">订阅转换</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9wcm94eS5hdHJpLnRr" title="https:&#x2F;&#x2F;proxy.atri.tk">在线代理</span>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.atri.tk/2020/mac-app-crack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/default_avatar.webp">
+      <meta itemprop="name" content="Misaka13514">
+      <meta itemprop="description" content="划水摸鱼最快乐啦～<br />写blog什么的才不要呢">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欠陥電気の摸鱼小池">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          破解 macOS 应用程序 (Inklet)<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0L2Jsb2cvdHJlZS9tYWluL3NvdXJjZS9fcG9zdHMvbWFjLWFwcC1jcmFjay5tZA==" title="编辑"><i class="fa fa-pen-nib"></i></span>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-30 10:55:38" itemprop="dateCreated datePublished" datetime="2020-04-30T10:55:38+08:00">2020-04-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">技术向</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="firestore-visitors-count"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><span class="exturl" data-url="aHR0cHM6Ly90ZW5vbmVkZXNpZ24uY29tL2lua2xldC5waHA=">Inklet<i class="fa fa-external-link-alt"></i></span> 是一个可以把笔记本触摸板变成简易数位板的 macOS 应用程序</p>
+<span id="more"></span>
+<p>软件售价 $19.98, 软件加<s>没什么用的</s>笔售价 $24.98<br>
+<span class="exturl" data-url="aHR0cHM6Ly90ZW5vbmVkZXNpZ24uY29tL2FwcHMvaW5rbGV0L2lua2xldC5waHA=">Demo 版下载<i class="fa fa-external-link-alt"></i></span><br>
+Demo 版有连续使用时间等限制</p>
+<p>上网课我需要用到, 所以我就在网上找了个 v2.1.1 的破解版用</p>
+<p>发现官方更新到了 v2.2.0, 但是网上找不到此版本破解版/激活码</p>
+<p>那就自己动手吧, <s>先棒读:</s><strong>仅供学习交流使用，严禁用于商业用途，请于 24 小时内删除。请支持正版</strong></p>
+<h2 id="工具准备">工具准备</h2>
+<ul>
+<li>
+<p>brew</p>
+</li>
+<li>
+<p>vim<br>
+不会用的话用 <span class="exturl" data-url="aHR0cDovL3JpZGljdWxvdXNmaXNoLmNvbS9oZXhmaWVuZC8=">Hex Fiend<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li>
+<p>otx</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew cask install otx</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可选工具:</p>
+<ul>
+<li>
+<p><span class="exturl" data-url="aHR0cDovL3N0ZXZlbnlnYXJkLmNvbS9wcm9qZWN0cy9jbGFzcy1kdW1wLw==">class-dump<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li>
+<p>gdb</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install gdb</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Hopper Disassembler</p>
+</li>
+</ul>
+<h2 id="开始破解">开始破解</h2>
+<p>程序的二进制文件位于<code>/Applications/Inklet.app/Contents/MacOS/Inklet</code></p>
+<h3 id="反汇编程序">反汇编程序</h3>
+<ul>
+<li>
+<p>使用 otx</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">otx /Applications/Inklet.app/Contents/MacOS/Inklet &gt; ~/Desktop/inklet.asm</span><br></pre></td></tr></table></figure>
+<p>打开<code>inklet.asm</code></p>
+</li>
+<li>
+<p>使用 class-dump</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class-dump -H /Applications/Inklet.app/Contents/MacOS/Inklet -o ~/classdump</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="找到返回注册信息程序的对应位置">找到返回注册信息程序的对应位置</h3>
+<p>我先查找了<code>license</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class-dump -f license  /Applications/Inklet.app/Contents/MacOS/Inklet</span><br></pre></td></tr></table></figure>
+<blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@interface InkletWelcomeLicense : InkletWelcomeBase</span><br><span class="line">- (long long)licenseUpgradeState;</span><br><span class="line"></span><br><span class="line">@interface InkletRegisterPreferences : NSPreferencesModule</span><br><span class="line">- (BOOL)licenseState;</span><br><span class="line">- (BOOL)unlicensedWithPreviousLicense;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>在<code>inklet.asm</code>中:</p>
+<blockquote>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-(BOOL)[InkletRegisterPreferences licenseState]:</span><br><span class="line">    +<span class="number">0</span>  000000010002856f  <span class="number">55</span>                        pushq         %rbp</span><br><span class="line">    +<span class="number">1</span>  <span class="number">0000000100028570</span>  4889e5                    <span class="keyword">movq</span>          %rsp,                         %rbp</span><br><span class="line">    +<span class="number">4</span>  <span class="number">0000000100028573</span>  488b0516060500            <span class="keyword">movq</span>          <span class="number">0x50616</span>(%rip),                %rax</span><br><span class="line">   +<span class="number">11</span>  000000010002857a  0fbe0407                  movsbl        (%rdi,%rax),                  %eax</span><br><span class="line">   +<span class="number">15</span>  000000010002857e  <span class="number">5d</span>                        popq          %rbp</span><br><span class="line">   +<span class="number">16</span>  000000010002857f  c3                        retq</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>猜测是<code>InkletRegisterPreferences</code>中的<code>(BOOL)licenseState</code>返回注册状态, 所以只需要让它的值一直返回 True 就很可能破解成功</p>
+<h3 id="修改程序">修改程序</h3>
+<p>持续返回 True 的程序的机器码来自<span class="exturl" data-url="aHR0cHM6Ly9mcmVlbWFuZGVhbGVyLmdpdGh1Yi5pby8yMDE1LzEwLzEwL2hhY2tpbmctb3N4LWFwcC8jJUU1JTg3JTg2JUU1JUE0JTg3JUU2JUFGJTkyJUU4JThEJUFG">这里<i class="fa fa-external-link-alt"></i></span><br>
+省事很多 ww</p>
+<h4 id="使用-gdb-动态测试">使用 gdb 动态测试</h4>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gdb inklet</span><br><span class="line">&gt; b *0x000000010002856f   <span class="comment">#InkletRegisterPreferences函数开始地址</span></span><br><span class="line">&gt; r</span><br><span class="line">&gt; <span class="built_in">set</span> *0x0000000100028573 = 0x000001b8</span><br><span class="line">&gt; <span class="built_in">set</span> *0x0000000100028577 = 0x0fc35d00</span><br><span class="line">&gt; <span class="built_in">set</span> *0x000000010002857b = 0x0000441f</span><br><span class="line">&gt; disas 0x000000010002856f, +10</span><br><span class="line">&gt; <span class="built_in">continue</span></span><br></pre></td></tr></table></figure>
+<p>测试成功, 原来的时间限制已经解锁了</p>
+<h4 id="修改二进制文件">修改二进制文件</h4>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /Applications/Inklet.app/Contents/MacOS/Inklet</span><br><span class="line">:%!xxd</span><br></pre></td></tr></table></figure>
+<p>找到<code>554889e5488b05160605000fbe04075d</code><br>
+改为<code>554889e5b8010000005dc30f1f440000</code></p>
+<p>如果修改后打不开那就给它<a href="/2020/fix-macOS-10-15-4-damage/">签个名</a>试试?(我这直接就能打开了)</p>
+<h2 id="技术总结">技术总结</h2>
+<p>收集信息和探索：对二进制文件展开成人类可读的形式后，使用关键词进行搜索，定位阻碍我们流畅使用该应用的函数。这一步耗时最长，需要仔细摆弄软件获得灵感，并且直接决定能否成功。一般搜索关键词如 activate、purchase、register、trial 之类，也可以结合具体应用和想要的效果选取。例如对于弹窗的应用，不一定非要“破解”，只要能屏蔽广告就行，那么可以使用 dialog、window 之类的关键词搜索。这个阶段使用的工具主要目的是为了把 binary format 妆换成 human-readable format，工具例如：hopper、otx、class-dump 都可以满足，class-dump 信息清晰一些。</p>
+<p>如果上一步定位了目标函数，则需要弄清这个函数的输入输出，并撰写编译自己后面用来替换的函数。比如目标函数通过判断用户身份返回是否合法，合法 true 不合法 false。那么我们就建立一个 C 文件写一个永远返回 true 的函数编译出二进制。如果一个目标是一个返回 void 的弹窗函数，那么我们就让这个函数调用后立马 return，跳过后面花里胡哨的广告展示逻辑。这个阶段用到的工具是 C 语言编译器，如 gcc。</p>
+<p>找到目标函数的虚拟内存地址。工具: hopper 或 otx 都可以满足。</p>
+<p>通过上面的内存地址获取代码在二进制文件中的位置。工具： offset 脚本。</p>
+<p>使用自己的函数逻辑替换二进制文件 offset 处原逻辑。工具：vim &amp;&amp; xxds</p>
+<p>测试是否成功。不成功重复上述步骤，或者 google 高阶破解技巧，或者放弃。</p>
+<p>转自<span class="exturl" data-url="aHR0cHM6Ly9mcmVlbWFuZGVhbGVyLmdpdGh1Yi5pby8yMDE1LzEwLzEwL2hhY2tpbmctb3N4LWFwcC8jJUU2JThBJTgwJUU2JTlDJUFGJUU2JTgwJUJCJUU3JUJCJTkz">技术总结 by Zhengyu Zhang<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="参考文章">参考文章</h2>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9mcmVlbWFuZGVhbGVyLmdpdGh1Yi5pby8yMDE1LzEwLzEwL2hhY2tpbmctb3N4LWFwcC8=">记录一次 OSX 软件破解<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9iZXN0c3dpZnRlci5jb20vYXBwLWNyYWNrLw==">一个数字的魔法——破解 Mac 上 198 元的 Paw<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>如果没有这些文章, 这次破解将会变得非常耗时且难以成功, 感谢!</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Misaka13514
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.atri.tk/2020/mac-app-crack/" title="破解 macOS 应用程序 (Inklet)">https://blog.atri.tk/2020/mac-app-crack/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://twitter.com/Misaka_0x34ca">
+          <span class="icon">
+            <i class="fab fa-twitter"></i>
+          </span>
+
+          <span class="label">Twitter</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://t.me/Emfield">
+          <span class="icon">
+            <i class="fab fa-telegram"></i>
+          </span>
+
+          <span class="label">Telegram</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://github.com/Misaka13514">
+          <span class="icon">
+            <i class="fab fa-github"></i>
+          </span>
+
+          <span class="label">GitHub</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/macOS/" rel="tag"><i class="fa fa-tag"></i> macOS</a>
+              <a href="/tags/Hack/" rel="tag"><i class="fa fa-tag"></i> Hack</a>
+              <a href="/tags/Reverse/" rel="tag"><i class="fa fa-tag"></i> Reverse</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/set-up-typecho/" rel="prev" title="搭建 Typecho">
+                  <i class="fa fa-chevron-left"></i> 搭建 Typecho
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/play-arduino/" rel="next" title="玩 Arduino 开发板">
+                  玩 Arduino 开发板 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"><a href="/">Misaka13514</a> | <a href="https://icp.gov.moe/?keyword=20213514" target="_blank" rel="external noopenner nofollow">萌ICP备 20213514号</a></span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">22k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">20 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">Proudly powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span>.
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/firebase@8.6.8/firebase-app.js" integrity="sha256-3hdiTmkDsofqAYaeI/xZx6N7xYgnG+aXWangXu+jtCg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/firebase@8.6.8/firebase-firestore.js" integrity="sha256-Itvsoir8vLRlK5Xg9Mz8vQqzJ6gVmc5GQ27rNTOZSOY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="firestore" type="application/json">{"enable":true,"collection":"articles","apiKey":"AIzaSyDTboPkf_mxdDtpHeUE0qWDC8Ex7NB5MIA","projectId":"misaka-blog-analytics"}</script>
+  <script src="/js/third-party/statistics/firestore.js"></script>
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha256-hFAmQt2dGk6G99nu2cEWz8/1JGRnBP/BsGoZwQ7WeLE=" crossorigin="anonymous">
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"misaka13514","count":false,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

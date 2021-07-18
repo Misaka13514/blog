@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#663399">
+<meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#663399">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.atri.tk","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":true,"nav":null,"activeClass":"disqus"},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="整了台小米路由器 AX3600 玩 我没有 root 权限会死所以root 了下，发现还能用 clash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AX3600 开启 ssh 并使用 Clash 实现透明代理">
+<meta property="og:url" content="https://blog.atri.tk/2020/ax3600-ssh-clash/">
+<meta property="og:site_name" content="欠陥電気の摸鱼小池">
+<meta property="og:description" content="整了台小米路由器 AX3600 玩 我没有 root 权限会死所以root 了下，发现还能用 clash">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-13T04:29:28.000Z">
+<meta property="article:modified_time" content="2020-09-13T04:29:28.000Z">
+<meta property="article:author" content="Misaka13514">
+<meta property="article:tag" content="OpenWRT">
+<meta property="article:tag" content="GFW">
+<meta property="article:tag" content="Shadowsocks">
+<meta property="article:tag" content="ShadowsocksR">
+<meta property="article:tag" content="V2Ray">
+<meta property="article:tag" content="Trojan">
+<meta property="article:tag" content="Proxy">
+<meta property="article:tag" content="Clash">
+<meta property="article:tag" content="Xiaomi">
+<meta property="article:tag" content="Router">
+<meta property="article:tag" content="ROM">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.atri.tk/2020/ax3600-ssh-clash/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.atri.tk/2020/ax3600-ssh-clash/","path":"2020/ax3600-ssh-clash/","title":"AX3600 开启 ssh 并使用 Clash 实现透明代理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AX3600 开启 ssh 并使用 Clash 实现透明代理 | 欠陥電気の摸鱼小池</title>
+  
+
+
+
+  <script data-pjax defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2a9b8e2d8b7848908d4a9848b825637b"}'></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="欠陥電気の摸鱼小池" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">欠陥電気の摸鱼小池</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Misaka13514的小站</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-book fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-dn42"><a href="/dn42-peering/" rel="section"><i class="fa fa-network-wired fa-fw"></i>DN42</a></li>
+        <li class="menu-item menu-item-homepage"><span class="exturl" data-url="aHR0cHM6Ly9hdHJpLnRr"><i class="fa fa-home fa-fw"></i>主页</span></li>
+        <li class="menu-item menu-item-about"><span class="exturl" data-url="aHR0cHM6Ly9hdHJpLnRrL2Fib3V0Lw=="><i class="fa fa-user fa-fw"></i>关于</span></li>
+        <li class="menu-item menu-item-drive"><span class="exturl" data-url="aHR0cHM6Ly9kcml2ZS5hdHJpLnRr"><i class="fa fa-hdd fa-fw"></i>网盘</span></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96-root-%E6%9D%83%E9%99%90%E5%B9%B6%E6%89%93%E5%BC%80-ssh"><span class="nav-number">1.</span> <span class="nav-text">获取 root 权限并打开 ssh</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%98%E6%96%B9%E5%9B%BA%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%BC%80%E5%90%AF-ssh"><span class="nav-number">1.1.</span> <span class="nav-text">使用官方固件漏洞开启 ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%AF%86%E7%A0%81%E5%8F%8A%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81"><span class="nav-number">1.2.</span> <span class="nav-text">更改密码及权限维持</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-clash-%E4%BD%9C%E4%B8%BA%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">安装 clash 作为透明代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Misaka13514"
+      src="/img/default_avatar.webp">
+  <p class="site-author-name" itemprop="name">Misaka13514</p>
+  <div class="site-description" itemprop="description">划水摸鱼最快乐啦～<br />写blog什么的才不要呢</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90ZWxlZ3JhbS5tZS9NaXNha2FfMHgzNGNh" title="Telegram → https:&#x2F;&#x2F;telegram.me&#x2F;Misaka_0x34ca"><i class="fab fa-telegram fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9NaXNha2FfMHgzNGNh" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Misaka_0x34ca"><i class="fab fa-twitter fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Misaka13514"><i class="fab fa-github fa-fw"></i></span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOk1pc2FrYTEzNTE0QGdtYWlsLmNvbQ==" title="E-Mail → mailto:Misaka13514@gmail.com"><i class="fa fa-envelope fa-fw"></i></span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9zLmF0cmkudGs=" title="https:&#x2F;&#x2F;s.atri.tk">缩短链接</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9zdWIuYXRyaS50aw==" title="https:&#x2F;&#x2F;sub.atri.tk">订阅转换</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9wcm94eS5hdHJpLnRr" title="https:&#x2F;&#x2F;proxy.atri.tk">在线代理</span>
+        </li>
+    </ul>
+  </div>
+
+          </div>
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.atri.tk/2020/ax3600-ssh-clash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/default_avatar.webp">
+      <meta itemprop="name" content="Misaka13514">
+      <meta itemprop="description" content="划水摸鱼最快乐啦～<br />写blog什么的才不要呢">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欠陥電気の摸鱼小池">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AX3600 开启 ssh 并使用 Clash 实现透明代理<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pc2FrYTEzNTE0L2Jsb2cvdHJlZS9tYWluL3NvdXJjZS9fcG9zdHMvYXgzNjAwLXNzaC1jbGFzaC5tZA==" title="编辑"><i class="fa fa-pen-nib"></i></span>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-13 12:29:28" itemprop="dateCreated datePublished" datetime="2020-09-13T12:29:28+08:00">2020-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="firestore-visitors-count"></span>
+    </span>
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>整了台小米路由器 AX3600 玩 <s>我没有 root 权限会死所以</s>root 了下，发现还能用 clash</p>
+<span id="more"></span>
+<h2 id="获取-root-权限并打开-ssh">获取 root 权限并打开 ssh</h2>
+<h3 id="使用官方固件漏洞开启-ssh">使用官方固件漏洞开启 ssh</h3>
+<p>先需要将固件版本降级到<code>1.0.17</code>，固件可以在<span class="exturl" data-url="aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2RyaXZlL2ZvbGRlcnMvMXRJaktNTlNTcmtZbTh2Qkdtay1nUFRqVHJZdVJFR0x0">这里<i class="fa fa-external-link-alt"></i></span>下载。</p>
+<p>连接上 wifi 并打开<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMzEuMS8=">路由器管理页面<i class="fa fa-external-link-alt"></i></span></p>
+<p>登录后浏览器地址栏应该是这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.31.1/cgi-bin/luci/;stok=&lt;STOK&gt;/web/home#router</span><br></pre></td></tr></table></figure>
+<p>复制记下这个<code>&lt;STOK&gt;</code></p>
+<p>把下面 URL 中的<code>&lt;STOK&gt;</code>替换成刚才的，并访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.31.1/cgi-bin/luci/;stok=&lt;STOK&gt;/api/misystem/set_config_iotdev?bssid=Xiaomi&amp;user_id=longdike&amp;ssid=-h%3B%20nvram%20set%20ssh_en%3D1%3B%20nvram%20commit%3B%20sed%20-i%20&#x27;s%2Fchannel%3D.*%2Fchannel%3D%5C%22debug%5C%22%2Fg&#x27;%20%2Fetc%2Finit.d%2Fdropbear%3B%20%2Fetc%2Finit.d%2Fdropbear%20start%3B</span><br></pre></td></tr></table></figure>
+<p>会显示<code>&#123;&quot;code&quot;:0&#125;</code></p>
+<p>再来一个 URL，注意替换<code>STOK</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.31.1/cgi-bin/luci/;stok=&lt;STOK&gt;/api/misystem/set_config_iotdev?bssid=Xiaomi&amp;user_id=longdike&amp;ssid=-h%3B%20echo%20-e%20&#x27;admin%5Cnadmin&#x27;%20%7C%20passwd%20root%3B</span><br></pre></td></tr></table></figure>
+<p>到这里 ssh 就成功打开了<br>
+可以使用用户名 root+密码 admin 来 ssh 登录路由器</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.31.1</span><br></pre></td></tr></table></figure>
+<p>输入密码回车后可以看到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">BusyBox v1.25.1 (YYYY-MM-DD HH:mm:ss UTC) built-in shell (ash)</span><br><span class="line"></span><br><span class="line"> -----------------------------------------------------</span><br><span class="line">       Welcome to XiaoQiang!</span><br><span class="line"> -----------------------------------------------------</span><br><span class="line">  $$$$$$\  $$$$$$$\  $$$$$$$$\      $$\      $$\        $$$$$$\  $$\   $$\</span><br><span class="line"> $$  __$$\ $$  __$$\ $$  _____|     $$ |     $$ |      $$  __$$\ $$ | $$  |</span><br><span class="line"> $$ /  $$ |$$ |  $$ |$$ |           $$ |     $$ |      $$ /  $$ |$$ |$$  /</span><br><span class="line"> $$$$$$$$ |$$$$$$$  |$$$$$\         $$ |     $$ |      $$ |  $$ |$$$$$  /</span><br><span class="line"> $$  __$$ |$$  __$$&lt; $$  __|        $$ |     $$ |      $$ |  $$ |$$  $$&lt;</span><br><span class="line"> $$ |  $$ |$$ |  $$ |$$ |           $$ |     $$ |      $$ |  $$ |$$ |\$$\</span><br><span class="line"> $$ |  $$ |$$ |  $$ |$$$$$$$$\       $$$$$$$$$  |       $$$$$$  |$$ | \$$\</span><br><span class="line"> \__|  \__|\__|  \__|\________|      \_________/        \______/ \__|  \__|</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root@XiaoQiang:~#</span><br></pre></td></tr></table></figure>
+<p>这个 RUOK 就很灵性</p>
+<h3 id="更改密码及权限维持">更改密码及权限维持</h3>
+<p>重新设置 root 密码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">passwd root</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>这样并不能保证升级后 ssh 仍能使用，如果留在这个版本漏洞还是有一定风险。</p>
+<p>备份</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nanddump -f /tmp/bdata_mtd9.img /dev/mtd9</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>用你喜欢的方式下载<code>bdata_mtd9.img</code>，我使用 scp 命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp root@192.168.31.1:/tmp/bdata_mtd9.img ~/</span><br></pre></td></tr></table></figure>
+<p>下载<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/Misaka13514/asset@main/blog/_posts/ax3600-ssh-clash/fuckax3600"><code>fuckax3600</code></a>(作者：<span class="exturl" data-url="aHR0cHM6Ly93d3cucmlnaHQuY29tLmNuL2ZvcnVtL3NwYWNlLXVpZC0xOTQ4MTMuaHRtbA==">paldier<i class="fa fa-external-link-alt"></i></span>) 并传到路由器的<code>/tmp</code>目录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp ~/Downloads/fuckax3600 root@192.168.31.1:/tmp/</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /tmp/fuckax3600</span><br><span class="line">/tmp/fuckax3600 unlock</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>等待路由器重启后</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/tmp/fuckax3600 hack</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>会自动设置永久 ssh、telnet、uart 权限，同时会计算出默认的 root 密码，注意记录密码，恢复出厂后 telnet 和 ssh 需要用</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/tmp/fuckax3600 lock</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>然后就可以升级新版本了，如果升级完新版本 ssh 不能用</p>
+<p>使用 telnet 登录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet 192.168.31.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">&#x27;s/channel=.*/channel=&quot;debug&quot;/g&#x27;</span> /etc/init.d/dropbear</span><br><span class="line">/etc/init.d/dropbear start</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<h2 id="安装-clash-作为透明代理">安装 clash 作为透明代理</h2>
+<p>这里使用一键脚本<a target="_blank" rel="noopener" href="https://github.com/juewuy/ShellClash"><code>ShellClash</code></a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -kfsSl https://cdn.jsdelivr.net/gh/juewuy/ShellClash@latest/install.sh)</span>&quot;</span> &amp;&amp; <span class="built_in">source</span> /etc/profile &amp;&gt; /dev/null</span><br><span class="line">clash</span><br><span class="line"><span class="comment">#在路由器shell执行</span></span><br></pre></td></tr></table></figure>
+<p>使用<code>clash</code>命令就能打开管理脚本</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucmlnaHQuY29tLmNuL2ZvcnVtL2ZvcnVtLnBocD9tb2Q9dmlld3RocmVhZCZhbXA7dGlkPTQwNDYwMjA=">[AX3600] 小米 ax3600 获取 root 权限【简单快速】【修复丢 ssid】<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2p1ZXd1eS9TaGVsbENsYXNo">juewuy/ShellClash<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li>
+<p><span class="exturl" data-url="aHR0cHM6Ly9qdWV3dXkuZ2l0aHViLmlvL3Bvc3QvY2xhc2gtZm9yLW1pd2lmaS1hbi16aHVhbmctamktc2hpLXlvbmctamlhby1jaGVuZy8=">Clash for Miwifi 安装及使用教程<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Misaka13514
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.atri.tk/2020/ax3600-ssh-clash/" title="AX3600 开启 ssh 并使用 Clash 实现透明代理">https://blog.atri.tk/2020/ax3600-ssh-clash/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://twitter.com/Misaka_0x34ca">
+          <span class="icon">
+            <i class="fab fa-twitter"></i>
+          </span>
+
+          <span class="label">Twitter</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://t.me/Emfield">
+          <span class="icon">
+            <i class="fab fa-telegram"></i>
+          </span>
+
+          <span class="label">Telegram</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://github.com/Misaka13514">
+          <span class="icon">
+            <i class="fab fa-github"></i>
+          </span>
+
+          <span class="label">GitHub</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/OpenWRT/" rel="tag"><i class="fa fa-tag"></i> OpenWRT</a>
+              <a href="/tags/GFW/" rel="tag"><i class="fa fa-tag"></i> GFW</a>
+              <a href="/tags/Shadowsocks/" rel="tag"><i class="fa fa-tag"></i> Shadowsocks</a>
+              <a href="/tags/ShadowsocksR/" rel="tag"><i class="fa fa-tag"></i> ShadowsocksR</a>
+              <a href="/tags/V2Ray/" rel="tag"><i class="fa fa-tag"></i> V2Ray</a>
+              <a href="/tags/Trojan/" rel="tag"><i class="fa fa-tag"></i> Trojan</a>
+              <a href="/tags/Proxy/" rel="tag"><i class="fa fa-tag"></i> Proxy</a>
+              <a href="/tags/Clash/" rel="tag"><i class="fa fa-tag"></i> Clash</a>
+              <a href="/tags/Xiaomi/" rel="tag"><i class="fa fa-tag"></i> Xiaomi</a>
+              <a href="/tags/Router/" rel="tag"><i class="fa fa-tag"></i> Router</a>
+              <a href="/tags/ROM/" rel="tag"><i class="fa fa-tag"></i> ROM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/github-actions-hexo/" rel="prev" title="使用 GitHub Actions 自动部署 blog">
+                  <i class="fa fa-chevron-left"></i> 使用 GitHub Actions 自动部署 blog
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/win-ssid-number/" rel="next" title="删除 Win10 中不再使用的或重复的网络">
+                  删除 Win10 中不再使用的或重复的网络 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"><a href="/">Misaka13514</a> | <a href="https://icp.gov.moe/?keyword=20213514" target="_blank" rel="external noopenner nofollow">萌ICP备 20213514号</a></span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">22k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">20 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">Proudly powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span>.
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/firebase@8.6.8/firebase-app.js" integrity="sha256-3hdiTmkDsofqAYaeI/xZx6N7xYgnG+aXWangXu+jtCg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/firebase@8.6.8/firebase-firestore.js" integrity="sha256-Itvsoir8vLRlK5Xg9Mz8vQqzJ6gVmc5GQ27rNTOZSOY=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="firestore" type="application/json">{"enable":true,"collection":"articles","apiKey":"AIzaSyDTboPkf_mxdDtpHeUE0qWDC8Ex7NB5MIA","projectId":"misaka-blog-analytics"}</script>
+  <script src="/js/third-party/statistics/firestore.js"></script>
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css" integrity="sha256-hFAmQt2dGk6G99nu2cEWz8/1JGRnBP/BsGoZwQ7WeLE=" crossorigin="anonymous">
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"misaka13514","count":false,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

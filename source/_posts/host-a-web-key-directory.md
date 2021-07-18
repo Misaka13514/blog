@@ -52,7 +52,7 @@ sub   cv25519 2021-05-16 [E] [expires: 2024-01-01]
 
 于是我寻找了其他发布公钥的途径，有`DNS CERT`、`DANE`、`Web Key Directory (wkd)`、`LDAP`、`NTDS`等。关于这些方法的说明可以`man gpg`或是在[GPG 文档](https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html)中看到。
 
-我选择了`Web Key Directory (wkd)`方法，它也是默认启用的除本地外的唯一一种方法。下面将以我的密钥为例，自己部署`Web Key Directory (wkd)`。你也可以使用在自己域名上[使用第三方提供的服务](#使用第三方服务)。如果你使用的邮箱的域名已经[提供了这样的服务](https://wiki.gnupg.org/WKD#Mail_Service_Providers_offering_WKD)，你可以跳过下面的步骤。
+我选择了`Web Key Directory (wkd)`方法，它也是默认启用的除本地外的唯一一种方法。下面将以我的密钥为例，自己部署 WKD。你也可以使用在自己域名上[使用第三方提供的服务](#使用第三方服务)。如果你使用的邮箱的域名已经[提供了这样的服务](https://wiki.gnupg.org/WKD#Mail_Service_Providers_offering_WKD)，你可以跳过下面的步骤。
 
 ## 自己部署
 
@@ -109,7 +109,14 @@ $ tree -a
 
 在 GitHub 上创建一个公开仓库。
 
+{% note info %}
+[GitHub Pages 默认启用了 Jekyll](https://docs.github.com/cn/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll)，而它默认不会构建开头为`.`的文件夹，所以需要额外的配置。
+
+可以通过在根目录创建`.nojekyll`文件以直接禁用 Jekyll；也可以创建一个配置文件`_config.yml`，并写入`include: [".well-known"]`。
+{% endnote %}
+
 ```sh
+$ touch .nojekyll
 $ echo "openpgpkey.your.domain" > CNAME
 $ git init && git add . && git commit -m "Initial commit"
 Initialized empty Git repository in ~/openpgpkey-WKD/.git/

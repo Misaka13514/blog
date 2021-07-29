@@ -87,7 +87,7 @@ menu:
   links: /links/ || fa fa-link
   dn42: /dn42-peering/ || fa fa-network-wired
   homepage: https://atri.tk || fa fa-home
-  about: https://atri.tk/about/ || fa fa-user
+  about: https://i.atri.tk || fa fa-user
   drive: https://drive.atri.tk || fa fa-hdd
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap

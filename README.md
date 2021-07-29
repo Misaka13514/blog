@@ -7,7 +7,7 @@ Misaka13514's blog locate at [blog.atri.tk](https://blog.atri.tk)!
 ## Site of Misaka13514
 
 - [home page](https://atri.tk/)
-- [about page](https://atri.tk/about/)
+- [about page](https://i.atri.tk/)
 - [blog](https://blog.atri.tk/)
 - [friend links](https://blog.atri.tk/links/)
 - [sitemap](https://atri.tk/sitemap.xml) including more web pages and services.

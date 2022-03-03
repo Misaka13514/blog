@@ -34,16 +34,16 @@ date: 2021-04-02 04:42:42
 | ASN                       | 4242421032                                         |
 | DN42 IPv4                 | 172.23.10.1                                        |
 | Link-Local                | fe80::1032                                         |
-| Hostname                  | sg.dn42.atri.tk                                    |
-| Endpoint                  | sg.dn42.atri.tk:「YourASNlast5digits(e.g. 21032)」 |
-| WireGuard public key      | x5i9qx8tglqzvghOckjXuRBcWQ8srWLNZOlt7VtFmwI=       |
+| Hostname                  | jp.dn42.atri.tk                                    |
+| Endpoint                  | jp.dn42.atri.tk:「YourASNlast5digits(e.g. 21032)」 |
+| WireGuard public key      | K3X8ndAJzjfgfxAo0gAQpgtH2yj03MCruvnsALSkhjg=       |
 | BGP software              | bird2                                              |
 | Extended next hop support | True                                               |
 | Multiprotocol BGP support | True                                               |
-| Hosting provider          | DigitalOcean                                       |
-| Location                  | Singapore                                          |
+| Hosting provider          | Oracle Cloud                                       |
+| Location                  | Japan/Osaka                                        |
 
-Valid before Jan. 15th, 2022.
+Valid before Dec. 31st, 2022.
 
 #### Contact Details
 
@@ -62,14 +62,14 @@ Valid before Jan. 15th, 2022.
 [Interface]
 ListenPort = <Your WireGuard port>
 PrivateKey = <Your PrivateKey>
-PostUp = ip addr add dev wg1032 <Your DN42 IPv4>/32 peer 172.23.10.1/32
-PostUp = ip addr add dev wg1032 <Your Link-Local>/64
+PostUp = ip addr add dev %i <Your DN42 IPv4>/32 peer 172.23.10.1/32
+PostUp = ip addr add dev %i <Your Link-Local>/64
 Table = off
 
 [Peer]
-PublicKey = x5i9qx8tglqzvghOckjXuRBcWQ8srWLNZOlt7VtFmwI=
-Endpoint = sg.dn42.atri.tk:<YourASNlast5digits(e.g. 21032)>
-AllowedIPs = 0.0.0.0/0, ::/0
+PublicKey = K3X8ndAJzjfgfxAo0gAQpgtH2yj03MCruvnsALSkhjg=
+Endpoint = jp.dn42.atri.tk:<YourASNlast5digits(e.g. 21032)>
+AllowedIPs = 172.16.0.0/12, 10.0.0.0/8, fd00::/8, fe80::/10
 ```
 
 `/etc/bird/peers/1032.conf`
@@ -89,7 +89,8 @@ protocol bgp dn42_1032_v6 from dnpeers {
 ```
 
 ```sh
-systemctl enable --now wg-quick@wg1032
+systemctl enable --now wg-quick@wg1032.service
+birdc configure
 ```
 
 ## Autonomous System Info
@@ -97,10 +98,13 @@ systemctl enable --now wg-quick@wg1032
 ```text
 Information related to AS4242421032
 aut-num:            AS4242421032
-as-name:            RADIONOISE-AS
+as-name:            RadioNoise
+descr:              Misaka13514's autonomous system
+remarks:            You may refer to https://dn42.atri.tk for details.
 admin-c:            RADIONOISE-DN42
 tech-c:             RADIONOISE-DN42
 mnt-by:             RADIONOISE-MNT
+source:             DN42
 
 Routes for AS4242421032
 route4:             172.23.10.0/27

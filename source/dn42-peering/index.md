@@ -1,6 +1,6 @@
 ---
 title: Peer AS4242421032
-date: 2021-04-02 04:42:42
+date: 2022-04-02 04:42:42
 ---
 
 ## Peering
@@ -40,8 +40,8 @@ date: 2021-04-02 04:42:42
 | BGP software              | bird2                                              |
 | Extended next hop support | True                                               |
 | Multiprotocol BGP support | True                                               |
-| Hosting provider          | Oracle Cloud                                       |
-| Location                  | Japan/Osaka                                        |
+| Hosting provider          | Amazon Web Services                                |
+| Location                  | Japan/Tokyo                                        |
 
 Valid before Dec. 31st, 2022.
 

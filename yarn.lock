@@ -618,10 +618,10 @@ hexo-theme-next@^8.2.1:
   resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.13.0.tgz#d8d6620c8a4287afd9bc30b34dbc8e74e575789d"
   integrity sha512-A6dWBv5SCEqapZkCrpJvDoCYthOEQSulRKZx+1WbS9K7CVDG3KEh/HFTYYzn3Ov09yMNSMH80xIH6wL4mr054A==
 
-hexo-util@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/hexo-util/-/hexo-util-2.1.0.tgz#2c691a034a05d4ed254696c2e99d7cb686fdd350"
-  integrity sha512-TXt6z7rj5BEDig7aZZjfHa7qFKGOtUlQoVHvQh0GS99fGp1JxWbllosI173kOcrzor/uubtGk+5nRzhELZyeZw==
+hexo-util@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/hexo-util/-/hexo-util-2.4.0.tgz#f5c0099a0a1718b3ad27061e5e4d1fb9eb7f2b41"
+  integrity sha512-IPQvAyn0cznYMU2gskMiZ6LZEvN7wHNusrJoYxrir4f7S7POpZeDTBswiko9R1qqd+/hu07wUYZdm4ceTTCEaA==
   dependencies:
     bluebird "^3.5.2"
     camel-case "^4.0.0"
@@ -647,12 +647,12 @@ hexo-util@^2.0.0, hexo-util@^2.1.0, hexo-util@^2.7.0:
     prismjs "^1.17.1"
     strip-indent "^3.0.0"
 
-hexo-word-counter@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/hexo-word-counter/-/hexo-word-counter-0.0.2.tgz#8da66f33f3b27881e8429076d80647cc8309567a"
-  integrity sha512-QCYQaxUQh0n9bxmD2FkZ3Vgz7mpJOs1XRZtiZNhrSxW+gSoFxg22EC09VvV9V7Vt3H9vfsHdvNKH6PoZ8k1h0w==
+hexo-word-counter@0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/hexo-word-counter/-/hexo-word-counter-0.0.3.tgz#9cd31de37bef0b5123b28a311240dc6fa256cccc"
+  integrity sha512-VImhZ9m2RFoGDwKCkfNodogHgGmN7JLa1OZQ/N9gW0SpZDyOwP4jKAlWplzbAVdwK/CF3VQfKEeDzfsTbjcKTQ==
   dependencies:
-    hexo-util "2.1.0"
+    hexo-util "2.4.0"
 
 hexo@^6.3.0:
   version "6.3.0"

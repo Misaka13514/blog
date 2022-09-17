@@ -11,7 +11,7 @@ date: 2022-04-02 04:42:42
 - Latency: ≦100ms
 - Currently does not accept strangers' peering unless their conditions are perfect.
 - Abnormal use will be blocked.
-- `THE SERVICE IS PROVIDED "AS IS", WITHOUT WARRANTY ...(sth really long and nobody want to read)... OTHER DEALINGS IN THE SERVICE.`
+- `THE SERVICE IS PROVIDED "AS IS", WITHOUT WARRANTY ...(sth really long and nobody wants to read)... OTHER DEALINGS IN THE SERVICE.`
 - All rights reserved.
 
 #### Your Information Required
@@ -31,19 +31,35 @@ date: 2022-04-02 04:42:42
 
 | Item | Value |
 | -- | -- |
-| ASN                       | 4242421032                                         |
-| DN42 IPv4                 | 172.23.10.1                                        |
-| Link-Local                | fe80::1032                                         |
-| Hostname                  | jp.dn42.atri.tk                                    |
-| Endpoint                  | jp.dn42.atri.tk:「YourASNlast5digits(e.g. 21032)」 |
-| WireGuard public key      | K3X8ndAJzjfgfxAo0gAQpgtH2yj03MCruvnsALSkhjg=       |
-| BGP software              | bird2                                              |
-| Extended next hop support | True                                               |
-| Multiprotocol BGP support | True                                               |
-| Hosting provider          | Amazon Web Services                                |
-| Location                  | Japan/Tokyo                                        |
+| ASN                       | 4242421032                                          |
+| DN42 IPv4                 | 172.23.10.1                                         |
+| Link-Local                | fe80::1032                                          |
+| Hostname                  | tyo.dn42.atri.tk                                    |
+| Endpoint                  | tyo.dn42.atri.tk:「YourASNlast5digits(e.g. 21032)」 |
+| WireGuard public key      | K3X8ndAJzjfgfxAo0gAQpgtH2yj03MCruvnsALSkhjg=        |
+| BGP software              | bird2                                               |
+| Extended next hop support | True                                                |
+| Multiprotocol BGP support | True                                                |
+| Hosting provider          | Amazon Web Services                                 |
+| Location                  | Asia/Tokyo                                          |
 
-Valid before Dec. 31st, 2022.
+Valid before Mar. 31st, 2023.
+
+| Item | Value |
+| -- | -- |
+| ASN                       | 4242421032                                          |
+| DN42 IPv4                 | 172.23.10.2                                         |
+| Link-Local                | fe80::1032                                          |
+| Hostname                  | lax.dn42.atri.tk                                    |
+| Endpoint                  | lax.dn42.atri.tk:「YourASNlast5digits(e.g. 21032)」 |
+| WireGuard public key      | K3X8ndAJzjfgfxAo0gAQpgtH2yj03MCruvnsALSkhjg=        |
+| BGP software              | bird2                                               |
+| Extended next hop support | True                                                |
+| Multiprotocol BGP support | True                                                |
+| Hosting provider          | RackNerd                                            |
+| Location                  | America/Los_Angeles                                 |
+
+Valid before Aug. 31st, 2023.
 
 #### Contact Details
 
@@ -52,7 +68,7 @@ Valid before Dec. 31st, 2022.
 | PGP Key Fingerprint | [C4B7 1F9E D351 5AEB 8270 D5D7 189B B387 CF3A D95F](https://keys.openpgp.org/vks/v1/by-fingerprint/C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F) |
 | E-mail              | [Misaka13514@gmail.com](mailto:Misaka13514@gmail.com)                                                                                        |
 | Telegram            | [Misaka_0x34ca](https://t.me/Misaka_0x34ca)                                                                                                  |
-| Supported language  | zh_CN, zh_TW, en_US, en_GB, ja_JP                                                                                                            |
+| Supported languages | zh_CN, zh_TW, en_US, en_GB, ja_JP, eo                                                                                                        |
 
 ### Sample Config
 
@@ -68,7 +84,7 @@ Table = off
 
 [Peer]
 PublicKey = K3X8ndAJzjfgfxAo0gAQpgtH2yj03MCruvnsALSkhjg=
-Endpoint = jp.dn42.atri.tk:<YourASNlast5digits(e.g. 21032)>
+Endpoint = tyo.dn42.atri.tk:<YourASNlast5digits(e.g. 21032)>
 AllowedIPs = 172.16.0.0/12, 10.0.0.0/8, fd00::/8, fe80::/10
 ```
 

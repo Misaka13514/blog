@@ -9,7 +9,7 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "5.4.1"
+    "version": "5.4.2"
   },
   "dependencies": {
     "@iktakahiro/markdown-it-katex": "^4.0.1",

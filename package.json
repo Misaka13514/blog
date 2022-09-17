@@ -32,7 +32,7 @@
     "pjax": "^0.2.8"
   },
   "devDependencies": {
-    "hexo-generator-sitemap": "^2.1.0"
+    "hexo-generator-sitemap": "^3.0.1"
   },
   "resolutions": {
     "stylus": "^0.54.8"

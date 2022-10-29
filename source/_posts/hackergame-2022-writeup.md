@@ -739,3 +739,7 @@ conn.interactive()
 明年可能会再来参加，希望到时候也能够顺利上榜。
 
 参加 Hackergame 喵，参加 Hackergame 谢谢喵。
+
+## See also
+
+- [参加 Hackergame 2022 的一些感想和部分题解](https://nekomoe.xyz/index.html?type=article&filename=hackergame-2022.md) by [柏园猫](https://nekomoe.xyz/)

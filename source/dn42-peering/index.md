@@ -1,6 +1,6 @@
 ---
 title: Peer AS4242421032
-date: 2022-04-02 04:42:42
+date: 2022-04-02 04:02:42
 ---
 
 ## Peering
@@ -18,7 +18,8 @@ date: 2022-04-02 04:42:42
 
 - ASN
 - DN42 IPv4
-- Link-Local
+- Link-Local (preferred for bird) or DN42 IPv6 ULA
+- Multiprotocol BGP?
 - Endpoint
 - WireGuard port
 - WireGuard public key
@@ -78,13 +79,14 @@ Valid before Aug. 31st, 2023.
 [Interface]
 ListenPort = <Your WireGuard port>
 PrivateKey = <Your PrivateKey>
-PostUp = ip addr add dev %i <Your DN42 IPv4>/32 peer 172.23.10.1/32
-PostUp = ip addr add dev %i <Your Link-Local>/64
+Address = <Your Link-Local>/64 # if Link-Local
+PostUp = ip addr add dev %i <Your DN42 IPv4>/32 peer 172.23.10.2/32
+#PostUp = ip addr add dev %i <Your DN42 IPv6>/128 peer fdbd:8e82:8b88::2/128 # if ULA
 Table = off
 
 [Peer]
 PublicKey = K3X8ndAJzjfgfxAo0gAQpgtH2yj03MCruvnsALSkhjg=
-Endpoint = tyo.dn42.atri.tk:<YourASNlast5digits(e.g. 21032)>
+Endpoint = lax.dn42.atri.tk:<YourASNlast5digits(e.g. 21032)>
 AllowedIPs = 172.16.0.0/12, 10.0.0.0/8, fd00::/8, fe80::/10
 ```
 
@@ -93,13 +95,14 @@ AllowedIPs = 172.16.0.0/12, 10.0.0.0/8, fd00::/8, fe80::/10
 ```conf
 # Delete these below if MP-BGP
 protocol bgp dn42_1032 from dnpeers {
-    neighbor 172.23.10.1 as 4242421032;
+    neighbor 172.23.10.2 as 4242421032;
     direct;
 }
 # Delete these above if MP-BGP
 
 protocol bgp dn42_1032_v6 from dnpeers {
-    neighbor fe80::1032%wg1032 as 4242421032;
+    neighbor fe80::1032%wg1032 as 4242421032; # if Link-Local
+    # neighbor fdbd:8e82:8b88::2 as 4242421032; # if ULA
     direct;
 }
 ```
@@ -130,5 +133,6 @@ route6:             fdbd:8e82:8b88::/48
 ## Reference
 
 - [Decentralized network 42](https://dn42.us)
+- [DN42 wiki](https://wiki.dn42.dev)
 - [WireGuard](https://www.wireguard.com)
 - [The BIRD Internet Routing Daemon](https://bird.network.cz)

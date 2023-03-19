@@ -33,22 +33,6 @@ date: 2022-04-02 04:02:42
 | Item | Value |
 | -- | -- |
 | ASN                       | 4242421032                                          |
-| DN42 IPv4                 | 172.23.10.1                                         |
-| Link-Local                | fe80::1032                                          |
-| Hostname                  | tyo.dn42.atri.tk                                    |
-| Endpoint                  | tyo.dn42.atri.tk:「YourASNlast5digits(e.g. 21032)」 |
-| WireGuard public key      | K3X8ndAJzjfgfxAo0gAQpgtH2yj03MCruvnsALSkhjg=        |
-| BGP software              | bird2                                               |
-| Extended next hop support | True                                                |
-| Multiprotocol BGP support | True                                                |
-| Hosting provider          | Amazon Web Services                                 |
-| Location                  | Asia/Tokyo                                          |
-
-Valid before Mar. 31st, 2023.
-
-| Item | Value |
-| -- | -- |
-| ASN                       | 4242421032                                          |
 | DN42 IPv4                 | 172.23.10.2                                         |
 | Link-Local                | fe80::1032                                          |
 | Hostname                  | lax.dn42.atri.tk                                    |

@@ -19,6 +19,11 @@ abbrev@^1.1.1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
+abbrev@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-2.0.0.tgz#cf59829b8b4f03f89dda2771cb7f3653828c89bf"
+  integrity sha512-6/mh1E2u2YgEsCHdY0Yx5oW+61gZU+1vXaoiHHrpKeuRNNgFvS+/jrwHiQhB5apAf5oB7UB7E19ol2R2LKH8hQ==
+
 accepts@~1.3.5:
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.8.tgz#0bf0be125b67014adcb0b0921e62db7bffe16b2e"
@@ -89,7 +94,7 @@ binary-extensions@^2.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-bluebird@^3.2.2, bluebird@^3.5.1, bluebird@^3.5.2, bluebird@^3.5.5, bluebird@^3.7.2:
+bluebird@^3.5.1, bluebird@^3.5.2, bluebird@^3.5.5, bluebird@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
@@ -245,7 +250,7 @@ css@^2.0.0:
     source-map-resolve "^0.5.2"
     urix "^0.1.0"
 
-cuid@^2.1.4:
+cuid@^2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/cuid/-/cuid-2.1.8.tgz#cbb88f954171e0d5747606c0139fb65c5101eac0"
   integrity sha512-xiEMER6E7TlTPnDxrM4eRiC6TRgjNX9xzEZ5U/Se2YJKr7Mq4pJn/2XEHjl3STcSh96GmkHPcBXLES8M29wyyg==
@@ -467,7 +472,7 @@ glob@^7.1.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-graceful-fs@^4.1.11, graceful-fs@^4.1.3, graceful-fs@^4.2.10:
+graceful-fs@^4.1.11, graceful-fs@^4.2.10:
   version "4.2.10"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
@@ -512,14 +517,14 @@ hexo-deployer-git@^4.0.0:
     nunjucks "^3.2.3"
     picocolors "^1.0.0"
 
-hexo-front-matter@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/hexo-front-matter/-/hexo-front-matter-3.0.0.tgz#b9a473c6cb910c73f9fea49f506e98540fcea6cb"
-  integrity sha512-hSQTPUmB/BCe1BFYmXRkPyLk8rqbBqHCQq+rjwwOJuEfOADrFaVK2VPZb90tJzPyXE1xSxpgCxE/AZq0CyTVwg==
+hexo-front-matter@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/hexo-front-matter/-/hexo-front-matter-4.1.0.tgz#cb0774757f975fcf0e7070e801de81258b049d78"
+  integrity sha512-8rac/v1WzD2qkIz3YmUuiV/2WhvzWaZbNA25yY8YsCD7PlR1XDND8jUDlvcCl01sVkZtzwnQT8JuWU4I2oM9jA==
   dependencies:
     js-yaml "^4.1.0"
 
-hexo-fs@^3.0.1, hexo-fs@^3.1.0:
+hexo-fs@^3.0.1:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/hexo-fs/-/hexo-fs-3.1.0.tgz#2052ff72c68cda2c577a87aa0ea7980ae503fa99"
   integrity sha512-SfoDH7zlU9Iop+bAfEONXezbNIkpVX1QqjNCBYpapilZR+xVOCfTEdlNixanrKBbLGPb2fXqrdDBFgrKuiVGQQ==
@@ -529,7 +534,7 @@ hexo-fs@^3.0.1, hexo-fs@^3.1.0:
     graceful-fs "^4.1.11"
     hexo-util "^2.0.0"
 
-hexo-fs@^4.0.0:
+hexo-fs@^4.0.0, hexo-fs@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/hexo-fs/-/hexo-fs-4.1.1.tgz#4a95d0d6b15eb7baf642ce54b8234fb32e5f032d"
   integrity sha512-aDysNTyv8ElcerbFVbPLRXnYt+QDY6gAOZZ5DLbCxudY0Ywppqd+uZ03gZ2BDypIBvmNB27WYWYz76M+Yv/YXw==
@@ -591,12 +596,12 @@ hexo-generator-tag@^2.0.0:
   dependencies:
     hexo-pagination "3.0.0"
 
-hexo-i18n@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/hexo-i18n/-/hexo-i18n-1.0.0.tgz#7983fb3a313e90615b84dd8fa946a71c489ef5bd"
-  integrity sha512-yw90JHr7ybUHN/QOkpHmlWJj1luVk5/v8CUU5NRA0n4TFp6av8NT7ujZ10GDawgnQEdMHnN5PUfAbNIVGR6axg==
+hexo-i18n@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/hexo-i18n/-/hexo-i18n-2.0.0.tgz#ec7abc160ffef202524f3ff8076b85d5701c447b"
+  integrity sha512-dkUXecEtChaQMdTHN4WR13c8GwKqjbSOZPJS9qDqV6Ebnb77Wa/nQzWFckhP0dCps3a9lUQBd8hYGOMbOosiQQ==
   dependencies:
-    sprintf-js "^1.0.3"
+    sprintf-js "^1.1.2"
 
 hexo-log@^2.0.0:
   version "2.0.0"
@@ -605,10 +610,10 @@ hexo-log@^2.0.0:
   dependencies:
     chalk "^4.0.0"
 
-hexo-log@^3.0.0, hexo-log@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/hexo-log/-/hexo-log-3.2.0.tgz#958c8ea681f7575afcd554f39c8e09f46461d317"
-  integrity sha512-fk7jOW3hvKiAv4Q/d8UxaQlARwcv+5KjGcnxexUrqBqyWbMCLmw7jhMHTSRLNNQpaoTlF5ff+kQkPi4yhp9iag==
+hexo-log@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/hexo-log/-/hexo-log-4.0.1.tgz#a59a7767467b3dbe44a9d83ebaf5de72e3f0afb3"
+  integrity sha512-jB2EADDJIwtepfUxiNCTN/5Ysa0B7vYMzkih69FAiubXcnMomKgx5WOlqODVfKnXYw0OQk1Fxrf5LVmfpR0i8w==
   dependencies:
     picocolors "^1.0.0"
 
@@ -643,13 +648,13 @@ hexo-renderer-markdown-it@^7.0.0:
     markdown-it-sub "^1.0.0"
     markdown-it-sup "^1.0.0"
 
-hexo-renderer-stylus@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/hexo-renderer-stylus/-/hexo-renderer-stylus-2.1.0.tgz#4cbae08d36c7390b791c2cc3df7c53c3ff615106"
-  integrity sha512-Nef4YCr7JX8jaRaByhzXMSsWnDed+RgJj6aU/ARnYu3Bn5xz/qRz52VJG7KqD0Xuysxa9TIBdVUgNzBrSFn3DQ==
+hexo-renderer-stylus@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/hexo-renderer-stylus/-/hexo-renderer-stylus-3.0.0.tgz#6d5d8678c327e68aef213b41a9e7fcf0527ccd51"
+  integrity sha512-wgKOcjUzq1i4Y70luoyYDbh91QeQcDzJO+v1598LgY+IdREFAm+vy1MWtl/TZsVXyPaEtsULNi3Vi22hdsPUSA==
   dependencies:
     nib "^1.2.0"
-    stylus "^0.57.0"
+    stylus "^0.59.0"
 
 hexo-server@^3.0.0:
   version "3.0.0"
@@ -665,10 +670,10 @@ hexo-server@^3.0.0:
     picocolors "^1.0.0"
     serve-static "^1.14.1"
 
-hexo-theme-next@^8.16.0:
-  version "8.16.0"
-  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.16.0.tgz#81e870dfafac692a08d6a0a14b8646fea1c5775d"
-  integrity sha512-UPqJXDlAThsbqsthSgC0J2qzdW5HtTxTwMnHPevgo/292qlv4Yx5noIttRV+W0WUgrzTmIVuSGuL0Sok10UhRA==
+hexo-theme-next@^8.17.0:
+  version "8.17.0"
+  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.17.0.tgz#c679dcf9cf59a754f1b00f7b0df8d8a92a4ce52b"
+  integrity sha512-J51XPF6wlxxgJ6MW7MXi7LweIhR7i/57CwFk7GHIncju4GHYcD78D678p2UAc9MQc8MFQuyz2pgGopnUEXZ9BQ==
 
 hexo-util@2.7.0, hexo-util@^2.0.0, hexo-util@^2.1.0, hexo-util@^2.7.0:
   version "2.7.0"
@@ -706,20 +711,20 @@ hexo-word-counter@0.1.0:
     cargo-cp-artifact "^0.1"
     hexo-util "2.7.0"
 
-hexo@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/hexo/-/hexo-6.3.0.tgz#10c940aaf86e2fbaf8a0db7cb79fc1fe4d6e1180"
-  integrity sha512-4Jq+rWd8sYvR1YdIQyndN/9WboQ/Mqm6eax8CjrjO+ePFm2oMVafSOx9WEyJ42wcLOHjfyMfnlQhnUuNmJIpPg==
+hexo@^7.0.0-rc1:
+  version "7.0.0-rc1"
+  resolved "https://registry.yarnpkg.com/hexo/-/hexo-7.0.0-rc1.tgz#0ba887977a55304b877bba06871e80b2391b61c2"
+  integrity sha512-dCjoiNKEsAdBvxSWGKb0rv+E9cCumc/FpxQ9DhYWqKFZ7hHyxGBZuaTGaaXoV9rbsHTAdPoTLyfYYWqPHLDmwQ==
   dependencies:
-    abbrev "^1.1.1"
+    abbrev "^2.0.0"
     archy "^1.0.0"
     bluebird "^3.7.2"
     hexo-cli "^4.3.0"
-    hexo-front-matter "^3.0.0"
-    hexo-fs "^3.1.0"
-    hexo-i18n "^1.0.0"
-    hexo-log "^3.2.0"
-    hexo-util "^2.7.0"
+    hexo-front-matter "^4.0.0"
+    hexo-fs "^4.1.1"
+    hexo-i18n "^2.0.0"
+    hexo-log "^4.0.1"
+    hexo-util "^3.0.1"
     js-yaml "^4.1.0"
     js-yaml-js-types "^1.0.0"
     micromatch "^4.0.4"
@@ -734,7 +739,7 @@ hexo@^6.3.0:
     text-table "^0.2.0"
     tildify "^2.0.0"
     titlecase "^1.1.3"
-    warehouse "^4.0.2"
+    warehouse "^5.0.0"
 
 highlight.js@^11.0.1:
   version "11.6.0"
@@ -1241,7 +1246,7 @@ resolve@^1.11.0, resolve@^1.22.0:
     path-parse "^1.0.7"
     supports-preserve-symlinks-flag "^1.0.0"
 
-rfdc@^1.1.4:
+rfdc@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/rfdc/-/rfdc-1.3.0.tgz#d0b7c441ab2720d05dc4cf26e01c89631d9da08b"
   integrity sha512-V2hovdzFbOi77/WajaSMXk2OLm+xNIeQdMMuB7icj7bk6zi2F8GGAxigcnDFpJHbNyNcgyJDiP+8nOrY5cZGrA==
@@ -1343,7 +1348,7 @@ source-map@^0.7.3:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.4.tgz#a9bbe705c9d8846f4e08ff6765acf0f1b0898656"
   integrity sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==
 
-sprintf-js@^1.0.3:
+sprintf-js@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.1.2.tgz#da1765262bf8c0f571749f2ad6c26300207ae673"
   integrity sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug==
@@ -1379,7 +1384,7 @@ strip-indent@^3.0.0:
   dependencies:
     min-indent "^1.0.0"
 
-stylus@^0.54.8, stylus@^0.57.0:
+stylus@^0.54.8, stylus@^0.59.0:
   version "0.54.8"
   resolved "https://registry.yarnpkg.com/stylus/-/stylus-0.54.8.tgz#3da3e65966bc567a7b044bfe0eece653e099d147"
   integrity sha512-vr54Or4BZ7pJafo2mpf0ZcwA74rpuYCZbxrHBsH8kbcXOwSfvBFwsRfpGO5OD5fhG5HDCFW737PKaawI7OqEAg==
@@ -1474,18 +1479,18 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-warehouse@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/warehouse/-/warehouse-4.0.2.tgz#5ea59381c59e2187bcd77d25d8a628b1e1ffc53d"
-  integrity sha512-GixS7SolBGu81rnxYM6bScxdElLM97Jx/kr0a6B6PGBWFqvHeuWFj7QbgEX1YWZSxiJt/aR6dBVQKC/PvvihdQ==
+warehouse@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/warehouse/-/warehouse-5.0.0.tgz#b3892ad133a517d8d235fa6b9aea8752b8db34d6"
+  integrity sha512-3NDCqIF1r83ermIM6QffsJPn9sYoNN/aohb87edraeE2NF57yjSd651f+G7tqOgg4SZuD2DgGmwekc8fTIdi2g==
   dependencies:
-    bluebird "^3.2.2"
-    cuid "^2.1.4"
-    graceful-fs "^4.1.3"
-    hexo-log "^3.0.0"
+    bluebird "^3.7.2"
+    cuid "^2.1.8"
+    graceful-fs "^4.2.10"
+    hexo-log "^4.0.1"
     is-plain-object "^5.0.0"
     jsonparse "^1.3.1"
-    rfdc "^1.1.4"
+    rfdc "^1.3.0"
     through2 "^4.0.2"
 
 which@^2.0.1:

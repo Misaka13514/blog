@@ -517,10 +517,10 @@ hexo-deployer-git@^4.0.0:
     nunjucks "^3.2.3"
     picocolors "^1.0.0"
 
-hexo-front-matter@^4.0.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/hexo-front-matter/-/hexo-front-matter-4.1.0.tgz#cb0774757f975fcf0e7070e801de81258b049d78"
-  integrity sha512-8rac/v1WzD2qkIz3YmUuiV/2WhvzWaZbNA25yY8YsCD7PlR1XDND8jUDlvcCl01sVkZtzwnQT8JuWU4I2oM9jA==
+hexo-front-matter@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/hexo-front-matter/-/hexo-front-matter-4.0.0.tgz#73ba7dce374b0048e215b21c9e3ab01507487951"
+  integrity sha512-2pQ24inDCdqbxuKQ4cK+1ak0AhSEVC1zTY/kVVyqi5m3lB/wYtAjSWp+elp+FqBmJOynogMpoBnUry/4fJkmAg==
   dependencies:
     js-yaml "^4.1.0"
 
@@ -711,16 +711,16 @@ hexo-word-counter@0.1.0:
     cargo-cp-artifact "^0.1"
     hexo-util "2.7.0"
 
-hexo@^7.0.0-rc1:
-  version "7.0.0-rc1"
-  resolved "https://registry.yarnpkg.com/hexo/-/hexo-7.0.0-rc1.tgz#0ba887977a55304b877bba06871e80b2391b61c2"
-  integrity sha512-dCjoiNKEsAdBvxSWGKb0rv+E9cCumc/FpxQ9DhYWqKFZ7hHyxGBZuaTGaaXoV9rbsHTAdPoTLyfYYWqPHLDmwQ==
+hexo@^7.0.0-rc2:
+  version "7.0.0-rc2"
+  resolved "https://registry.yarnpkg.com/hexo/-/hexo-7.0.0-rc2.tgz#c1450eb0dc5473a9505a0c7b20e6d56ba223df6f"
+  integrity sha512-+s0lm5e5QKWo+vdb+5C/tDaU0FI0tRqoJze9/2Gvakrykhq96/xfmqBhSo7FvfObgnN1u1ff+pJ66lrWN46NBw==
   dependencies:
     abbrev "^2.0.0"
     archy "^1.0.0"
     bluebird "^3.7.2"
     hexo-cli "^4.3.0"
-    hexo-front-matter "^4.0.0"
+    hexo-front-matter "4.0.0"
     hexo-fs "^4.1.1"
     hexo-i18n "^2.0.0"
     hexo-log "^4.0.1"
@@ -728,7 +728,7 @@ hexo@^7.0.0-rc1:
     js-yaml "^4.1.0"
     js-yaml-js-types "^1.0.0"
     micromatch "^4.0.4"
-    moize "^6.1.0"
+    moize "^6.1.6"
     moment "^2.29.1"
     moment-timezone "^0.5.34"
     nunjucks "^3.2.3"
@@ -986,10 +986,10 @@ medium-zoom@^1.0.8:
   resolved "https://registry.yarnpkg.com/medium-zoom/-/medium-zoom-1.0.8.tgz#2bd1fbcf2961fa7b0e318fe284462aa9b8608ed2"
   integrity sha512-CjFVuFq/IfrdqesAXfg+hzlDKu6A2n80ZIq0Kl9kWjoHh9j1N9Uvk5X0/MmN0hOfm5F9YBswlClhcwnmtwz7gA==
 
-micro-memoize@^4.0.11:
-  version "4.0.11"
-  resolved "https://registry.yarnpkg.com/micro-memoize/-/micro-memoize-4.0.11.tgz#f664afc8bd8c11cb2838716a7306d6e1ec205d3a"
-  integrity sha512-CjxsaYe4j43df32DtzzNCwanPqZjZDwuQAZilsCYpa2ZVtSPDjHXbTlR4gsEZRyO9/twHs0b7HLjvy/sowl7sA==
+micro-memoize@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/micro-memoize/-/micro-memoize-4.1.2.tgz#ce719c1ba1e41592f1cd91c64c5f41dcbf135f36"
+  integrity sha512-+HzcV2H+rbSJzApgkj0NdTakkC+bnyeiUxgT6/m7mjcz1CmM22KYFKp+EVj1sWe4UYcnriJr5uqHQD/gMHLD+g==
 
 micromatch@^4.0.2, micromatch@^4.0.4:
   version "4.0.5"
@@ -1050,13 +1050,13 @@ mkdirp@~1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-moize@^6.1.0:
-  version "6.1.3"
-  resolved "https://registry.yarnpkg.com/moize/-/moize-6.1.3.tgz#2e188a5ee02e4e3c06beaab39a4a3c92f92dd9aa"
-  integrity sha512-Cn+1T5Ypieeo46fn8X98V2gHj2VSRohVPjvT8BRvNANJJC3UOeege/G84xA/3S9c5qA4p9jOdSB1jfhumwe8qw==
+moize@^6.1.6:
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/moize/-/moize-6.1.6.tgz#ac2e723e74b951875fe2c0c3433405c2b098c3e6"
+  integrity sha512-vSKdIUO61iCmTqhdoIDrqyrtp87nWZUmBPniNjO0fX49wEYmyDO4lvlnFXiGcaH1JLE/s/9HbiK4LSHsbiUY6Q==
   dependencies:
     fast-equals "^3.0.1"
-    micro-memoize "^4.0.11"
+    micro-memoize "^4.1.2"
 
 moment-timezone@^0.5.34:
   version "0.5.37"

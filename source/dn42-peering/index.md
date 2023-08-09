@@ -50,7 +50,7 @@ Valid before Aug. 30th, 2024.
 
 | Item | Value |
 | -- | -- |
-| PGP Key Fingerprint | [C4B7 1F9E D351 5AEB 8270 D5D7 189B B387 CF3A D95F](https://keys.openpgp.org/vks/v1/by-fingerprint/C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F) |
+| PGP Key Fingerprint | [293B 93D8 A471 059F 85D7  16A6 5BA9 2099 D9BE 2DAA](https://keys.openpgp.org/vks/v1/by-fingerprint/293B93D8A471059F85D716A65BA92099D9BE2DAA) |
 | E-mail              | [Misaka13514@gmail.com](mailto:Misaka13514@gmail.com)                                                                                        |
 | Telegram            | [Misaka_0x34ca](https://t.me/Misaka_0x34ca)                                                                                                  |
 | Supported languages | zh_CN, zh_TW, en_US, en_GB, ja_JP, eo                                                                                                        |

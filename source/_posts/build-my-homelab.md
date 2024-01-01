@@ -1,20 +1,33 @@
 ---
-title: 搭建 HomeLab
+title: 搭建我的 HomeLab：硬件、软件和网络
 date: 2023-08-15 08:00:00
 tags:
   - OpenWRT
   - Router
   - HomeLab
   - NAS
-  - PVE
   - HP
   - Linux
+  - Networking
+  - Virtualization
+  - PVE
+  - Docker
+  - DNS
+  - Security
+  - IPv6
+  - Zerotier
+  - VPN
+  - Bird
 categories: 技术向
 ---
 
-我原先使用的 NAS 是黑群晖 DS120j （Marvell ARMADA A3720 1.0GHz 2xCortex-A53 + 512M DDR3L + 8G eMMC + 1TB HDD），原本的使用场景是轻度 PT 做种 + 小范围私人共享。随着我的 VPS 上运行了越来越多服务（bind、wireguard、zerotier、bird、nginx、v2ray、nonebot、gocqhttp、nazurin、rsstt...），我的小鸡要被榨干了，而今年 QQ 对 gocqhttp 的风控也更严格了，就想要把境内服务全部迁移到境内。起初我在我的黑群晖 NAS 上尝试使用 docker，虽然可以用，但由于 CPU 性能低经常满载，机械硬盘速度慢，重启一次 QQ 机器人的 docker 容器至少要半小时，而且由于是 arm 架构，需要不同的 docker 映像。家里也没其它设备可以换地方跑，把家里的电视盒子全拆了都没找到有适配 linux 固件的。加上原先我对黑群晖的一些套件也不满意（而不能通过 docker 绕过），就打算组装一台 HomeLab。
+这篇博客记录了我搭建 HomeLab 的经历。使用 HP EliteDesk 800 G4 TWR 和 Proxmox VE 虚拟化平台，搭建了多个虚拟机和容器来运行各种服务。还涉及了以 NanoPi R2S 为主路由的网络配置。
 
 <!-- more -->
+
+## 起因
+
+我原先使用的 NAS 是黑群晖 DS120j （Marvell ARMADA A3720 1.0GHz 2xCortex-A53 + 512M DDR3L + 8G eMMC + 1TB HDD），原本的使用场景是轻度 PT 做种 + 小范围私人共享。随着我的 VPS 上运行了越来越多服务（bind、wireguard、zerotier、bird、nginx、v2ray、nonebot、gocqhttp、nazurin、rsstt...），我的小鸡要被榨干了，而今年 QQ 对 gocqhttp 的风控也更严格了，就想要把境内服务全部迁移到境内。起初我在我的黑群晖 NAS 上尝试使用 docker，虽然可以用，但由于 CPU 性能低经常满载，机械硬盘速度慢，重启一次 QQ 机器人的 docker 容器至少要半小时，而且由于是 arm 架构，需要不同的 docker 映像。家里也没其它设备可以换地方跑，把家里的电视盒子全拆了都没找到有适配 linux 固件的。加上原先我对黑群晖的一些套件也不满意（而不能通过 docker 绕过），就打算组装一台 HomeLab。
 
 ## 硬件
 
@@ -34,7 +47,7 @@ categories: 技术向
 |           购买合计            |      |    1259     |                  |
 |           拆机合计            |      |   约 350    |                  |
 
-考虑到扩展性买了全高机箱的版本。买的 unbuffered ECC 内存，但是 ECC 似乎不工作。
+考虑到扩展性采用了全高机箱的版本。买的 unbuffered ECC 内存，但是 ECC 似乎不工作。
 
 硬盘分别是从我的笔记本、Dell Inspiron 3847、旧的 NAS 里拆的，空间有点小但我没有仓鼠症所以还算够用，晚点有需要再加硬盘。
 

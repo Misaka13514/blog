@@ -8,6 +8,7 @@ link = {
         return response.json();
       })
       .then(function (data) {
+        data = link.shuffle(data);
         link.render(data);
       })
       .catch(function (error) {
@@ -28,6 +29,19 @@ link = {
     }).join('');
 
     document.querySelector(".link-navigation").innerHTML = html;
+  },
+  // Fisher-Yates Shuffle
+  shuffle: function (array) {
+    var currentIndex = array.length, randomIndex;
+
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
   }
 };
 

@@ -3,7 +3,7 @@ link = {
     this.fetchData();
   },
   fetchData: function () {
-    fetch("https://cdn.jsdelivr.net/gh/Misaka13514/Friends@main/linklist.json")
+    fetch("https://cdn.jsdelivr.net/gh/Misaka13514/Friends@gh-pages/linklist.json")
       .then(function (response) {
         return response.json();
       })

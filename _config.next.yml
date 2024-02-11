@@ -86,9 +86,9 @@ menu:
   archives: /archives/ || fa fa-archive
   links: /links/ || fa fa-link
   dn42: /dn42-peering/ || fa fa-network-wired
-  homepage: https://atri.tk || fa fa-home
-  about: https://i.atri.tk || fa fa-user
-  drive: https://drive.atri.tk || fa fa-hdd
+  homepage: https://apeiria.net || fa fa-home
+  about: https://i.apeiria.net || fa fa-user
+  drive: https://drive.apeiria.net || fa fa-hdd
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
@@ -169,10 +169,10 @@ links_settings:
   layout: block
 
 links:
-  文本存储: https://p.atri.tk
-  缩短链接: https://s.atri.tk
-  订阅转换: https://sub.atri.tk
-  在线代理: https://proxy.atri.tk
+  文本存储: https://p.apeiria.net
+  缩短链接: https://s.apeiria.net
+  订阅转换: https://sub.apeiria.net
+  在线代理: https://proxy.apeiria.net
 
 # Table of Contents in the Sidebar
 # Front-matter variable (unsupport wrap expand_all).

@@ -1,17 +1,17 @@
 # Misaka13514's blog
 
-Misaka13514's blog locate at [blog.atri.tk](https://blog.atri.tk)!
+Misaka13514's blog locate at [blog.apeiria.net](https://blog.apeiria.net)!
 
 ---
 
 ## Site of Misaka13514
 
-- [home page](https://atri.tk/)
-- [about page](https://i.atri.tk/)
-- [blog](https://blog.atri.tk/)
-- [friend links](https://blog.atri.tk/links/)
-- [sitemap](https://atri.tk/sitemap.xml) including more web pages and services.
-- ~~[robots.txt](https://atri.tk/robots.txt) including something useless and disallowed.~~
+- [home page](https://apeiria.net/)
+- [about page](https://i.apeiria.net/)
+- [blog](https://blog.apeiria.net/)
+- [friend links](https://blog.apeiria.net/links/)
+- [sitemap](https://apeiria.net/sitemap.xml) including more web pages and services.
+- ~~[robots.txt](https://apeiria.net/robots.txt) including something useless and disallowed.~~
 
 ### Get in touch
 
@@ -33,7 +33,7 @@ The formations of this project and its sub-projects are inseparable from:
 
   Knowledgeable, kawaii, friendly visitors.
 
-- Friends in [the friend link page](https://blog.atri.tk/links/).
+- Friends in [the friend link page](https://blog.apeiria.net/links/).
 
   Exchanged link with me and bear watching.
 

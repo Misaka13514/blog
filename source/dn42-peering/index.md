@@ -35,8 +35,8 @@ date: 2022-04-02 04:02:42
 | ASN                       | 4242421032                                          |
 | DN42 IPv4                 | 172.23.10.2                                         |
 | Link-Local                | fe80::1032                                          |
-| Hostname                  | lax.dn42.atri.tk                                    |
-| Endpoint                  | lax.dn42.atri.tk:「YourASNlast5digits(e.g. 21032)」 |
+| Hostname                  | lax.dn42.apeiria.net                                    |
+| Endpoint                  | lax.dn42.apeiria.net:「YourASNlast5digits(e.g. 21032)」 |
 | WireGuard public key      | K3X8ndAJzjfgfxAo0gAQpgtH2yj03MCruvnsALSkhjg=        |
 | BGP software              | bird2                                               |
 | Extended next hop support | True                                                |
@@ -70,7 +70,7 @@ Table = off
 
 [Peer]
 PublicKey = K3X8ndAJzjfgfxAo0gAQpgtH2yj03MCruvnsALSkhjg=
-Endpoint = lax.dn42.atri.tk:<YourASNlast5digits(e.g. 21032)>
+Endpoint = lax.dn42.apeiria.net:<YourASNlast5digits(e.g. 21032)>
 AllowedIPs = 172.16.0.0/12, 10.0.0.0/8, fd00::/8, fe80::/10
 ```
 
@@ -103,7 +103,7 @@ Information related to AS4242421032
 aut-num:            AS4242421032
 as-name:            RadioNoise
 descr:              Misaka13514's autonomous system
-remarks:            You may refer to https://dn42.atri.tk for details.
+remarks:            You may refer to https://dn42.apeiria.net for details.
 admin-c:            RADIONOISE-DN42
 tech-c:             RADIONOISE-DN42
 mnt-by:             RADIONOISE-MNT

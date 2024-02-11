@@ -12,10 +12,10 @@ tags:
 categories: 技术向
 ---
 
-你现在可以快速地通过我的域名邮箱`admin@atri.tk`来自动获取我的 PGP 公钥。
+你现在可以快速地通过我的域名邮箱`admin@apeiria.net`来自动获取我的 PGP 公钥。
 
 ```sh
-gpg --locate-key admin@atri.tk
+gpg --locate-key admin@apeiria.net
 ```
 
 <!-- more -->
@@ -30,7 +30,7 @@ pub   ed25519 2021-05-15 [C] [expires: 2024-01-01]
       C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F
 uid           [ultimate] 欠陥電気RadioNoise (御坂13514号のECC鍵) <Misaka13514@gmail.com>
 uid           [ultimate] Misaka13514 <Misaka13514@gmail.com>
-uid           [ultimate] Misaka <admin@atri.tk>
+uid           [ultimate] Misaka <admin@apeiria.net>
 sub   ed25519 2021-05-16 [S] [expires: 2024-01-01]
 sub   ed25519 2021-05-16 [A] [expires: 2024-01-01]
 sub   cv25519 2021-05-16 [E] [expires: 2024-01-01]
@@ -83,12 +83,12 @@ $ cd ..
 
 ```text
 gpg-wks-client: gpg: Total number processed: 1
-gpg-wks-client: using key with user id 'Misaka <admin@atri.tk>'
+gpg-wks-client: using key with user id 'Misaka <admin@apeiria.net>'
 gpg-wks-client: gpg: Total number processed: 1
-gpg-wks-client: directory 'openpgpkey/atri.tk' created
-gpg-wks-client: directory 'openpgpkey/atri.tk/hu' created
-gpg-wks-client: policy file 'openpgpkey/atri.tk/policy' created
-gpg-wks-client: key C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F published for 'admin@atri.tk'
+gpg-wks-client: directory 'openpgpkey/apeiria.net' created
+gpg-wks-client: directory 'openpgpkey/apeiria.net/hu' created
+gpg-wks-client: policy file 'openpgpkey/apeiria.net/policy' created
+gpg-wks-client: key C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F published for 'admin@apeiria.net'
 ```
 
 站点目录结构将会类似这样
@@ -97,7 +97,7 @@ gpg-wks-client: key C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F published for 'admi
 $ tree -a
 .
 `-- openpgpkey
-    `-- atri.tk
+    `-- apeiria.net
         |-- hu
         |   `-- 4y36rkzdjnzmk3oxaekyi5biowgr5kcz
         `-- policy
@@ -144,12 +144,12 @@ $ git push -u origin your-branch-name
 ```sh
 $ gpg --no-default-keyring --keyring /tmp/gpg-$$ \
     --auto-key-locate clear,wkd,nodefault --verbose --locate-key you@your.domain
-gpg: key 189BB387CF3AD95F: public key "Misaka <admin@atri.tk>" imported
+gpg: key 189BB387CF3AD95F: public key "Misaka <admin@apeiria.net>" imported
 gpg: Total number processed: 1
 gpg:               imported: 1
 pub   ed25519 2021-05-15 [C] [expires: 2024-01-01]
       C4B71F9ED3515AEB8270D5D7189BB387CF3AD95F
-uid           [ unknown] Misaka <admin@atri.tk>
+uid           [ unknown] Misaka <admin@apeiria.net>
 sub   ed25519 2021-05-16 [S] [expires: 2024-01-01]
 sub   ed25519 2021-05-16 [A] [expires: 2024-01-01]
 sub   cv25519 2021-05-16 [E] [expires: 2024-01-01]

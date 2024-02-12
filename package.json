@@ -28,7 +28,7 @@
     "hexo-theme-next": "^8.18.0",
     "hexo-word-counter": "0.1.0",
     "lozad": "^1.16.0",
-    "medium-zoom": "^1.0.8",
+    "medium-zoom": "^1.1.0",
     "pjax": "^0.2.8"
   },
   "devDependencies": {

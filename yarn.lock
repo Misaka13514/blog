@@ -629,10 +629,10 @@ hexo-renderer-ejs@^2.0.0:
   dependencies:
     ejs "^3.1.6"
 
-hexo-renderer-markdown-it@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/hexo-renderer-markdown-it/-/hexo-renderer-markdown-it-7.1.0.tgz#fb7b982284e0deca88ac9c54440ac38715b2bcba"
-  integrity sha512-CQK7/kvhWbpKzXOSTpSuANVKgOZjPzxkPna4IQ6xMnRqsNpVXNSzpn5Ke1QEVH2x6FJB1/Vf7B40sJVxQKagaw==
+hexo-renderer-markdown-it@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/hexo-renderer-markdown-it/-/hexo-renderer-markdown-it-7.1.1.tgz#30997efd6e5972056e4c37a986ab68cbe891fed9"
+  integrity sha512-BxI2j2f/l7lOgb7DiT1M4GcP/QhR8/rjMlYx4MEPog/9NTpYhbaspiVsw3tGXOsZVmu+cVgBYoeyIQsFYvv3rw==
   dependencies:
     hexo-util "^3.0.1"
     markdown-it "^13.0.1"

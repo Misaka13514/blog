@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@iktakahiro/markdown-it-katex": "^4.0.1",
-    "hexo": "^7.0.0-rc2",
+    "hexo": "^7.1.1",
     "hexo-deployer-git": "^4.0.0",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",
@@ -22,13 +22,13 @@
     "hexo-generator-searchdb": "^1.4.1",
     "hexo-generator-tag": "^2.0.0",
     "hexo-renderer-ejs": "^2.0.0",
-    "hexo-renderer-markdown-it": "^7.1.0",
-    "hexo-renderer-stylus": "^3.0.0",
+    "hexo-renderer-markdown-it": "^7.1.1",
+    "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0",
-    "hexo-theme-next": "^8.18.0",
+    "hexo-theme-next": "^8.19.1",
     "hexo-word-counter": "0.1.0",
     "lozad": "^1.16.0",
-    "medium-zoom": "^1.0.8",
+    "medium-zoom": "^1.1.0",
     "pjax": "^0.2.8"
   },
   "devDependencies": {

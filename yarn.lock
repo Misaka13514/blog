@@ -675,7 +675,7 @@ hexo-theme-next@^8.19.2:
   resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.19.2.tgz#2ceaee027da2c18951279f14a6b4fbf688886701"
   integrity sha512-FyDbKvVRJKT+3yYxkfsXBVXHHPGxNULYfdd+pavcSclonehNwlpq7oPMsTPfO5jaYFuSmNH68TFTqRuXNZ2bHw==
 
-hexo-util@2.7.0, hexo-util@^2.0.0, hexo-util@^2.1.0, hexo-util@^2.7.0:
+hexo-util@^2.0.0, hexo-util@^2.1.0, hexo-util@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/hexo-util/-/hexo-util-2.7.0.tgz#13d09292e79d260db35399710b3e19f3995443a3"
   integrity sha512-hQM3h34nhDg0bSe/Tg1lnpODvNkz7h2u0+lZGzlKL0Oufp+5KCAEUX9wal7/xC7ax3/cwEn8IuoU75kNpZLpJQ==
@@ -703,13 +703,12 @@ hexo-util@^3.0.1:
     prismjs "^1.29.0"
     strip-indent "^3.0.0"
 
-hexo-word-counter@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/hexo-word-counter/-/hexo-word-counter-0.1.0.tgz#68e37bfaab9de97d9b0577a2fdcd2bfb2b2a0248"
-  integrity sha512-6HXSL2dlPuekSqWV7DevrUjGF0JgiHKGqkKSfay00JF9GmshJCLDK+AjvVrN0J1WgCbavsUGSwukyZgfW8VdSw==
+hexo-word-counter@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/hexo-word-counter/-/hexo-word-counter-0.2.0.tgz#109ec89f339ee38d4ea8252b2f41cd0e585bc8c6"
+  integrity sha512-cHFGjynprFsSrJoYEi7ar2peoavjTy7ZBDf/bQ0doXocL/ZjR42aMIcKtTi2A64KLvyTqzyb2mdKADCeclhCpQ==
   dependencies:
     cargo-cp-artifact "^0.1"
-    hexo-util "2.7.0"
 
 hexo@^7.1.1:
   version "7.1.1"

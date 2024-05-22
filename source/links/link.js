@@ -4,7 +4,7 @@ const link = (function () {
   let filterReciprocal = false;
 
   function fetchData() {
-    fetch("https://cdn.jsdelivr.net/gh/Misaka13514/Friends@gh-pages/linklist.json")
+    fetch("https://rss.apeiria.net/linklist.json")
       .then(function (response) {
         return response.json();
       })

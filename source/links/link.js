@@ -1,11 +1,14 @@
-const link = (function () {
+var link = (function () {
   let data = [];
-  let randomDisplay = false;
-  let filterReciprocal = false;
+  let randomDisplay = true;
+  let filterReciprocal = true;
 
   function fetchData() {
     fetch("https://rss.apeiria.net/linklist.json")
       .then(function (response) {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
         return response.json();
       })
       .then(function (receivedData) {
@@ -19,19 +22,29 @@ const link = (function () {
 
   function setupToggle() {
     const randomToggle = document.getElementById('random-toggle');
+    const reciprocalToggle = document.getElementById('reciprocal-toggle');
+
+    if (localStorage.getItem('randomDisplay') !== null) {
+      randomDisplay = JSON.parse(localStorage.getItem('randomDisplay'));
+    }
+    if (localStorage.getItem('filterReciprocal') !== null) {
+      filterReciprocal = JSON.parse(localStorage.getItem('filterReciprocal'));
+    }
+
+    randomToggle.checked = randomDisplay;
+    reciprocalToggle.checked = filterReciprocal;
+
     randomToggle.addEventListener('change', function (event) {
       randomDisplay = event.target.checked;
+      localStorage.setItem('randomDisplay', randomDisplay);
       render();
     });
 
-    const reciprocalToggle = document.getElementById('reciprocal-toggle');
     reciprocalToggle.addEventListener('change', function (event) {
       filterReciprocal = event.target.checked;
+      localStorage.setItem('filterReciprocal', filterReciprocal);
       render();
     });
-
-    randomDisplay = randomToggle.checked;
-    filterReciprocal = reciprocalToggle.checked;
   }
 
   function render() {
@@ -43,10 +56,15 @@ const link = (function () {
       });
     }
 
-    const html = displayData.map(function (item) {
+    const html = generateHTML(displayData);
+    document.querySelector(".link-navigation").innerHTML = html;
+  }
+
+  function generateHTML(data) {
+    return data.map(function (item) {
       return `
         <div class="card">
-          <a href="${item.site}" target="_blank" rel="external noopener nofollow">
+          <a href="${item.site}" target="_blank" rel="external noopener nofollow noreferrer">
             <div class="thumb" style="background: url(${item.avatar});"></div>
           </a>
           <div class="card-header">
@@ -54,8 +72,6 @@ const link = (function () {
           </div>
         </div>`;
     }).join('');
-
-    document.querySelector(".link-navigation").innerHTML = html;
   }
 
   function shuffle(array) {
@@ -80,4 +96,4 @@ const link = (function () {
   };
 })();
 
-document.addEventListener('DOMContentLoaded', link.init);
+link.init();

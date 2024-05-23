@@ -7,21 +7,20 @@ quicklink:
   enable: false
 ---
 
-<!-- <script data-pjax src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" type="text/javascript"></script> -->
-<script data-pjax src="/links/link.js"></script>
-<link data-pjax rel="stylesheet" href="/links/link.css">
-
 <div style="text-align:right;">
   <label for="random-toggle">随机顺序:</label>
-  <input type="checkbox" id="random-toggle" checked>
+  <input type="checkbox" id="random-toggle">
   <label for="reciprocal-toggle">仅显示双向友链:</label>
-  <input type="checkbox" id="reciprocal-toggle" checked>
+  <input type="checkbox" id="reciprocal-toggle">
 </div>
 <div>
   <div class="links-content">
     <div class="link-navigation" id="links1">加载中…</div>
   </div>
 </div>
+
+<script data-pjax src="/links/link.js"></script>
+<link data-pjax rel="stylesheet" href="/links/link.css">
 
 ---
 

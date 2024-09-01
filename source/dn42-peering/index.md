@@ -44,7 +44,7 @@ date: 2022-04-02 04:02:42
 | Hosting provider          | RackNerd                                            |
 | Location                  | America/Los_Angeles                                 |
 
-Valid before Aug. 30th, 2024.
+Valid before Aug. 30th, 2025.
 
 #### Contact Details
 

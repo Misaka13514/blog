@@ -648,10 +648,10 @@ hexo-server@^3.0.0:
     picocolors "^1.0.0"
     serve-static "^1.14.1"
 
-hexo-theme-next@^8.20.0:
-  version "8.20.0"
-  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.20.0.tgz#8130f1b32d353f4bde7e99aa7d9f8f1e682d37b4"
-  integrity sha512-cLKE32mP6B2E84+4XUXOgZhaI+srndHAviVpDaz8S7fj4OTnRchWg1anbhpZTFAgMO0NSRs4A0kT61eXY3l/Gg==
+hexo-theme-next@^8.21.0:
+  version "8.21.0"
+  resolved "https://registry.yarnpkg.com/hexo-theme-next/-/hexo-theme-next-8.21.0.tgz#098a906a4a3f7fb74c068b1e84c5c5f62427bfb9"
+  integrity sha512-O0xKsX73QJSOfPs8R+Kd1sFbJQhy0Od3NsoN5uR717IXjK4xn2w9x+GlSijEfh96JkhCIQOOPS5xBtzsfpjE6A==
 
 hexo-util@^2.1.0, hexo-util@^2.7.0:
   version "2.7.0"
